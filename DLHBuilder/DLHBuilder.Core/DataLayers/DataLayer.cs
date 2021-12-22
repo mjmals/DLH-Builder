@@ -8,6 +8,10 @@ namespace DLHBuilder
 {
     public abstract class DataLayer
     {
+        public DataLayerType Type { get => _type; }
+
+        protected DataLayerType _type { get; set; }
+
         public string Container { get => _container; }
 
         protected string _container { get; set; }

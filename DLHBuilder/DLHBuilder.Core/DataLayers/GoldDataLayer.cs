@@ -10,6 +10,7 @@ namespace DLHBuilder
     {
         public GoldDataLayer()
         {
+            _type = DataLayerType.Gold;
             _path = "/CUR/";
             _container = "root";
         }

@@ -13,6 +13,6 @@ namespace DLHBuilder
 
         }
 
-        LoadDefinitionSource Source { get; set; }
+        public LoadDefinitionSource Source { get; set; }
     }
 }

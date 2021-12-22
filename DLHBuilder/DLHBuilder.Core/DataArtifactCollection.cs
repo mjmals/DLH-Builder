@@ -28,5 +28,10 @@ namespace DLHBuilder
         }
 
         public string Name { get; set; }
+
+        public void Add(DataArtifact artifact)
+        {
+            _artifacts.Add(artifact);
+        }
     }
 }
