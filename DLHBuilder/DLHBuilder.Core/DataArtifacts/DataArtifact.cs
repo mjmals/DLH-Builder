@@ -11,7 +11,7 @@ namespace DLHBuilder
     {
         public string Name { get; set; }
 
-        public DataArtifactItemCollection ItemDefinitions { get; set; }
+        public DataArtifactPropertyCollection ItemDefinitions { get; set; }
 
         public LoadDefinitionCollection LoadDefinitions { get; set; }
 

@@ -7,7 +7,7 @@ using DLHBuilder.DataTypes;
 
 namespace DLHBuilder
 {
-    public class DataArtifactItem
+    public class DataArtifactProperty
     {
         public string Name { get; set; }
 
