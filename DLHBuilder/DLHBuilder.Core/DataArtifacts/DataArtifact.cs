@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
@@ -11,17 +12,47 @@ namespace DLHBuilder
     {
         public string Name { get; set; }
 
-        public DataArtifactPropertyCollection ItemDefinitions { get; set; }
+        [JsonIgnore]
+        public DataArtifactPropertyCollection Properties { get; set; }
 
+        [JsonIgnore]
         public LoadDefinitionCollection LoadDefinitions { get; set; }
 
-        public void Save(string path)
+        internal void Save(string path)
         {
             path = Path.Combine(path, Name);
 
             if (!Directory.Exists(path))
             {
                 Directory.CreateDirectory(path);
+            }
+
+            string filepath = Path.Combine(path, "DataArtifact.json");
+
+            MetadataController.SaveObject(this, filepath);
+
+            string definitionpath = Path.Combine(path, "Load Definitions");
+
+            if(!Directory.Exists(definitionpath))
+            {
+                Directory.CreateDirectory(definitionpath);
+            }
+
+            foreach(LoadDefinition definition in LoadDefinitions.Definitions)
+            {
+
+            }
+
+            string propertypath = Path.Combine(path, "Properties");
+
+            if (!Directory.Exists(propertypath))
+            {
+                Directory.CreateDirectory(propertypath);
+            }
+
+            foreach(DataArtifactProperty property in Properties.Items)
+            {
+
             }
         }
     }

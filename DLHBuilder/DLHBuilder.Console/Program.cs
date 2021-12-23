@@ -2,6 +2,8 @@
 using System.Text.RegularExpressions;
 using System.Data;
 using Microsoft.Data.SqlClient;
+using System.Windows;
+using Microsoft.Win32;
 
 namespace DLHBuilder
 {
@@ -9,63 +11,17 @@ namespace DLHBuilder
     {
         static void Main(string[] args)
         {
-            Console.Write("Server: ");
-            string server = Console.ReadLine();
+            Project project = new Project();
+            project.Name = "Delta Lake Example";
 
-            Console.Write("Database: ");
-            string database = Console.ReadLine();
+            DataArtifactCollection group = project.CreateDataArtfactCollection("DatabaseA");
 
-            Console.Write("Schema: ");
-            string schema = Console.ReadLine();
+            DataArtifact artifact = group.CreateDataArtifact("tblSales");
 
-            Console.Write("Table: ");
-            string table = Console.ReadLine();
+            Console.Write("Specify Project save path: ");
+            string path = Console.ReadLine();
 
-            SqlConnectionStringBuilder connstr = new SqlConnectionStringBuilder()
-            {
-                DataSource = server,
-                InitialCatalog = database,
-                IntegratedSecurity = true
-            };
-
-            using (SqlConnection conn = new SqlConnection(connstr.ConnectionString))
-            {
-                try
-                {
-                    conn.Open();
-                    Console.WriteLine("Connected...");
-                }
-                catch(Exception e)
-                {
-                    Console.WriteLine(e.Message);
-                }
-                finally
-                {
-                    DataArtifact artifact = new DataArtifact();
-                    artifact.Name = table;
-                    artifact.LoadDefinitions = new LoadDefinitionCollection();
-
-                    SQLServerLoadDefinitionSource source = new SQLServerLoadDefinitionSource();
-                    source.Server = server;
-                    source.Database = database;
-                    source.Schema = schema;
-                    source.Table = table;
-
-                    LoadDefinition definition = new LoadDefinition();
-                    definition.Source = source;
-
-                    artifact.LoadDefinitions.Add(definition);
-
-                    DataArtifactCollection artifacts = new DataArtifactCollection();
-                    artifacts.Name = "MCS";
-                    artifacts.Add(artifact);
-
-                    Console.Write("Object Created");
-                }
-                
-            }
-
-            Console.ReadKey();
-        }
+            project.Save(path);
+        }    
     }
 }

@@ -14,9 +14,19 @@ namespace DLHBuilder
         {
             string data = JsonConvert.SerializeObject(item, Formatting.Indented);
 
-            using (FileStream fs = new FileStream(path, FileMode.OpenOrCreate))
+            if(!Directory.Exists(Path.GetDirectoryName(path)))
             {
-                new StreamWriter(fs).Write(data);
+                Directory.CreateDirectory(Path.GetDirectoryName(path));
+            }
+
+            using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate))
+            {
+                stream.SetLength(0);
+
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.Write(data);
+                }
             }
         }
     }
