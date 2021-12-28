@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public enum DataLayerType
+    public class Dependency
     {
-        Gold,
-        Silver,
-        Bronze,
-        Landing
+        public string SourceArtifact { get; set; }
+
+        public DataLayer DataLayer { get; set; }
     }
 }

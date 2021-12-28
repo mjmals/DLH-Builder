@@ -14,5 +14,7 @@ namespace DLHBuilder
         }
 
         public LoadDefinitionSource Source { get; set; }
+
+        public LoadDefinitionTarget Target { get; set; }
     }
 }

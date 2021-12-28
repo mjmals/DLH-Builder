@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace DLHBuilder.DataLayers
+namespace DLHBuilder
 {
     public class DataLayerCollection
     {
         public DataLayerCollection()
         {
             _datalayer.Add(new GoldDataLayer());
+            _datalayer.Add(new SilverDataLayer());
+            _datalayer.Add(new BronzeDataLayer());
+            _datalayer.Add(new LandingDataLayer());
         }
 
         List<DataLayer> _datalayer = new List<DataLayer>();

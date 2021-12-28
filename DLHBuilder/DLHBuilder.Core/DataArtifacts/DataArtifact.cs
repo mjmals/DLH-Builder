@@ -18,6 +18,20 @@ namespace DLHBuilder
         [JsonIgnore]
         public LoadDefinitionCollection LoadDefinitions { get; set; }
 
+        public LoadDefinition CreateLoadDefinition()
+        {
+            LoadDefinition output = new LoadDefinition();
+
+            if (LoadDefinitions == null)
+            {
+                LoadDefinitions = new LoadDefinitionCollection();
+            }
+
+            LoadDefinitions.Add(output);
+
+            return output;
+        }
+
         internal void Save(string path)
         {
             path = Path.Combine(path, Name);

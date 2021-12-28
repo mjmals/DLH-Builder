@@ -14,9 +14,25 @@ namespace DLHBuilder
             Project project = new Project();
             project.Name = "Delta Lake Example";
 
-            DataArtifactCollection group = project.CreateDataArtfactCollection("DatabaseA");
+            string server = "SQLDB-01";
+            string database = "SalesDB";
+            string table = "tblSales";
 
-            DataArtifact artifact = group.CreateDataArtifact("tblSales");
+            DataArtifactCollection salesdb = project.CreateDataArtfactCollection(database);
+
+            DataArtifact sales = salesdb.CreateDataArtifact(table);
+
+            LoadDefinition salesdef = sales.CreateLoadDefinition();
+
+            SQLServerLoadDefinitionSource salesdefsource = new SQLServerLoadDefinitionSource();
+            salesdefsource.Server = server;
+            salesdefsource.Database = database;
+            salesdefsource.Schema = "dbo";
+            salesdefsource.Table = table;
+            salesdef.Source = salesdefsource;
+
+            
+
 
             Console.Write("Specify Project save path: ");
             string path = Console.ReadLine();

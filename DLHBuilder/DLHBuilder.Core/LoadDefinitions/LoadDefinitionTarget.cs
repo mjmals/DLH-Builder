@@ -8,6 +8,20 @@ namespace DLHBuilder
 {
     public abstract class LoadDefinitionTarget
     {
-        public DataFileFormat Type { get; }
+        public LoadDefinitionTarget(DataLayer targetlayer)
+        {
+            Layer = targetlayer;
+        }
+
+        public DataFileFormat Type { get => _type; }
+
+        protected DataFileFormat _type { get; set; }
+
+        public DataLayer Layer { get; set; }
+
+        public virtual string FullPath()
+        {
+            return null;
+        }
     }
 }
