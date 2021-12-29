@@ -10,6 +10,6 @@ namespace DLHBuilder
     {
         public string SourceArtifact { get; set; }
 
-        public DataLayer DataLayer { get; set; }
+        public DataLayerType DataLayer { get; set; }
     }
 }

@@ -17,7 +17,7 @@ namespace DLHBuilder
 
         List<DataArtifact> _artifacts = new List<DataArtifact>();
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public DataArtifact[] Artifacts
         {
             get

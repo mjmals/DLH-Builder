@@ -15,10 +15,19 @@ namespace DLHBuilder
 
         List<Dependency> _dependencies = new List<Dependency>();
 
-        Dependency[] Dependencies
+        public Dependency[] Dependencies
         {
             get => _dependencies.ToArray();
             set => _dependencies = ((Dependency[])value).ToList();
+        }
+
+        public void Add(string artifact, DataLayerType layer)
+        {
+            Dependency dependency = new Dependency();
+            dependency.SourceArtifact = artifact;
+            dependency.DataLayer = layer;
+
+            _dependencies.Add(dependency);
         }
     }
 }

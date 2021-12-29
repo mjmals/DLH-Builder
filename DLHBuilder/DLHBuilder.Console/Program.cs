@@ -31,8 +31,16 @@ namespace DLHBuilder
             salesdefsource.Table = table;
             salesdef.Source = salesdefsource;
 
-            
 
+            ParquetLoadDefinitionTarget salesdeftarget = new ParquetLoadDefinitionTarget(DataLayerType.Bronze);
+            salesdeftarget.DirectoryName = table;
+            salesdeftarget.Path = string.Format("/{0}/{1}", project.DataLayers.Find(DataLayerType.Bronze).Path, database);
+            salesdef.Target = salesdeftarget;
+
+
+            DataArtifactCollection facts = project.CreateDataArtfactCollection("FACT");
+            DataArtifact factsales = facts.CreateDataArtifact("Sales");
+            factsales.Dependencies.Add(sales.Name, salesdeftarget.Layer);
 
             Console.Write("Specify Project save path: ");
             string path = Console.ReadLine();

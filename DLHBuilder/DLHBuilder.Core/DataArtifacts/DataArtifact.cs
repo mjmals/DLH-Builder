@@ -13,10 +13,10 @@ namespace DLHBuilder
         public string Name { get; set; }
 
         [JsonIgnore]
-        public DataArtifactPropertyCollection Properties { get; set; }
+        public DataArtifactPropertyCollection Properties = new DataArtifactPropertyCollection();
 
-        [JsonIgnore]
-        public LoadDefinitionCollection LoadDefinitions { get; set; }
+        //[JsonIgnore]
+        public LoadDefinitionCollection LoadDefinitions = new LoadDefinitionCollection();
 
         public LoadDefinition CreateLoadDefinition()
         {
@@ -31,6 +31,9 @@ namespace DLHBuilder
 
             return output;
         }
+
+        //[JsonIgnore]
+        public DependencyCollection Dependencies = new DependencyCollection();
 
         internal void Save(string path)
         {
@@ -64,10 +67,10 @@ namespace DLHBuilder
                 Directory.CreateDirectory(propertypath);
             }
 
-            foreach(DataArtifactProperty property in Properties.Items)
-            {
+            //foreach(DataArtifactProperty property in Properties.Items)
+            //{
 
-            }
+            //}
         }
     }
 }

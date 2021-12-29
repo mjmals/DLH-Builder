@@ -16,11 +16,11 @@ namespace DLHBuilder
         public string FilePath { get; set; }
 
         [JsonIgnore]
-        DataLayerCollection DataLayers = new DataLayerCollection();
+        public DataLayerCollection DataLayers = new DataLayerCollection();
 
         List<DataArtifactCollection> _artifactcollections = new List<DataArtifactCollection>();
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public DataArtifactCollection[] DataArtifactCollections
         {
             get => _artifactcollections.ToArray();

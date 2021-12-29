@@ -10,8 +10,8 @@ namespace DLHBuilder.DataArtifacts
     {
         public DataArtifactRegistrationType Type { get; set; }
 
-        public string Server { get; set; }
-
         public string Database { get; set; }
+
+        public string Table { get; set; }
     }
 }

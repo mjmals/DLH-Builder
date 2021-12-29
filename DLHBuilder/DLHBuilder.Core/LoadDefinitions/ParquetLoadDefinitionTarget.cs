@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DeltaLoadDefinitionTarget : LoadDefinitionTarget
+    public class ParquetLoadDefinitionTarget : LoadDefinitionTarget
     {
-        public DeltaLoadDefinitionTarget(DataLayerType targetlayer) : base(targetlayer)
+        public ParquetLoadDefinitionTarget(DataLayerType targetlayer) : base(targetlayer)
         {
-            _type = DataFileFormat.Delta;
+            _type = DataFileFormat.Parquet;
         }
 
         public string DirectoryName { get; set; }
@@ -19,7 +19,7 @@ namespace DLHBuilder
 
         public override string FullPath()
         {
-            return string.Format("/{0}/{1}", Path, DirectoryName);
+            return string.Format("/{0}/{1}.parquet", Path, DirectoryName);
         }
     }
 }
