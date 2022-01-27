@@ -39,9 +39,16 @@ namespace DLHBuilder
             GroupPath sexternal = new GroupPath("External", "Area Type");
             sensitive.AddChild(sexternal);
 
-            string data = JsonConvert.SerializeObject(raw, Formatting.Indented);
 
-            using (FileStream stream = new FileStream("", FileMode.OpenOrCreate))
+            DataStage rawstage = new DataStage();
+            rawstage.Name = "Raw";
+            rawstage.Levels.Add(new DataStageLevel() { Name = "Non Sensitive" });
+
+            string data = JsonConvert.SerializeObject(rawstage, Formatting.Indented);
+            
+            Console.Write("Enter Output Directory: ");
+
+            using (FileStream stream = new FileStream(Path.Combine(Console.ReadLine(), string.Format("{0}.DataStage.json", rawstage.Name)), FileMode.OpenOrCreate))
             {
                 using (StreamWriter writer = new StreamWriter(stream))
                 {
