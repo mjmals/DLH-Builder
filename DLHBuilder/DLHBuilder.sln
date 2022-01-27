@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Core", "DLHBuilder.Core\DLHBuilder.Core.csproj", "{244E10BA-17A5-4C6A-A91A-CAE940AD6A3D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Core", "DLHBuilder.Core\DLHBuilder.Core.csproj", "{244E10BA-17A5-4C6A-A91A-CAE940AD6A3D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Console", "DLHBuilder.Console\DLHBuilder.Console.csproj", "{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Console", "DLHBuilder.Console\DLHBuilder.Console.csproj", "{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Desktop", "DLHBuilder.Desktop\DLHBuilder.Desktop.csproj", "{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

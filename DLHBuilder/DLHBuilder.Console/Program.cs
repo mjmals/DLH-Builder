@@ -4,6 +4,10 @@ using System.Data;
 using Microsoft.Data.SqlClient;
 using System.Windows;
 using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using System.IO;
 
 namespace DLHBuilder
 {
@@ -11,41 +15,79 @@ namespace DLHBuilder
     {
         static void Main(string[] args)
         {
-            Project project = new Project();
-            project.Name = "Delta Lake Example";
+            Group raw = new Group();
+            raw.Name = "RAW";
 
-            string server = "SQLDB-01";
-            string database = "SalesDB";
-            string table = "tblSales";
+            GroupPath rawpath = new GroupPath("RAW", "Stage");
+            raw.Paths = new GroupPath[] { rawpath };
 
-            DataArtifactCollection salesdb = project.CreateDataArtfactCollection(database);
+            GroupPath nonsensitive = new GroupPath("Non Sensitive", "Classification");
+            rawpath.AddChild(nonsensitive);
 
-            DataArtifact sales = salesdb.CreateDataArtifact(table);
+            GroupPath sensitive = new GroupPath("Sensitive", "Classification");
+            rawpath.AddChild(sensitive);
 
-            LoadDefinition salesdef = sales.CreateLoadDefinition();
+            GroupPath nsinternal = new GroupPath("Internal", "Area Type");
+            nonsensitive.AddChild(nsinternal);
 
-            SQLServerLoadDefinitionSource salesdefsource = new SQLServerLoadDefinitionSource();
-            salesdefsource.Server = server;
-            salesdefsource.Database = database;
-            salesdefsource.Schema = "dbo";
-            salesdefsource.Table = table;
-            salesdef.Source = salesdefsource;
+            GroupPath nsexternal = new GroupPath("External", "Area Type");
+            nonsensitive.AddChild(nsexternal);
 
+            GroupPath sinternal = new GroupPath("Internal", "Area Type");
+            sensitive.AddChild(sinternal);
 
-            ParquetLoadDefinitionTarget salesdeftarget = new ParquetLoadDefinitionTarget(DataLayerType.Bronze);
-            salesdeftarget.DirectoryName = table;
-            salesdeftarget.Path = string.Format("/{0}/{1}", project.DataLayers.Find(DataLayerType.Bronze).Path, database);
-            salesdef.Target = salesdeftarget;
+            GroupPath sexternal = new GroupPath("External", "Area Type");
+            sensitive.AddChild(sexternal);
 
+            string data = JsonConvert.SerializeObject(raw, Formatting.Indented);
 
-            DataArtifactCollection facts = project.CreateDataArtfactCollection("FACT");
-            DataArtifact factsales = facts.CreateDataArtifact("Sales");
-            factsales.Dependencies.Add(sales.Name, salesdeftarget.Layer);
+            using (FileStream stream = new FileStream("", FileMode.OpenOrCreate))
+            {
+                using (StreamWriter writer = new StreamWriter(stream))
+                {
+                    writer.Write(data);
+                }
+            }
 
-            Console.Write("Specify Project save path: ");
-            string path = Console.ReadLine();
+            Console.WriteLine();
+        }
+    }
 
-            project.Save(path);
-        }    
+    public class Group
+    {
+        public string Name { get; set; }
+
+        public GroupPath[] Paths { get; set; }
+    }
+
+    public class GroupPath
+    {
+        public GroupPath(string name, string tag, string description = null)
+        {
+            Name = name;
+            Tag = tag;
+            Description = Description;
+        }
+
+        public string Name { get; set; }
+
+        public string Tag { get; set; }
+
+        public string Description { get; set; }
+
+        public GroupPath[] Children { get; set; }
+
+        public void AddChild(GroupPath path)
+        {
+            List<GroupPath> children = Children == null ? new List<GroupPath>() : Children.ToList();
+            children.Add(path);
+
+            Children = children.ToArray();
+        }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }
