@@ -12,12 +12,30 @@ namespace DLHBuilder.Desktop.UI
         public ProjectTree(Project project)
         {
             Project = project;
-            Tag = project;
 
             ImageList = Images.ImageList;
+            AfterExpand += NodeExpanded;
             Nodes.Add(new ProjectNode(project));
         }
 
-        Project Project { get; set; }
+        Project Project 
+        { 
+            get => (Project)Tag; 
+            set => Tag = value;
+        }
+
+        void NodeExpanded(object sender, TreeViewEventArgs e)
+        {
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+            node.ImageKey = node.ExpandedImage;
+            node.SelectedImageKey = node.ExpandedImage;
+        }
+
+        void NodeCollapsed(object sender, TreeViewEventArgs e)
+        {
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+            node.ImageKey = node.CollapsedImage;
+            node.SelectedImageKey = node.CollapsedImage;
+        }
     }
 }

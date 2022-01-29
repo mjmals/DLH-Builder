@@ -13,6 +13,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Dock = dock;
             SelectedObject = propertyobject;
+            PropertySort = PropertySort.NoSort;
         }
     }
 }

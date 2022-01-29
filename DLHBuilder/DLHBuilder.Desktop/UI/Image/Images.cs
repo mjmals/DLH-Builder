@@ -14,6 +14,8 @@ namespace DLHBuilder.Desktop.UI
             get
             {
                 ImageList output = new ImageList();
+                output.Images.Add("Folder Closed", Properties.Resources.FolderClosed_16x);
+                output.Images.Add("Folder Open", Properties.Resources.FolderOpened_16x);
                 output.Images.Add("Open", Properties.Resources.OpenFile_16x);
                 output.Images.Add("Project", Properties.Resources.ProjectFilterFile_16x);
                 output.Images.Add("Save", Properties.Resources.Save_16x);

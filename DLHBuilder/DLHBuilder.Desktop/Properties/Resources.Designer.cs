@@ -63,6 +63,36 @@ namespace DLHBuilder.Desktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap FolderBrowserDialogControl_16x {
+            get {
+                object obj = ResourceManager.GetObject("FolderBrowserDialogControl_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderClosed_16x {
+            get {
+                object obj = ResourceManager.GetObject("FolderClosed_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap FolderOpened_16x {
+            get {
+                object obj = ResourceManager.GetObject("FolderOpened_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap OpenFile_16x {
             get {
                 object obj = ResourceManager.GetObject("OpenFile_16x", resourceCulture);

@@ -11,14 +11,20 @@ namespace DLHBuilder.Desktop.UI
         public ProjectNode(Project project)
         {
             Project = project;
-            Tag = project;
-            
             Text = project.Name;
-            ImageKey = "Project";
-            SelectedImageKey = ImageKey;
-            
+            Nodes.Add(new DataStagesNode(project.Stages));
+
+            Expand();
         }
 
-        Project Project { get; set; }
+        Project Project 
+        { 
+            get => (Project)Tag; 
+            set => Tag = value;
+        }
+
+        public override string CollapsedImage => "Project";
+
+        public override string ExpandedImage => "Project";
     }
 }

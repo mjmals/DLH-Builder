@@ -11,11 +11,16 @@ namespace DLHBuilder.Desktop.UI
     {
         public ProjectTreeNode()
         {
-            
+            ImageKey = CollapsedImage;
+            SelectedImageKey = ExpandedImage;
         }
 
         public virtual bool ShowPropertyEditor { get => true; }
 
         public virtual Type[] Editors { get; set; }
+
+        public virtual string CollapsedImage { get; }
+
+        public virtual string ExpandedImage { get; }
     }
 }
