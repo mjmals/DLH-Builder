@@ -23,5 +23,7 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Folder Closed";
 
         public override string ExpandedImage => "Folder Open";
+
+        public override Type[] Editors { get => new Type[] { typeof(DataStageTree) }; }
     }
 }

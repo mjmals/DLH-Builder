@@ -25,7 +25,11 @@ namespace DLHBuilder.Desktop.UI
             DataStage stage = new DataStage();
             stage.Name = "<New Data Stage>";
 
-            Node.Nodes.Add(new DataStageNode(stage));
+            DataStageNode stagenode = new DataStageNode(stage);
+
+            Node.Nodes.Add(stagenode);
+            Node.TreeView.SelectedNode = stagenode;
+            Node.Expand();
         }
     }
 }

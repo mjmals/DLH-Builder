@@ -13,5 +13,17 @@ namespace DLHBuilder.Desktop.UI
         {
             Dock = DockStyle.Fill;
         }
+
+        public void SetControls(params Control[] controls)
+        {
+            Controls.Clear();
+
+            foreach(Control control in controls)
+            {
+                control.Dock = controls.Count() > 1 ? control.Dock = DockStyle.Top : DockStyle.Fill;
+
+                Controls.Add(control);
+            }
+        }
     }
 }

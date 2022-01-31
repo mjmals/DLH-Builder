@@ -14,8 +14,6 @@ namespace DLHBuilder.Desktop.UI
             Text = "DLH Builder";
             WindowState = FormWindowState.Maximized;
 
-            editorpanel.Controls.Add(new PropertyEditor(DockStyle.Fill));
-
             Controls.Add(editorpanel);
             Controls.Add(explorerpanel);
             Controls.Add(tools);
@@ -63,10 +61,12 @@ namespace DLHBuilder.Desktop.UI
             
             editorpanel.Controls.Clear();
 
+            List<Control> controls = new List<Control>();
+
             switch(node.ShowPropertyEditor)
             {
                 case true:
-                    editorpanel.Controls.Add(new PropertyEditor(DockStyle.Fill, node.Tag));
+                    editorpanel.SetControls(new PropertyEditor(node.Tag));
                     break;
                 default:
                     break;

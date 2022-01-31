@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.ComponentModel;
 
 namespace DLHBuilder
 {
-    public class DataStageLevel
+    public enum DataStageLevelType
     {
-        public string Name { get; set; }
-
-        public DataStageLevelType Type { get; set; }
+        Defined,
+        Parameter
     }
 }

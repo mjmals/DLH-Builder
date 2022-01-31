@@ -9,9 +9,8 @@ namespace DLHBuilder.Desktop.UI
 {
     class PropertyEditor : PropertyGrid
     {
-        public PropertyEditor(DockStyle dock, object propertyobject = null)
+        public PropertyEditor(object propertyobject = null)
         {
-            Dock = dock;
             SelectedObject = propertyobject;
             PropertySort = PropertySort.NoSort;
         }
