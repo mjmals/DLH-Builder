@@ -12,5 +12,24 @@ namespace DLHBuilder
         public string Name { get; set; }
 
         public DataStageLevelType Type { get; set; }
+
+        public DataStageLevelCollection Levels
+        {
+            get
+            {
+                if(levels == null)
+                {
+                    levels = new DataStageLevelCollection();
+                }
+
+                return levels;
+            }
+            set
+            {
+                levels = value;
+            }
+        }
+
+        DataStageLevelCollection levels { get; set; }
     }
 }

@@ -3,35 +3,32 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataStageTree : TreeView
+    class DataStageLevelNode : DataStageTreeNode
     {
-        public DataStageTree(DataStage stage)
+        public DataStageLevelNode(DataStageLevel level)
         {
-            Stage = stage;
-            LabelEdit = true;
-            AddLevelNodes(stage.Levels);
+            StageLevel = level;
+            Text = level.Name;
+            AddSubLevels(level.Levels);
+            ContextMenuStrip = new DataStageLevelMenu(this);
         }
 
-        DataStage Stage
+        public DataStageLevel StageLevel
         {
-            get => (DataStage)Tag;
+            get => (DataStageLevel)Tag;
             set => Tag = value;
         }
 
-        void AddLevelNodes(DataStageLevelCollection levels)
+        void AddSubLevels(DataStageLevelCollection levels)
         {
             foreach(DataStageLevel level in levels)
             {
                 DataStageLevelNode node = new DataStageLevelNode(level);
                 Nodes.Add(node);
-                SelectedNode = node;
             }
-            
-            ExpandAll();
         }
     }
 }

@@ -29,7 +29,7 @@ namespace DLHBuilder.Desktop.UI
         {
             return new Control[]
             {
-                new DataStageTree(),
+                new DataStageTree(Stage),
                 new PropertyEditor(Stage)
             };
         }

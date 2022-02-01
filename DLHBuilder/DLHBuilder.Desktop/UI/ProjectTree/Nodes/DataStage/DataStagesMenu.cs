@@ -24,6 +24,7 @@ namespace DLHBuilder.Desktop.UI
         {
             DataStage stage = new DataStage();
             stage.Name = "<New Data Stage>";
+            stage.Levels.Add(new DataStageLevel() { Name = "<New Path Level>" });
 
             DataStageNode stagenode = new DataStageNode(stage);
 
