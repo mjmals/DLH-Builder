@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -24,6 +25,13 @@ namespace DLHBuilder.Desktop.UI
 
         public override string ExpandedImage => "Folder Open";
 
-        public override Type[] Editors { get => new Type[] { typeof(DataStageTree) }; }
+        public override Control[] Editors()
+        {
+            return new Control[]
+            {
+                new DataStageTree(),
+                new PropertyEditor(Stage)
+            };
+        }
     }
 }

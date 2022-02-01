@@ -20,7 +20,17 @@ namespace DLHBuilder.Desktop.UI
 
             foreach(Control control in controls)
             {
-                control.Dock = controls.Count() > 1 ? control.Dock = DockStyle.Top : DockStyle.Fill;
+                switch(controls.Count() > 1)
+                {
+                    case true:
+                        int index = controls.ToList().IndexOf(control);
+                        control.Dock = index == 0 ? DockStyle.Top : DockStyle.Fill;
+                        control.Height = index == 0 ? (Height / controls.Count()) : control.Height;
+                        break;
+                    case false:
+                        control.Dock = DockStyle.Fill;
+                        break;
+                }
 
                 Controls.Add(control);
             }

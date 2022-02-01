@@ -60,17 +60,7 @@ namespace DLHBuilder.Desktop.UI
             ProjectTreeNode node = (ProjectTreeNode)tview.SelectedNode;
             
             editorpanel.Controls.Clear();
-
-            List<Control> controls = new List<Control>();
-
-            switch(node.ShowPropertyEditor)
-            {
-                case true:
-                    editorpanel.SetControls(new PropertyEditor(node.Tag));
-                    break;
-                default:
-                    break;
-            }
+            editorpanel.SetControls(node.Editors());
         }
     }
 }

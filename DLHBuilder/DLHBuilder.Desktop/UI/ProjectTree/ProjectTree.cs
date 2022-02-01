@@ -13,6 +13,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Project = project;
 
+            LabelEdit = true;
             ImageList = Images.ImageList;
             AfterExpand += NodeExpanded;
             Nodes.Add(new ProjectNode(project));

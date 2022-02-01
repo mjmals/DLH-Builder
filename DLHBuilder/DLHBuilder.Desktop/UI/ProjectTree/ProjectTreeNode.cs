@@ -17,7 +17,10 @@ namespace DLHBuilder.Desktop.UI
 
         public virtual bool ShowPropertyEditor { get => true; }
 
-        public virtual Type[] Editors { get; set; }
+        public virtual Control[] Editors()
+        {
+            return new Control[] { new PropertyEditor(Tag) };
+        }
 
         public virtual string CollapsedImage { get; }
 
