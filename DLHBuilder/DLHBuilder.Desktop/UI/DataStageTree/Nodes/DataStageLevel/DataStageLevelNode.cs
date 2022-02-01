@@ -30,5 +30,11 @@ namespace DLHBuilder.Desktop.UI
                 Nodes.Add(node);
             }
         }
+
+        public override void LabelUpdated(string text)
+        {
+            StageLevel.Name = text;
+            base.LabelUpdated(text);
+        }
     }
 }

@@ -26,5 +26,11 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Project";
 
         public override string ExpandedImage => "Project";
+
+        public override void LabelChanged(string text)
+        {
+            Project.Name = text;
+            base.LabelChanged(text);
+        }
     }
 }

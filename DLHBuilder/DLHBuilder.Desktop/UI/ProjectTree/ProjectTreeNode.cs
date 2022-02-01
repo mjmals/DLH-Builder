@@ -13,9 +13,8 @@ namespace DLHBuilder.Desktop.UI
         {
             ImageKey = CollapsedImage;
             SelectedImageKey = ExpandedImage;
+            
         }
-
-        public virtual bool ShowPropertyEditor { get => true; }
 
         public virtual Control[] Editors()
         {
@@ -25,5 +24,12 @@ namespace DLHBuilder.Desktop.UI
         public virtual string CollapsedImage { get; }
 
         public virtual string ExpandedImage { get; }
+
+        public virtual bool AllowLabelChange { get => true; }
+
+        public virtual void LabelChanged(string text)
+        {
+            Text = text;
+        }
     }
 }

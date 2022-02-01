@@ -14,6 +14,7 @@ namespace DLHBuilder.Desktop.UI
             Stage = stage;
             LabelEdit = true;
             AddLevelNodes(stage.Levels);
+            AfterLabelEdit += LabelChanged;
         }
 
         DataStage Stage
@@ -32,6 +33,12 @@ namespace DLHBuilder.Desktop.UI
             }
             
             ExpandAll();
+        }
+
+        void LabelChanged(object sender, NodeLabelEditEventArgs e)
+        {
+            DataStageTreeNode node = (DataStageTreeNode)e.Node;
+            node.LabelUpdated(e.Label);
         }
     }
 }

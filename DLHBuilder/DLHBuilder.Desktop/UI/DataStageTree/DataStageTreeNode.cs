@@ -9,6 +9,9 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStageTreeNode : TreeNode
     {
-
+        public virtual void LabelUpdated(string text)
+        {
+            Text = text;
+        }
     }
 }

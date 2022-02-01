@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataStageTreeLevelMenuButton : ToolStripMenuItem
+    class DataStageTreeMenuButton : ToolStripMenuItem
     {
-        public DataStageTreeLevelMenuButton(string text, EventHandler task)
+        public DataStageTreeMenuButton(string text, EventHandler task)
         {
             Text = text;
             Click += task;

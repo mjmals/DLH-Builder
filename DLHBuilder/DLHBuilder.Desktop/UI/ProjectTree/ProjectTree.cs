@@ -17,6 +17,7 @@ namespace DLHBuilder.Desktop.UI
             ImageList = Images.ImageList;
             AfterExpand += NodeExpanded;
             Nodes.Add(new ProjectNode(project));
+            AfterLabelEdit += OnLabelEdit;
         }
 
         Project Project 
@@ -37,6 +38,21 @@ namespace DLHBuilder.Desktop.UI
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
             node.ImageKey = node.CollapsedImage;
             node.SelectedImageKey = node.CollapsedImage;
+        }
+
+        void OnLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+
+            switch(node.AllowLabelChange)
+            {
+                case true:
+                    node.LabelChanged(e.Label);
+                    break;
+                case false:
+                    e.CancelEdit = true;
+                    break;
+            }
         }
     }
 }

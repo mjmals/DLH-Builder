@@ -25,5 +25,7 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Folder Closed";
 
         public override string ExpandedImage => "Folder Open";
+
+        public override bool AllowLabelChange => false;
     }
 }

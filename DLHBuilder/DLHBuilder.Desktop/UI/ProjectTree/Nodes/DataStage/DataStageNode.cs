@@ -33,5 +33,11 @@ namespace DLHBuilder.Desktop.UI
                 new PropertyEditor(Stage)
             };
         }
+
+        public override void LabelChanged(string text)
+        {
+            Stage.Name = text;
+            base.LabelChanged(text);
+        }
     }
 }

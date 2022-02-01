@@ -30,6 +30,7 @@ namespace DLHBuilder.Desktop.UI
 
             Node.Nodes.Add(stagenode);
             Node.TreeView.SelectedNode = stagenode;
+            Node.TreeView.SelectedNode.BeginEdit();
             Node.Expand();
         }
     }

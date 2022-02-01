@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataStageTreeLevelMenu : ContextMenuStrip
+    class DataStageTreeMenu : ContextMenuStrip
     {
 
     }
