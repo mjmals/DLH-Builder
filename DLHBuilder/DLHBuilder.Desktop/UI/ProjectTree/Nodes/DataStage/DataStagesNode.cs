@@ -14,9 +14,10 @@ namespace DLHBuilder.Desktop.UI
             Text = "Data Stages";
 
             ContextMenuStrip = new DataStagesMenu(this);
+            AddStages();
         }
 
-        DataStageCollection Stages 
+        public DataStageCollection Stages 
         {
             get => (DataStageCollection)Tag;
             set => Tag = value;
@@ -27,5 +28,13 @@ namespace DLHBuilder.Desktop.UI
         public override string ExpandedImage => "Folder Open";
 
         public override bool AllowLabelChange => false;
+
+        void AddStages()
+        {
+            foreach(DataStage stage in Stages)
+            {
+                Nodes.Add(new DataStageNode(stage));
+            }
+        }
     }
 }

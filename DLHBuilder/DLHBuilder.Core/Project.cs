@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 using System.ComponentModel;
 
 namespace DLHBuilder
@@ -15,9 +16,6 @@ namespace DLHBuilder
         public string Description { get; set; }
 
         [JsonIgnore]
-        [Browsable(false)]
-        public string FilePath { get; set; }
-
         [Browsable(false)]
         public DataStageCollection Stages
         {
@@ -34,5 +32,31 @@ namespace DLHBuilder
         }
 
         private DataStageCollection stages { get; set; }
+
+        public void Save(string path)
+        {
+            path = Path.Combine(path, Name);
+
+            if(!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+
+            string file = Path.Combine(path, string.Format("{0}.project.json", Name));
+            FileMetadataExtractor extractor = new FileMetadataExtractor(file);
+            extractor.Write(this);
+
+            Stages.Save(path);
+        }
+
+        public static Project Load(string file)
+        {
+            string path = Path.GetDirectoryName(file);
+
+            Project output = new FileMetadataExtractor(file).LoadFile<Project>();
+            output.Stages = DataStageCollection.Load(path);
+
+            return output;
+        }
     }
 }

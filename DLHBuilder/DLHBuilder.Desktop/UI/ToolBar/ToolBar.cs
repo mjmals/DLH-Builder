@@ -16,8 +16,8 @@ namespace DLHBuilder.Desktop.UI
             Items.Add(SaveButton);
         }
 
-        ToolStripButton OpenButton = new ToolStripButton() { ImageKey = "Open", ToolTipText = "Open Project" };
+        public ToolStripButton OpenButton = new ToolStripButton() { ImageKey = "Open", ToolTipText = "Open Project" };
 
-        ToolStripButton SaveButton = new ToolStripButton() { ImageKey = "Save", ToolTipText = "Save Project" };
+        public ToolStripButton SaveButton = new ToolStripButton() { ImageKey = "Save", ToolTipText = "Save Project" };
     }
 }
