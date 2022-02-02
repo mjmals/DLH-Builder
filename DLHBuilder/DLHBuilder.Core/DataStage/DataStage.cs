@@ -27,5 +27,24 @@ namespace DLHBuilder
         }
 
         private DataStageLevelCollection levels { get; set; }
+
+        public DataStageParameterCollection Parameters
+        {
+            get
+            {
+                if(parameters == null)
+                {
+                    parameters = new DataStageParameterCollection();
+                }
+
+                return parameters;
+            }
+            set
+            {
+                parameters = value;
+            }
+        }
+
+        private DataStageParameterCollection parameters { get; set; }
     }
 }

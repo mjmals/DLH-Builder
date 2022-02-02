@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Drawing;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -35,6 +36,32 @@ namespace DLHBuilder.Desktop.UI
         {
             StageLevel.Name = text;
             base.LabelUpdated(text);
+            SetParameters();
+        }
+
+        void SetParameters()
+        {
+            switch(ContainsParameter())
+            {
+                case true:
+                    DataStageTree tree = (DataStageTree)TreeView;
+                    tree.Stage.Parameters.Add(StageLevel.Name);
+                    NodeFont = new Font(TreeView.Font, FontStyle.Bold);
+                    break;
+                default:
+                    NodeFont = new Font(TreeView.Font, FontStyle.Regular);
+                    break;
+            }
+        }
+
+        bool ContainsParameter()
+        {
+            if(StageLevel.Name.Contains("$("))
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

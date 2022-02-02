@@ -17,7 +17,7 @@ namespace DLHBuilder.Desktop.UI
             AfterLabelEdit += LabelChanged;
         }
 
-        DataStage Stage
+        public DataStage Stage
         {
             get => (DataStage)Tag;
             set => Tag = value;
