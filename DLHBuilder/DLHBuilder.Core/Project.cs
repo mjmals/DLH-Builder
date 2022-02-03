@@ -15,6 +15,22 @@ namespace DLHBuilder
 
         public string Description { get; set; }
 
+        public DataConnectionCollection Connections
+        {
+            get
+            {
+                if(connections == null)
+                {
+                    connections = new DataConnectionCollection();
+                }
+
+                return connections;
+            }
+            set => connections = value;
+        }
+
+        private DataConnectionCollection connections { get; set; }
+
         [JsonIgnore]
         [Browsable(false)]
         public DataStageCollection Stages
