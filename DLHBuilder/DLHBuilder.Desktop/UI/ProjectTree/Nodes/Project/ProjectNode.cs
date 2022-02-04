@@ -12,7 +12,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Project = project;
             Text = project.Name;
-            Nodes.Add(new ConnectionsNode());
+            Nodes.Add(new ConnectionsNode(project.Connections));
             Nodes.Add(new DataStagesNode(project.Stages));
 
             Expand();

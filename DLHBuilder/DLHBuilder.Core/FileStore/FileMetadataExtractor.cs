@@ -42,5 +42,12 @@ namespace DLHBuilder
 
             return JsonConvert.DeserializeObject<T>(filedata);
         }
+
+        public object LoadFile(Type type)
+        {
+            string filedata = File.ReadAllText(FilePath);
+
+            return JsonConvert.DeserializeObject(filedata, type);
+        }
     }
 }

@@ -15,6 +15,8 @@ namespace DLHBuilder
 
         public string Description { get; set; }
 
+        [JsonIgnore]
+        [Browsable(false)]
         public DataConnectionCollection Connections
         {
             get
@@ -62,6 +64,7 @@ namespace DLHBuilder
             FileMetadataExtractor extractor = new FileMetadataExtractor(file);
             extractor.Write(this);
 
+            Connections.Save(path);
             Stages.Save(path);
         }
 
@@ -70,6 +73,7 @@ namespace DLHBuilder
             string path = Path.GetDirectoryName(file);
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
+            output.Connections = DataConnectionCollection.Load(path);
             output.Stages = DataStageCollection.Load(path);
 
             return output;
