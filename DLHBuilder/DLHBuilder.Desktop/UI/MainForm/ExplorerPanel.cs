@@ -13,10 +13,14 @@ namespace DLHBuilder.Desktop.UI
         {
             Dock = DockStyle.Left;
             Width = 400;
-            
+
+            Controls.Add(PanelSplitter);
+
             dockitem.Dock = DockStyle.Fill;
             Controls.Add(dockitem);
         }
+
+        Splitter PanelSplitter = new Splitter() { Dock = DockStyle.Right, Width = 5 };
 
         public void Reset(Control dockitem)
         {
