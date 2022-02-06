@@ -23,9 +23,9 @@ namespace DLHBuilder.Desktop.UI
             set => Tag = value;
         }
 
-        public override string CollapsedImage => "Folder Closed";
+        public override string CollapsedImage => "Data Stage";
 
-        public override string ExpandedImage => "Folder Open";
+        public override string ExpandedImage => "Data Stage";
 
         public override Control[] Editors()
         {

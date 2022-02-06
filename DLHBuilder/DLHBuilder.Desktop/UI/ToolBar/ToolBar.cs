@@ -11,12 +11,15 @@ namespace DLHBuilder.Desktop.UI
     {
         public ToolBar()
         {
-            ImageList = Images.ImageList;
+            ImageList = Images.Items;
+            Items.Add(NewButton);
             Items.Add(OpenButton);
             Items.Add(SaveButton);
         }
 
-        public ToolStripButton OpenButton = new ToolStripButton() { ImageKey = "Open", ToolTipText = "Open Project" };
+        public ToolStripButton NewButton = new ToolStripButton() { ImageKey = "Project", ToolTipText = "New Project" };
+
+        public ToolStripButton OpenButton = new ToolStripButton() { ImageKey = "Folder Open", ToolTipText = "Open Project" };
 
         public ToolStripButton SaveButton = new ToolStripButton() { ImageKey = "Save", ToolTipText = "Save Project" };
     }

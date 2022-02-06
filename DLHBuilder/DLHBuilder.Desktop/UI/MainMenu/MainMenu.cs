@@ -11,7 +11,7 @@ namespace DLHBuilder.Desktop.UI
     {
         public MainMenu()
         {
-            ImageList = Images.ImageList;
+            ImageList = Images.Items;
             Items.Add(FileMenu);
         }
 

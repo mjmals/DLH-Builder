@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -27,6 +28,11 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Project";
 
         public override string ExpandedImage => "Project";
+
+        public override Control[] Editors()
+        {
+            return new Control[] { new PropertyEditor(Project) };
+        }
 
         public override void LabelChanged(string text)
         {

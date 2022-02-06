@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -16,5 +17,7 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Folder Closed";
 
         public override string ExpandedImage => "Folder Open";
+
+        public override ContextMenuStrip ContextMenuStrip => new DataArtifactsMenu(this);
     }
 }

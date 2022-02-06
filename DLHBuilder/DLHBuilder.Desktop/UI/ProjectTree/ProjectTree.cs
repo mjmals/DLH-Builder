@@ -14,30 +14,32 @@ namespace DLHBuilder.Desktop.UI
             Project = project;
 
             LabelEdit = true;
-            ImageList = Images.ImageList;
-            AfterExpand += NodeExpanded;
+            ImageList = Images.Items;
+            AfterExpand += SetNodeImage;
+            AfterCollapse += SetNodeImage;
             Nodes.Add(new ProjectNode(project));
             AfterLabelEdit += OnLabelEdit;
         }
 
-        Project Project 
+        public Project Project 
         { 
             get => (Project)Tag; 
             set => Tag = value;
         }
 
-        void NodeExpanded(object sender, TreeViewEventArgs e)
+        void SetNodeImage(object sender, TreeViewEventArgs e)
         {
-            ProjectTreeNode node = (ProjectTreeNode)e.Node;
-            node.ImageKey = node.ExpandedImage;
-            node.SelectedImageKey = node.ExpandedImage;
-        }
+            switch(e.Node.IsExpanded)
+            {
+                case true:
+                    e.Node.ImageKey = ((ProjectTreeNode)e.Node).ExpandedImage;
+                    break;
+                case false:
+                    e.Node.ImageKey = ((ProjectTreeNode)e.Node).CollapsedImage;
+                    break;
+            }
 
-        void NodeCollapsed(object sender, TreeViewEventArgs e)
-        {
-            ProjectTreeNode node = (ProjectTreeNode)e.Node;
-            node.ImageKey = node.CollapsedImage;
-            node.SelectedImageKey = node.CollapsedImage;
+            e.Node.SelectedImageKey = e.Node.ImageKey;
         }
 
         void OnLabelEdit(object sender, NodeLabelEditEventArgs e)

@@ -18,7 +18,15 @@ namespace DLHBuilder.Desktop.UI
 
         public virtual Control[] Editors()
         {
-            return new Control[] { new PropertyEditor(Tag) };
+            return new Control[] { new PropertyEditor(null) };
+        }
+
+        public ProjectTree Tree
+        {
+            get
+            {
+                return (ProjectTree)TreeView;
+            }
         }
 
         public virtual string CollapsedImage { get; }
