@@ -25,6 +25,7 @@ namespace DLHBuilder.Desktop.UI
         public void Reset(Control dockitem)
         {
             Controls.Clear();
+            Controls.Add(PanelSplitter);
             dockitem.Dock = DockStyle.Fill;
             Controls.Add(dockitem);
         }
