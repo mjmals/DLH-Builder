@@ -111,6 +111,30 @@ namespace DLHBuilder.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT 
+        ///    col.TABLE_SCHEMA,
+        ///	col.TABLE_NAME, 
+        ///    col.ORDINAL_POSITION,
+        ///	col.COLUMN_NAME, 
+        ///	DATA_TYPE 
+        ///	+ 
+        ///	CASE 
+        ///		WHEN CHARACTER_MAXIMUM_LENGTH IS NOT NULL 
+        ///			THEN &apos;(&apos; + CASE CHARACTER_MAXIMUM_LENGTH WHEN -1 THEN &apos;MAX&apos; ELSE CONVERT(VARCHAR(10), CHARACTER_MAXIMUM_LENGTH) END + &apos;)&apos;
+        ///		ELSE &apos;&apos;
+        ///	END
+        ///	+
+        ///	CASE 
+        ///		WHEN NUMERIC_PRECISION IS NOT NULL AND DATA_TYPE IN (&apos;decimal&apos;, &apos;numeric&apos;)
+        ///			THEN &apos;(&apos; + ISNULL(CONVERT(VARCHAR(10), NUMERIC_PRECISION), &apos;&apos;) + ISNULL(&apos;,&apos; + CONVERT(VARCHAR(10), NUMERIC [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string DatabaseTableColumns {
+            get {
+                return ResourceManager.GetString("DatabaseTableColumns", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap FolderBrowserDialogControl_16x {

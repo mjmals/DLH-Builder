@@ -7,11 +7,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Scripts\TSQL\DatabaseTableColumns.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.SqlServer.SqlManagementObjects" Version="161.46521.71" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Scripts\TSQL\DatabaseTableColumns.sql" />
   </ItemGroup>
 
   <ItemGroup>

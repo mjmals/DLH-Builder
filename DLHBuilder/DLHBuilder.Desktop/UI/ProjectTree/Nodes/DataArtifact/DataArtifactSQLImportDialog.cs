@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Data.SqlClient;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -11,6 +12,8 @@ namespace DLHBuilder.Desktop.UI
     {
         public DataArtifactSQLImportDialog(SQLDataConnection connection)
         {
+            Connection = connection;
+
             Text = "Import Database Object";
             Width = 800;
             Height = 600;
@@ -26,6 +29,14 @@ namespace DLHBuilder.Desktop.UI
             Tools.Items.Add(SQLSelectButton);
             Tools.Items.Add(new ToolStripSeparator());
             Tools.Items.Add(new ToolStripButton(null, Images.Items.Images["Run"]));
+
+            TableTree.Nodes.AddRange(TableNodes());
+        }
+
+        SQLDataConnection Connection
+        {
+            get => (SQLDataConnection)Tag;
+            set => Tag = value;
         }
 
         TreeView TableTree = new TreeView() { ImageList = Images.Items, Dock = DockStyle.Fill };
@@ -42,7 +53,42 @@ namespace DLHBuilder.Desktop.UI
 
         TreeNode[] TableNodes()
         {
-            return null;
+            List<TreeNode> output = new List<TreeNode>();
+
+            string connstr = new SqlConnectionStringBuilder() { DataSource = Connection.Server, InitialCatalog = Connection.Database, IntegratedSecurity = true }.ConnectionString;
+
+            using (SqlConnection conn = new SqlConnection(connstr))
+            {
+                conn.Open();
+
+                using (SqlCommand cmd = new SqlCommand(Properties.Resources.DatabaseTableColumns, conn))
+                {
+                    using (SqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        if (rdr.HasRows)
+                        {
+                            TreeNode node = new TreeNode();
+
+                            while (rdr.Read())
+                            {
+                                string tbl = string.Format("{0}.{1}", rdr.GetString(rdr.GetOrdinal("TABLE_SCHEMA")), rdr.GetString(rdr.GetOrdinal("TABLE_NAME")));
+
+                                if (tbl != node.Text)
+                                {
+                                    TreeNode tablenode = new TreeNode();
+                                    tablenode.ImageKey = "Table";
+                                    tablenode.Text = tbl;
+
+                                    node = tablenode;
+                                    output.Add(tablenode);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            return output.ToArray();
         }
 
         void TableSelectButtonClicked(object sender, EventArgs e)
