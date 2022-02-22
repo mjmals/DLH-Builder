@@ -29,9 +29,9 @@ namespace DLHBuilder.Desktop.UI
             }
         }
 
-        public virtual string CollapsedImage { get; }
+        public virtual string CollapsedImage => "Folder Closed";
 
-        public virtual string ExpandedImage { get; }
+        public virtual string ExpandedImage => "Folder Open";
 
         public virtual bool AllowLabelChange { get => true; }
 

@@ -29,27 +29,43 @@ namespace DLHBuilder
                 return connections;
             }
             set => connections = value;
-        }
+        } 
 
         private DataConnectionCollection connections { get; set; }
 
-        [JsonIgnore]
-        [Browsable(false)]
-        public DataStageCollection Stages
+        public DataArtifactGroupCollection ArtifactGroups
         {
             get
             {
-                if(stages == null)
+                if(artifactgroups == null)
                 {
-                    stages = new DataStageCollection();
+                    artifactgroups = new DataArtifactGroupCollection();
                 }
 
-                return stages;
+                return artifactgroups;
             }
-            set => stages = value;
+            set => artifactgroups = value;
         }
 
-        private DataStageCollection stages { get; set; }
+        private DataArtifactGroupCollection artifactgroups { get; set; }
+
+        [JsonIgnore]
+        [Browsable(false)]
+        public DataApplicationCollection Applications
+        {
+            get
+            {
+                if(applications == null)
+                {
+                    applications = new DataApplicationCollection();
+                }
+
+                return applications;
+            }
+            set => applications = value;
+        }
+
+        private DataApplicationCollection applications { get; set; }
 
         public void Save(string path)
         {
@@ -65,7 +81,7 @@ namespace DLHBuilder
             extractor.Write(this);
 
             Connections.Save(path);
-            Stages.Save(path);
+            Applications.Save(path);
         }
 
         public static Project Load(string file)
@@ -74,7 +90,7 @@ namespace DLHBuilder
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
             output.Connections = DataConnectionCollection.Load(path);
-            output.Stages = DataStageCollection.Load(path);
+            output.Applications = DataApplicationCollection.Load(path);
 
             return output;
         }

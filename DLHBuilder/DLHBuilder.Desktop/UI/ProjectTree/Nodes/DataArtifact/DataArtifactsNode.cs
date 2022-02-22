@@ -9,7 +9,7 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactsNode : ProjectTreeNode
     {
-        public DataArtifactsNode()
+        public DataArtifactsNode(DataArtifactCollection artifacts)
         {
             Text = "Data Artifacts";
         }

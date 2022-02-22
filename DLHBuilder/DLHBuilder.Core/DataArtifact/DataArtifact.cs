@@ -14,7 +14,20 @@ namespace DLHBuilder
 
         public DataArtifactFormat Format { get; set; }
 
-        public DataArtifactSchemaItemCollection Schema { get; set; }
+        public DataArtifactSchemaCollection Schemas 
+        { 
+            get
+            {
+                if(schemas == null)
+                {
+                    schemas = new DataArtifactSchemaCollection();
+                }
+                return schemas;
+            }
+            set => schemas = value; 
+        }
+
+        private DataArtifactSchemaCollection schemas { get; set; }
 
         public DataArtifactSource Source { get; set; }
 

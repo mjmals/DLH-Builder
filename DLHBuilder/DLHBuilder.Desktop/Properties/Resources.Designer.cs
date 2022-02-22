@@ -103,6 +103,16 @@ namespace DLHBuilder.Desktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap DatabaseApplication_16x {
+            get {
+                object obj = ResourceManager.GetObject("DatabaseApplication_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DatabaseStoredProcedures_16x {
             get {
                 object obj = ResourceManager.GetObject("DatabaseStoredProcedures_16x", resourceCulture);

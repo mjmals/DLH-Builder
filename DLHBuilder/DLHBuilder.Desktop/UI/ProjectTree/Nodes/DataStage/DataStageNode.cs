@@ -13,8 +13,6 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             Text = stage.Name;
-
-            Nodes.Add(new DataArtifactsNode());
         }
 
         DataStage Stage

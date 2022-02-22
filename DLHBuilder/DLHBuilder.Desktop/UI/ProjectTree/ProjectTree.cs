@@ -46,13 +46,15 @@ namespace DLHBuilder.Desktop.UI
         {
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
 
-            switch(node.AllowLabelChange)
+            switch (node.IsExpanded)
             {
                 case true:
-                    node.LabelChanged(e.Label);
+                    node.ImageKey = node.ExpandedImage;
+                    node.SelectedImageKey = node.ExpandedImage;
                     break;
-                case false:
-                    e.CancelEdit = true;
+                default:
+                    node.ImageKey = node.CollapsedImage;
+                    node.SelectedImageKey = node.CollapsedImage;
                     break;
             }
         }
