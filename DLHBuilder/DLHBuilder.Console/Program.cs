@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
 using System.IO;
+using System.Reflection;
 
 namespace DLHBuilder
 {
@@ -15,7 +16,19 @@ namespace DLHBuilder
     {
         static void Main(string[] args)
         {
+            Assembly syslib = typeof(string).Assembly;
 
+            Type[] types = syslib.GetTypes()
+                .Where(x => x.Namespace == "System")
+                .Where(x => x.IsPrimitive || (new string[] { "String", "Object"}).Contains(x.Name))
+                .ToArray();
+
+            foreach(Type type in types.OrderBy(x => x.Name))
+            {
+                Console.WriteLine(type.Name);
+            }
+
+            Console.ReadKey();
         }
     }
 }
