@@ -34,5 +34,13 @@ namespace DLHBuilder
         public DataArtifactSchemaItemCollection SourceSchema { get; set; }
 
         public DataArtifactSchemaItemMapping SchemaMapping { get; set; }
+
+        public static DataArtifact New()
+        {
+            DataArtifact output = new DataArtifact();
+            output.Name = "<New Artifact>";
+
+            return output;
+        }
     }
 }

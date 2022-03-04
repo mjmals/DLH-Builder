@@ -29,21 +29,6 @@ namespace DLHBuilder.Desktop.UI
 
         void SetNodeImage(object sender, TreeViewEventArgs e)
         {
-            switch(e.Node.IsExpanded)
-            {
-                case true:
-                    e.Node.ImageKey = ((ProjectTreeNode)e.Node).ExpandedImage;
-                    break;
-                case false:
-                    e.Node.ImageKey = ((ProjectTreeNode)e.Node).CollapsedImage;
-                    break;
-            }
-
-            e.Node.SelectedImageKey = e.Node.ImageKey;
-        }
-
-        void OnLabelEdit(object sender, NodeLabelEditEventArgs e)
-        {
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
 
             switch (node.IsExpanded)
@@ -57,6 +42,12 @@ namespace DLHBuilder.Desktop.UI
                     node.SelectedImageKey = node.CollapsedImage;
                     break;
             }
+        }
+
+        void OnLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+            node.LabelChanged(e.Label);
         }
     }
 }

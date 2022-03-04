@@ -4,12 +4,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
     public class DataArtifactCollection : List<DataArtifact>
     {
         const string DirectoryPath = "Data Artifacts";
+
+        [JsonIgnore]
+        public EventHandler<DataArtifactEventArgs> ArtifactAdded;
+
+
+        public new void Add(DataArtifact artifact)
+        {
+            base.Add(artifact);
+            ArtifactAdded?.Invoke(this, new DataArtifactEventArgs(artifact));
+        }
 
         internal void Save(string path)
         {

@@ -13,7 +13,6 @@ namespace DLHBuilder.Desktop.UI
         {
             ImageKey = CollapsedImage;
             SelectedImageKey = ExpandedImage;
-            
         }
 
         public virtual Control[] Editors()

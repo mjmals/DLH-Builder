@@ -10,7 +10,17 @@ namespace DLHBuilder
 {
     public class DataArtifactGroup
     {
-        public string Name { get; set; }
+        public string Name 
+        { 
+            get => name; 
+            set
+            {
+                name = value;
+                OnPropertyUpdated(Name);
+            }
+        }
+
+        private string name { get; set; }
 
         public DataArtifactCollection Artifacts
         {
@@ -35,8 +45,22 @@ namespace DLHBuilder
             {
                 Directory.CreateDirectory(path);
             }
+        }
 
+        [JsonIgnore]
+        public EventHandler<DataArtifactGroupEventArgs> PropertyUpdated;
 
+        void OnPropertyUpdated(object property)
+        {
+            PropertyUpdated?.Invoke(property, new DataArtifactGroupEventArgs(this));
+        }
+
+        public static DataArtifactGroup New()
+        {
+            DataArtifactGroup output = new DataArtifactGroup();
+            output.Name = "<New Group>";
+
+            return output;
         }
     }
 }

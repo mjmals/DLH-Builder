@@ -14,15 +14,19 @@ namespace DLHBuilder.Desktop.UI
             Project = project;
             Text = project.Name;
             Nodes.Add(new ConnectionsNode(project.Connections));
-            //Nodes.Add(new DataArtifactsNode(project.Artifacts));
+            Nodes.Add(new DataArtifactGroupsNode(project.ArtifactGroups));
 
             Expand();
         }
 
         Project Project 
         { 
-            get => (Project)Tag; 
-            set => Tag = value;
+            get => (Project)Tag;
+            set
+            {
+                value.PropertyUpdated += OnProjectUpdated;
+                Tag = value;
+            }
         }
 
         public override string CollapsedImage => "Project";
@@ -38,6 +42,11 @@ namespace DLHBuilder.Desktop.UI
         {
             Project.Name = text;
             base.LabelChanged(text);
+        }
+
+        void OnProjectUpdated(object sender, EventArgs e)
+        {
+
         }
     }
 }

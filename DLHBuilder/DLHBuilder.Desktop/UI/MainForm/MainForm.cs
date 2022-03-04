@@ -42,6 +42,7 @@ namespace DLHBuilder.Desktop.UI
         void Initialize()
         {
             menu.FileMenu.NewProjectMenuPressed += NewProject;
+            tools.NewButton.Click += NewProject;
             tools.OpenButton.Click += LoadProject;
             tools.SaveButton.Click += SaveProject;
         }

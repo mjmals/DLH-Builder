@@ -11,9 +11,29 @@ namespace DLHBuilder
 {
     public class Project
     {
-        public string Name { get; set; }
+        public string Name 
+        { 
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyUpdated(Name);
+            }
+        }
 
-        public string Description { get; set; }
+        private string name { get; set; }
+
+        public string Description 
+        { 
+            get => description;
+            set
+            {
+                description = value;
+                OnPropertyUpdated(Description);
+            }
+        }
+
+        private string description { get; set; }
 
         [JsonIgnore]
         [Browsable(false)]
@@ -93,6 +113,14 @@ namespace DLHBuilder
             output.Applications = DataApplicationCollection.Load(path);
 
             return output;
+        }
+
+        [JsonIgnore]
+        public EventHandler PropertyUpdated;
+
+        void OnPropertyUpdated(object sender)
+        {
+            PropertyUpdated?.Invoke(sender, null);
         }
     }
 }
