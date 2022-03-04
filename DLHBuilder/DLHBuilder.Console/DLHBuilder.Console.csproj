@@ -12,6 +12,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
   </ItemGroup>
 
 </Project>

@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Core", "DLHBuild
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Console", "DLHBuilder.Console\DLHBuilder.Console.csproj", "{D0C70F01-E5CF-4E47-941D-7DA4AC62A6EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Desktop", "DLHBuilder.Desktop\DLHBuilder.Desktop.csproj", "{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Desktop", "DLHBuilder.Desktop\DLHBuilder.Desktop.csproj", "{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Generator", "DLHBuilder.Generator\DLHBuilder.Generator.csproj", "{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C7219AE2-6B6B-4F18-BA3F-DBBAA5690D3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
