@@ -5,6 +5,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Templates\Terraform\Variables\VariableData.st" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Terraform\Variables\VariableData.st" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="StringTemplate4" Version="4.0.8" />
   </ItemGroup>
 

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Antlr4;
+using System.IO;
 using Antlr4.StringTemplate;
 using System.Reflection;
 
@@ -21,14 +22,24 @@ namespace DLHBuilder.Generator
 
         object[] BaseObjects { get; set; }
 
+        string TemplateContent()
+        {
+            string[] resources = this.GetType().Assembly.GetManifestResourceNames();
+            string templatefile = resources.FirstOrDefault(x => x == string.Format("DLHBuilder.Generator.Templates.{0}.st", Template));
+            
+            StreamReader reader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream(templatefile));
+            return reader.ReadToEnd();
+        }
+
         public string Render()
         {
             char delimiter = '$';
-            Template output = new Template(Template, delimiter, delimiter);
+            string content = TemplateContent();
+            Template output = new Template(content, delimiter, delimiter);
 
             foreach(object baseobject in BaseObjects)
             {
-                if(Template.Contains(string.Format("{0}{1}.", delimiter, baseobject.GetType().Name)))
+                if(content.Contains(string.Format("{0}{1}.", delimiter, baseobject.GetType().Name)))
                 {
                     output.Add(baseobject.GetType().Name, baseobject);
                 }
@@ -37,7 +48,7 @@ namespace DLHBuilder.Generator
                 {
                     string propertyfullname = string.Format("{0}_{1}", baseobject.GetType().Name, property.Name);
 
-                    if(Template.Contains(propertyfullname))
+                    if(content.Contains(propertyfullname))
                     {
                         output.Add(propertyfullname, property.GetValue(baseobject));
                     }
