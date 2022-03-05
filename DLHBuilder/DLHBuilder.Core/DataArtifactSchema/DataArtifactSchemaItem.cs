@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class ParquetColumnDataArtifactSchemaItem
+    public abstract class DataArtifactSchemaItem
     {
-        public bool IsVersion { get; set; }
+        public string Name { get; set; }
+
+        public IDataType DataType { get; set; }
     }
 }

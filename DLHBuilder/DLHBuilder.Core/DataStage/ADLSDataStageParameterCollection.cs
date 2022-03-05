@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DataStageParameterCollection : List<DataStageParameter>
+    public class ADLSDataStageParameterCollection : BuilderCollection<ADLSDataStageParameter>
     {
         public void Add(string name)
         {
-            DataStageParameter param = new DataStageParameter(name);
+            ADLSDataStageParameter param = new ADLSDataStageParameter(name);
 
             if(!Exists(x => x.Name == param.Name))
             {

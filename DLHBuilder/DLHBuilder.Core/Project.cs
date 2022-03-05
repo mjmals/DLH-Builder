@@ -71,21 +71,21 @@ namespace DLHBuilder
 
         [JsonIgnore]
         [Browsable(false)]
-        public DataApplicationCollection Applications
+        public DataStageCollection Stages
         {
             get
             {
-                if(applications == null)
+                if(stages == null)
                 {
-                    applications = new DataApplicationCollection();
+                    stages = new DataStageCollection();
                 }
 
-                return applications;
+                return stages;
             }
-            set => applications = value;
+            set => stages = value;
         }
 
-        private DataApplicationCollection applications { get; set; }
+        private DataStageCollection stages { get; set; }
 
         public void Save(string path)
         {
@@ -101,7 +101,7 @@ namespace DLHBuilder
             extractor.Write(this);
 
             Connections.Save(path);
-            Applications.Save(path);
+            Stages.Save(path);
         }
 
         public static Project Load(string file)
@@ -110,7 +110,7 @@ namespace DLHBuilder
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
             output.Connections = DataConnectionCollection.Load(path);
-            output.Applications = DataApplicationCollection.Load(path);
+            output.Stages = DataStageCollection.Load<DataStageCollection>(path);
 
             return output;
         }

@@ -31,7 +31,7 @@ namespace DLHBuilder.Desktop.UI
         {
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
 
-            switch (node.IsExpanded)
+            switch (node.IsExpanded && node.Nodes.Count > 0)
             {
                 case true:
                     node.ImageKey = node.ExpandedImage;

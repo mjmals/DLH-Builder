@@ -11,7 +11,7 @@ namespace DLHBuilder.Desktop.UI
         public DataStagesMenu(DataStagesNode node)
         {
             Node = node;
-            Items.Add(new ProjectTreeMenuButton("New Data Stage", AddDataStage));
+            Items.Add(new ProjectTreeMenuButton("Add MSSQL Stage", AddDataStage));
         }
 
         DataStagesNode Node
@@ -22,17 +22,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddDataStage(object sender, EventArgs e)
         {
-            DataStage stage = new DataStage();
-            stage.Name = "<New Data Stage>";
-            stage.Levels.Add(new DataStageLevel() { Name = "<New Path Level>" });
-            
-            Node.Stages.Add(stage);
-
-            DataStageNode stagenode = new DataStageNode(stage);
-            Node.Nodes.Add(stagenode);
-            Node.TreeView.SelectedNode = stagenode;
-            Node.TreeView.SelectedNode.BeginEdit();
-            Node.Expand();
+            Node.Stages.Add(MSSQLDataStage.New());
         }
     }
 }

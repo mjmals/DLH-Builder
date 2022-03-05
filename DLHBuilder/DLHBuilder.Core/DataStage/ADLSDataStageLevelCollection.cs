@@ -6,9 +6,8 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public enum DataStageLevelType
+    public class ADLSDataStageLevelCollection : BuilderCollection<ADLSDataStageLevel>
     {
-        Defined,
-        Parameter
+
     }
 }

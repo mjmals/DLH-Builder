@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
@@ -11,8 +12,6 @@ namespace DLHBuilder
         public string Name { get; set; }
 
         public string Description { get; set; }
-
-        public DataArtifactFormat Format { get; set; }
 
         public DataArtifactSchemaCollection Schemas 
         { 
@@ -28,12 +27,6 @@ namespace DLHBuilder
         }
 
         private DataArtifactSchemaCollection schemas { get; set; }
-
-        public DataArtifactSource Source { get; set; }
-
-        public DataArtifactSchemaItemCollection SourceSchema { get; set; }
-
-        public DataArtifactSchemaItemMapping SchemaMapping { get; set; }
 
         public static DataArtifact New()
         {

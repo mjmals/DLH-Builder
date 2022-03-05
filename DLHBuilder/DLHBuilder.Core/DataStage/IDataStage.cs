@@ -6,8 +6,12 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public abstract class DataArtifactSchemaItem
+    public interface IDataStage
     {
-        public string Name { get; set; }
+        Guid ID { get; set; }
+
+        string Name { get; set; }
+
+        string Description { get; set; }
     }
 }

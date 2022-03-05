@@ -24,7 +24,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddSubLevel(object sender, EventArgs e)
         {
-            DataStageLevel level = new DataStageLevel();
+            ADLSDataStageLevel level = new ADLSDataStageLevel();
             level.Name = "<New Level>";
 
             Node.StageLevel.Levels.Add(level);

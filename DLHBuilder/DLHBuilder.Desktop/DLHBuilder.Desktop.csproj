@@ -37,4 +37,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="UI\ProjectTree\Nodes\DataArtifact\Schema\" />
+  </ItemGroup>
+
 </Project>

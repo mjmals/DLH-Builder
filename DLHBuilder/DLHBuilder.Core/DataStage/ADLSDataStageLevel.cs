@@ -7,19 +7,19 @@ using System.ComponentModel;
 
 namespace DLHBuilder
 {
-    public class DataStageLevel
+    public class ADLSDataStageLevel
     {
         public string Name { get; set; }
 
-        public DataStageLevelType Type { get; set; }
+        public ADLSDataStageLevelType Type { get; set; }
 
-        public DataStageLevelCollection Levels
+        public ADLSDataStageLevelCollection Levels
         {
             get
             {
                 if(levels == null)
                 {
-                    levels = new DataStageLevelCollection();
+                    levels = new ADLSDataStageLevelCollection();
                 }
 
                 return levels;
@@ -30,6 +30,6 @@ namespace DLHBuilder
             }
         }
 
-        DataStageLevelCollection levels { get; set; }
+        ADLSDataStageLevelCollection levels { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStageLevelNode : DataStageTreeNode
     {
-        public DataStageLevelNode(DataStageLevel level)
+        public DataStageLevelNode(ADLSDataStageLevel level)
         {
             StageLevel = level;
             Text = level.Name;
@@ -17,15 +17,15 @@ namespace DLHBuilder.Desktop.UI
             ContextMenuStrip = new DataStageLevelMenu(this);
         }
 
-        public DataStageLevel StageLevel
+        public ADLSDataStageLevel StageLevel
         {
-            get => (DataStageLevel)Tag;
+            get => (ADLSDataStageLevel)Tag;
             set => Tag = value;
         }
 
-        void AddSubLevels(DataStageLevelCollection levels)
+        void AddSubLevels(ADLSDataStageLevelCollection levels)
         {
-            foreach(DataStageLevel level in levels)
+            foreach(ADLSDataStageLevel level in levels)
             {
                 DataStageLevelNode node = new DataStageLevelNode(level);
                 Nodes.Add(node);
@@ -45,7 +45,7 @@ namespace DLHBuilder.Desktop.UI
             {
                 case true:
                     DataStageTree tree = (DataStageTree)TreeView;
-                    tree.Stage.Parameters.Add(StageLevel.Name);
+                    //tree.Stage.Parameters.Add(StageLevel.Name);
                     NodeFont = new Font(TreeView.Font, FontStyle.Bold);
                     break;
                 default:

@@ -17,10 +17,14 @@ namespace DLHBuilder.Desktop.UI
             AddStages();
         }
 
-        public DataStageCollection Stages 
+        public DataStageCollection Stages
         {
             get => (DataStageCollection)Tag;
-            set => Tag = value;
+            set
+            {
+                value.CollectionAdded += OnCollectionAdded;
+                Tag = value;
+            }
         }
 
         public override string CollapsedImage => "Folder Closed";
@@ -29,12 +33,25 @@ namespace DLHBuilder.Desktop.UI
 
         public override bool AllowLabelChange => false;
 
+        void OnCollectionAdded(object sender, EventArgs e)
+        {
+            DataStageNode node = AddStage((IDataStage)sender);
+            Tree.SelectedNode = node;
+        }
+
         void AddStages()
         {
-            foreach(DataStage stage in Stages)
+            foreach(IDataStage stage in Stages)
             {
-                Nodes.Add(new DataStageNode(stage));
+                AddStage(stage);
             }
+        }
+
+        DataStageNode AddStage(IDataStage stage)
+        {
+            DataStageNode output = new DataStageNode(stage);
+            Nodes.Add(output);
+            return output;
         }
     }
 }

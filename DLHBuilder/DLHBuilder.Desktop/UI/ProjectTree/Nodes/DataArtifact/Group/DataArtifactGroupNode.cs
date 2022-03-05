@@ -31,7 +31,8 @@ namespace DLHBuilder.Desktop.UI
 
         void OnArtifactAdded(object sender, DataArtifactEventArgs e)
         {
-            AddArtifactNode(e.Artifact);
+            DataArtifactNode node = AddArtifactNode(e.Artifact);
+            Tree.SelectedNode = node;
         }
 
         void AddArtifacts()
@@ -42,9 +43,11 @@ namespace DLHBuilder.Desktop.UI
             }
         }
 
-        void AddArtifactNode(DataArtifact artifact)
+        DataArtifactNode AddArtifactNode(DataArtifact artifact)
         {
-            Nodes.Add(new DataArtifactNode(artifact));
+            DataArtifactNode output = new DataArtifactNode(artifact);
+            Nodes.Add(output);
+            return output;
         }
 
         public override void LabelChanged(string text)

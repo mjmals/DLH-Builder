@@ -15,6 +15,7 @@ namespace DLHBuilder.Desktop.UI
             Text = project.Name;
             Nodes.Add(new ConnectionsNode(project.Connections));
             Nodes.Add(new DataArtifactGroupsNode(project.ArtifactGroups));
+            Nodes.Add(new DataStagesNode(project.Stages));
 
             Expand();
         }

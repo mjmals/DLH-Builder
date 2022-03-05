@@ -45,22 +45,11 @@ namespace DLHBuilder
             }
         }
 
-        internal static DataStageCollection Load(string path)
+        internal static DataArtifactCollection Load(string path)
         {
             path = Path.Combine(path, DirectoryPath);
 
-            DataStageCollection output = new DataStageCollection();
-
-            foreach (string folder in Directory.GetDirectories(path))
-            {
-                DirectoryInfo directory = new DirectoryInfo(folder);
-                string file = Path.Combine(folder, string.Format("{0}.json", directory.Name));
-
-                DataStage stage = new FileMetadataExtractor(file).LoadFile<DataStage>();
-                output.Add(stage);
-            }
-
-            return output;
+            return null;
         }
     }
 }

@@ -20,5 +20,9 @@ namespace DLHBuilder.Desktop.UI
             get => (DataArtifact)Tag;
             set => Tag = value;
         }
+
+        public override string CollapsedImage => "Data Artifact";
+
+        public override string ExpandedImage => "Data Artifact";
     }
 }

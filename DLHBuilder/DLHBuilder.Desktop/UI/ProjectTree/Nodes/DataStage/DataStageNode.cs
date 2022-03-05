@@ -9,15 +9,15 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStageNode : ProjectTreeNode
     {
-        public DataStageNode(DataStage stage)
+        public DataStageNode(IDataStage stage)
         {
             Stage = stage;
             Text = stage.Name;
         }
 
-        DataStage Stage
+        protected IDataStage Stage
         {
-            get => (DataStage)Tag;
+            get => (IDataStage)Tag;
             set => Tag = value;
         }
 
@@ -29,7 +29,6 @@ namespace DLHBuilder.Desktop.UI
         {
             return new Control[]
             {
-                new DataStageTree(Stage),
                 new PropertyEditor(Stage)
             };
         }

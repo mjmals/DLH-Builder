@@ -6,13 +6,11 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DataStageParameter
+    public class ADLSDataStageParameter
     {
-        public DataStageParameter(string name)
+        public ADLSDataStageParameter(string name)
         {
             Name = name;
-
-            
         }
 
         public string Name 

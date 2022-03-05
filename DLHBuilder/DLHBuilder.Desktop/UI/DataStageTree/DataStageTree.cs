@@ -13,7 +13,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             LabelEdit = true;
-            AddLevelNodes(stage.Levels);
+            //AddLevelNodes(stage.Levels);
             AfterLabelEdit += LabelChanged;
         }
 
@@ -23,9 +23,9 @@ namespace DLHBuilder.Desktop.UI
             set => Tag = value;
         }
 
-        void AddLevelNodes(DataStageLevelCollection levels)
+        void AddLevelNodes(ADLSDataStageLevelCollection levels)
         {
-            foreach(DataStageLevel level in levels)
+            foreach(ADLSDataStageLevel level in levels)
             {
                 DataStageLevelNode node = new DataStageLevelNode(level);
                 Nodes.Add(node);
