@@ -7,25 +7,22 @@ using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class EditorPanel : Panel
+    class Editor : TabPage
     {
-        public EditorPanel()
-        {
-            Dock = DockStyle.Fill;
-        }
+        protected virtual EditorControl[] EditorControls { get; set; }
 
-        public void SetControls(params Control[] controls)
+        public void SetControls()
         {
             Controls.Clear();
 
-            foreach(Control control in controls)
+            foreach (EditorControl control in EditorControls)
             {
-                switch(controls.Count() > 1)
+                switch (EditorControls.Count() > 1)
                 {
                     case true:
-                        int index = controls.ToList().IndexOf(control);
+                        int index = EditorControls.ToList().IndexOf(control);
                         control.Dock = index == 0 ? DockStyle.Top : DockStyle.Fill;
-                        control.Height = index == 0 ? (Height / controls.Count()) : control.Height;
+                        control.Height = index == 0 ? (Height / EditorControls.Count()) : control.Height;
                         break;
                     case false:
                         control.Dock = DockStyle.Fill;

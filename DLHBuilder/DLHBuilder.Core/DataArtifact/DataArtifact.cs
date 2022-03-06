@@ -13,20 +13,20 @@ namespace DLHBuilder
 
         public string Description { get; set; }
 
-        public DataArtifactSchemaCollection Schemas 
+        public DataArtifactSchemaItemCollection Schema
         { 
             get
             {
-                if(schemas == null)
+                if(schema == null)
                 {
-                    schemas = new DataArtifactSchemaCollection();
+                    schema = new DataArtifactSchemaItemCollection();
                 }
-                return schemas;
+                return schema;
             }
-            set => schemas = value; 
+            set => schema = value; 
         }
 
-        private DataArtifactSchemaCollection schemas { get; set; }
+        private DataArtifactSchemaItemCollection schema { get; set; }
 
         public static DataArtifact New()
         {

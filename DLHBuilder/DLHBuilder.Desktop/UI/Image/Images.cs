@@ -25,6 +25,7 @@ namespace DLHBuilder.Desktop.UI
                 output.Images.Add("Project", Properties.Resources.ProjectFilterFile_16x);
                 output.Images.Add("Run", Properties.Resources.Run_16x);
                 output.Images.Add("Save", Properties.Resources.Save_16x);
+                output.Images.Add("Schema Item", Properties.Resources.PropertySnippet_16x);
                 output.Images.Add("SQL", Properties.Resources.SQL_16x);
                 output.Images.Add("Table", Properties.Resources.Table_16x);
                 return output;

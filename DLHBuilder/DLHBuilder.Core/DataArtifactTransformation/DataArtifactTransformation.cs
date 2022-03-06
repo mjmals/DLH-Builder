@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DataArtifactSchemaItemCollection : BuilderCollection<DataArtifactSchemaItem>
+    public class DataArtifactTransformation
     {
+        public Guid DataStageID { get; set; }
 
+        public string Definition { get; set; }
     }
 }
