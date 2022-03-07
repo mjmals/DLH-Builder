@@ -42,6 +42,7 @@ namespace DLHBuilder.Desktop.UI
         void Initialize()
         {
             menu.FileMenu.NewProjectMenuPressed += NewProject;
+            menu.FileMenu.NewMSSQLProjectMenuPressed += NewMSSQLProject;
             tools.NewButton.Click += NewProject;
             tools.OpenButton.Click += LoadProject;
             tools.SaveButton.Click += SaveProject;
@@ -104,6 +105,16 @@ namespace DLHBuilder.Desktop.UI
         {
             project = new Project();
             project.Name = "<New Project>";
+
+            tree = new ProjectTree(project);
+            ProjectTreeLoaded(null, null);
+            explorerpanel.Reset(tree);
+            projectpath = string.Empty;
+        }
+
+        void NewMSSQLProject(object sender, EventArgs e)
+        {
+            project = new MSSQLProject();
 
             tree = new ProjectTree(project);
             ProjectTreeLoaded(null, null);

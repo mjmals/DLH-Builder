@@ -30,7 +30,9 @@ namespace DLHBuilder.Desktop.UI
 
         void OnGroupAdded(object sender, DataArtifactGroupEventArgs e)
         {
-            AddGroupNode(e.Group);
+            DataArtifactGroupNode node = AddGroupNode(e.Group);
+            Tree.SelectedNode = node;
+            Expand();
         }
 
         void AddGroups()
@@ -41,12 +43,11 @@ namespace DLHBuilder.Desktop.UI
             }
         }
 
-        void AddGroupNode(DataArtifactGroup group)
+        DataArtifactGroupNode AddGroupNode(DataArtifactGroup group)
         {
             DataArtifactGroupNode node = new DataArtifactGroupNode(group);
             Nodes.Add(node);
-            Tree.SelectedNode = node;
-            Expand();
+            return node;
         }
     }
 }

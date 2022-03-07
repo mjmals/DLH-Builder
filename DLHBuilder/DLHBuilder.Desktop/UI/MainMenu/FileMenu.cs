@@ -12,18 +12,32 @@ namespace DLHBuilder.Desktop.UI
         public FileMenu()
         {
             Text = "File";
-            DropDownItems.Add(NewProjectMenu);
+            DropDownItems.Add(NewMenu);
+            NewMenu.DropDownItems.Add(NewProjectMenu);
+            NewMenu.DropDownItems.Add(NewMSSQLProjectMenu);
 
             NewProjectMenu.Click += OnNewProjectMenuPressed;
+            NewMSSQLProjectMenu.Click += OnNewMSSQLProjectMenuPressed;
         }
+
+        public ToolStripMenuItem NewMenu = new ToolStripMenuItem() { Text = "New" };
 
         public ToolStripMenuItem NewProjectMenu = new ToolStripMenuItem() { Text = "New Project" };
 
+        public ToolStripMenuItem NewMSSQLProjectMenu = new ToolStripMenuItem() { Text = "New MSSQL Project" };
+
         public EventHandler NewProjectMenuPressed;
+
+        public EventHandler NewMSSQLProjectMenuPressed;
 
         void OnNewProjectMenuPressed(object sender, EventArgs e)
         {
-            NewProjectMenuPressed.Invoke(this, null);
+            NewProjectMenuPressed.Invoke(NewProjectMenu, new NewProjectEventArgs(typeof(Project)));
+        }
+
+        void OnNewMSSQLProjectMenuPressed(object sender, EventArgs e)
+        {
+            NewMSSQLProjectMenuPressed.Invoke(NewMSSQLProjectMenu, new NewProjectEventArgs(typeof(MSSQLProject)));
         }
     }
 }
