@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using System.Reflection;
 
 namespace DLHBuilder
 {
@@ -12,7 +13,9 @@ namespace DLHBuilder
     {
         protected virtual string DirectoryName => string.Empty;
 
-        protected virtual BuilderCollectionItemType CollectionType { get; }
+        protected virtual string FileNameProperty => "Name";
+
+        protected virtual BuilderCollectionItemType CollectionType => BuilderCollectionItemType.File;
 
         [JsonIgnore]
         public EventHandler CollectionSaved;
@@ -47,7 +50,7 @@ namespace DLHBuilder
 
         string _directorypath { get; set; }
 
-        internal void Save(string path)
+        internal virtual void Save(string path)
         {
             DirectoryPath = Path.Combine(path, DirectoryName);
 
@@ -57,6 +60,7 @@ namespace DLHBuilder
                     SaveFiles();
                     break;
                 case BuilderCollectionItemType.Folder:
+                    SaveFolders();
                     break;
             }
 
@@ -67,13 +71,55 @@ namespace DLHBuilder
         {
             foreach(T item in this)
             {
+                Type objecttype = item.GetType();
+                string objecttitle = (string)objecttype.GetProperty(FileNameProperty).GetValue(item);
+                string filename = Path.Combine(DirectoryPath, string.Format("{0}.{1}.json", objecttitle, objecttype.Name));
 
+                new FileMetadataExtractor(filename).Write(item);
             }
         }
 
-        public static T Load<T>(string path)
+        protected virtual void SaveFolders()
         {
-            return default(T);
+            foreach(T item in this)
+            {
+                string directory = Path.Combine(DirectoryPath, (string)item.GetType().GetProperty(FileNameProperty).GetValue(item));
+
+                if(!Directory.Exists(directory))
+                {
+                    Directory.CreateDirectory(directory);
+                }
+            }
+        }
+
+        internal virtual void Load(string path)
+        {
+            DirectoryPath = Path.Combine(path, DirectoryName);
+
+            if (CollectionType == BuilderCollectionItemType.Folder)
+            {
+                foreach(string directory in Directory.GetDirectories(DirectoryPath))
+                {
+                    var item = Activator.CreateInstance(typeof(T));
+                    item.GetType().GetProperty(FileNameProperty).SetValue(item, new DirectoryInfo(directory).Name);
+                    Add((T)item);
+                }
+
+                return;
+            }
+
+            foreach(string file in Directory.GetFiles(DirectoryPath))
+            {
+                string filename = Path.GetFileNameWithoutExtension(file);
+                int startpos = filename.IndexOf(".") + 1;
+
+                string filetype = string.Concat(typeof(DataConnectionCollection).Namespace, ".", filename.Substring(startpos));
+
+                Type type = Type.GetType(filetype);
+
+                FileMetadataExtractor extractor = new FileMetadataExtractor(file);
+                Add((T)extractor.LoadFile(type));
+            }
         }
     }
 }

@@ -101,6 +101,7 @@ namespace DLHBuilder
             extractor.Write(this);
 
             Connections.Save(path);
+            ArtifactGroups.Save(path);
             Stages.Save(path);
         }
 
@@ -109,8 +110,15 @@ namespace DLHBuilder
             string path = Path.GetDirectoryName(file);
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
-            output.Connections = DataConnectionCollection.Load(path);
-            output.Stages = DataStageCollection.Load<DataStageCollection>(path);
+            
+            output.Connections = new DataConnectionCollection();
+            output.Connections.Load(path);
+
+            output.ArtifactGroups = new DataArtifactGroupCollection();
+            output.ArtifactGroups.Load(path);
+            
+            output.Stages = new DataStageCollection();
+            output.Stages.Load(path);
 
             return output;
         }

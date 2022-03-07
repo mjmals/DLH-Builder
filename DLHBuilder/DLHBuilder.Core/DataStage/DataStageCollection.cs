@@ -9,6 +9,6 @@ namespace DLHBuilder
 {
     public class DataStageCollection : BuilderCollection<IDataStage>
     {
-        
+        protected override string DirectoryName => "Data Stages";
     }
 }

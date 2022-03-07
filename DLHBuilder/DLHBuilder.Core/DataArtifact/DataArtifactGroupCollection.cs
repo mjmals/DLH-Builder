@@ -8,9 +8,11 @@ using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
-    public class DataArtifactGroupCollection : List<DataArtifactGroup>
+    public class DataArtifactGroupCollection : BuilderCollection<DataArtifactGroup>
     {
-        const string DirectoryPath = "Data Artifacts";
+        protected override string DirectoryName => "Data Artifacts";
+
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.Folder;
 
         [JsonIgnore]
         public EventHandler<DataArtifactGroupEventArgs> GroupAdded;
@@ -21,40 +23,25 @@ namespace DLHBuilder
             GroupAdded?.Invoke(this, new DataArtifactGroupEventArgs(group));
         }
 
-        internal void Save(string path)
+        internal override void Save(string path)
         {
-            path = Path.Combine(path, DirectoryPath);
-
-            if(!Directory.Exists(path))
+            base.Save(path);
+            
+            foreach(DataArtifactGroup group in this)
             {
-                Directory.CreateDirectory(path);
-            }
-
-            foreach (DataArtifactGroup group in this)
-            {
-                string grouppath = Path.Combine(path, group.Name);
-
-                if (!Directory.Exists(grouppath))
-                {
-                    Directory.CreateDirectory(grouppath);
-                }
-
-                group.Save(grouppath);
+                group.Artifacts.Save(Path.Combine(path, DirectoryName, group.Name));
             }
         }
 
-        internal static DataArtifactGroupCollection Load(string path)
+        internal override void Load(string path)
         {
-            path = Path.Combine(path, DirectoryPath);
+            base.Load(path);
 
-            DataArtifactGroupCollection output = new DataArtifactGroupCollection();
-
-            foreach (string folder in Directory.GetDirectories(path))
+            foreach(DataArtifactGroup group in this)
             {
-
+                group.Artifacts = new DataArtifactCollection();
+                group.Artifacts.Load(Path.Combine(path, DirectoryName, group.Name));
             }
-
-            return output;
         }
     }
 }
