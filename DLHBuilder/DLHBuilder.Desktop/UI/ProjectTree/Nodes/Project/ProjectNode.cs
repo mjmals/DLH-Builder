@@ -34,9 +34,9 @@ namespace DLHBuilder.Desktop.UI
 
         public override string ExpandedImage => "Project";
 
-        public override Control[] Editors()
+        public override EditorCollection Editors()
         {
-            return new Control[] { new PropertyEditor(Project) };
+            return new EditorCollection(new PropertyEditor(Project));
         }
 
         public override void LabelChanged(string text)

@@ -7,23 +7,16 @@ using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class PropertyEditor : Editor
+    class SchemaItemTransformationEditor : Editor
     {
-        public PropertyEditor(object propertyobject = null)
+        public SchemaItemTransformationEditor(DataArtifactTransformationCollection transformations, DataStageCollection stages)
         {
-            Text = "Properties";
-
-            Grid = new PropertyGrid()
-            {
-                SelectedObject = propertyobject,
-                PropertySort = PropertySort.NoSort,
-                Dock = DockStyle.Fill
-            };
-
+            Text = "Transformations";
+            Grid = new SchemaItemTransformationEditorGrid(transformations, stages);
             SetControls();
         }
 
-        public PropertyGrid Grid { get; set; }
+        SchemaItemTransformationEditorGrid Grid { get; set; }
 
         protected override Control[] EditorControls()
         {

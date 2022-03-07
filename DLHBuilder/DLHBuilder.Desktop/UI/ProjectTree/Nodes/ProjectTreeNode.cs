@@ -15,9 +15,9 @@ namespace DLHBuilder.Desktop.UI
             SelectedImageKey = ExpandedImage;
         }
 
-        public virtual Control[] Editors()
+        public virtual EditorCollection Editors()
         {
-            return new Control[] { new PropertyEditor(null) };
+            return new EditorCollection(new PropertyEditor(Tag));
         }
 
         public ProjectTree Tree

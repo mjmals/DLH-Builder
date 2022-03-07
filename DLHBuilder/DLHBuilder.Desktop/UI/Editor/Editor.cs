@@ -9,20 +9,23 @@ namespace DLHBuilder.Desktop.UI
 {
     class Editor : TabPage
     {
-        protected virtual EditorControl[] EditorControls { get; set; }
+        protected virtual Control[] EditorControls()
+        {
+            return null;
+        }
 
         public void SetControls()
         {
             Controls.Clear();
 
-            foreach (EditorControl control in EditorControls)
+            foreach (Control control in EditorControls())
             {
-                switch (EditorControls.Count() > 1)
+                switch (EditorControls().Count() > 1)
                 {
                     case true:
-                        int index = EditorControls.ToList().IndexOf(control);
+                        int index = EditorControls().ToList().IndexOf(control);
                         control.Dock = index == 0 ? DockStyle.Top : DockStyle.Fill;
-                        control.Height = index == 0 ? (Height / EditorControls.Count()) : control.Height;
+                        control.Height = index == 0 ? (Height / EditorControls().Count()) : control.Height;
                         break;
                     case false:
                         control.Dock = DockStyle.Fill;

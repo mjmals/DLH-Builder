@@ -13,6 +13,8 @@ namespace DLHBuilder.Desktop.UI
         {
             Editors = editors;
             SetEditors();
+
+            Dock = DockStyle.Fill;
         }
 
         Editor[] Editors { get; set; }

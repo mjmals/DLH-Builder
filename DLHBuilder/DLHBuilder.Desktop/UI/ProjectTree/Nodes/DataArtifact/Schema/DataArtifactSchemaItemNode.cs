@@ -26,5 +26,10 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Schema Item";
 
         public override string ExpandedImage => "Schema Item";
+
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection(new SchemaItemTransformationEditor(Item.Transformations, Tree.Project.Stages));
+        }
     }
 }

@@ -20,7 +20,7 @@ namespace DLHBuilder.Desktop.UI
             Controls.Add(tools);
             Controls.Add(menu);
 
-            editorpanel.SetControls(new Control[] { new PropertyEditor() });
+            editorpanel.SetControls(new EditorCollection(new PropertyEditor()));
 
             Initialize();
         }

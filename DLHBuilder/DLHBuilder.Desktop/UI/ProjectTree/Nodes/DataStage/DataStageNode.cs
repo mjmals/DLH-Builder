@@ -25,12 +25,12 @@ namespace DLHBuilder.Desktop.UI
 
         public override string ExpandedImage => "Data Stage";
 
-        public override Control[] Editors()
+        public override EditorCollection Editors()
         {
-            return new Control[]
-            {
+            return new EditorCollection
+            (
                 new PropertyEditor(Stage)
-            };
+            );
         }
 
         public override void LabelChanged(string text)
