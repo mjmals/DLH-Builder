@@ -19,6 +19,7 @@ namespace DLHBuilder.Desktop.UI
             get => (DataArtifactSchemaItem)Tag;
             set
             {
+                value.PropertyUpdated += OnPropertyUpdated;
                 Tag = value;
             }
         }
@@ -30,6 +31,17 @@ namespace DLHBuilder.Desktop.UI
         public override EditorCollection Editors()
         {
             return new EditorCollection(new SchemaItemTransformationEditor(Item.Transformations, Tree.Project.Stages));
+        }
+
+        void OnPropertyUpdated(object sender, EventArgs e)
+        {
+            Text = Item.Name;
+        }
+
+        public override void LabelChanged(string text)
+        {
+            Item.Name = text;
+            base.LabelChanged(text);
         }
     }
 }

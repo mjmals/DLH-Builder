@@ -8,6 +8,6 @@ namespace DLHBuilder
 {
     public class DataArtifactSchemaItemCollection : BuilderCollection<DataArtifactSchemaItem>
     {
-
+        protected override string DirectoryName => "Schema";
     }
 }

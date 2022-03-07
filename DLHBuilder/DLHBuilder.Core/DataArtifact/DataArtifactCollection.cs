@@ -12,6 +12,8 @@ namespace DLHBuilder
     {
         protected override string DirectoryName => string.Empty;
 
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
+
         [JsonIgnore]
         public EventHandler<DataArtifactEventArgs> ArtifactAdded;
 
@@ -20,6 +22,27 @@ namespace DLHBuilder
         {
             base.Add(artifact);
             ArtifactAdded?.Invoke(this, new DataArtifactEventArgs(artifact));
+        }
+
+        internal override void Save(string path)
+        {
+            base.Save(path);
+
+            foreach(DataArtifact artifact in this)
+            {
+                artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.Name));
+            }
+        }
+
+        internal override void Load(string path)
+        {
+            base.Load(path);
+
+            foreach(DataArtifact artifact in this)
+            {
+                artifact.Schema = new DataArtifactSchemaItemCollection();
+                artifact.Schema.Load(Path.Combine(path, DirectoryName));
+            }
         }
     }
 }

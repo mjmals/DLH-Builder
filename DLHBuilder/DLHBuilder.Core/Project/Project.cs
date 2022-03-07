@@ -53,6 +53,7 @@ namespace DLHBuilder
 
         private DataConnectionCollection connections { get; set; }
 
+        [JsonIgnore]
         public DataArtifactGroupCollection ArtifactGroups
         {
             get

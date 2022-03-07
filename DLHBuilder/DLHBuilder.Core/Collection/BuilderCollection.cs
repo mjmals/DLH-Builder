@@ -62,6 +62,9 @@ namespace DLHBuilder
                 case BuilderCollectionItemType.Folder:
                     SaveFolders();
                     break;
+                case BuilderCollectionItemType.FolderAndFile:
+                    SaveFiles();
+                    break;
             }
 
             OnCollectionSaved();
@@ -73,7 +76,14 @@ namespace DLHBuilder
             {
                 Type objecttype = item.GetType();
                 string objecttitle = (string)objecttype.GetProperty(FileNameProperty).GetValue(item);
-                string filename = Path.Combine(DirectoryPath, string.Format("{0}.{1}.json", objecttitle, objecttype.Name));
+                string subfolder = CollectionType == BuilderCollectionItemType.FolderAndFile ? objecttitle : string.Empty;
+
+                if(!string.IsNullOrEmpty(subfolder) && !Directory.Exists(Path.Combine(DirectoryPath, subfolder)))
+                {
+                    Directory.CreateDirectory(Path.Combine(DirectoryPath, subfolder));
+                }
+
+                string filename = Path.Combine(DirectoryPath, subfolder, string.Format("{0}.{1}.json", objecttitle, objecttype.Name));
 
                 new FileMetadataExtractor(filename).Write(item);
             }
@@ -108,7 +118,25 @@ namespace DLHBuilder
                 return;
             }
 
-            foreach(string file in Directory.GetFiles(DirectoryPath))
+            if (CollectionType == BuilderCollectionItemType.FolderAndFile)
+            {
+                foreach(string directory in Directory.GetDirectories(DirectoryPath))
+                {
+                    LoadFiles(directory);
+                }
+
+                return;
+            }
+
+            if (CollectionType == BuilderCollectionItemType.File)
+            {
+                LoadFiles(DirectoryPath);
+            }
+        }
+
+        void LoadFiles(string path)
+        {
+            foreach (string file in Directory.GetFiles(path))
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
                 int startpos = filename.IndexOf(".") + 1;

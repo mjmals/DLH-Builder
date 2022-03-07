@@ -13,6 +13,7 @@ namespace DLHBuilder
 
         public string Description { get; set; }
 
+        [JsonIgnore]
         public DataArtifactSchemaItemCollection Schema
         { 
             get

@@ -9,6 +9,7 @@ namespace DLHBuilder
     public enum BuilderCollectionItemType
     {
         File,
-        Folder
+        Folder,
+        FolderAndFile
     }
 }
