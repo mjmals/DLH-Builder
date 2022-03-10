@@ -9,7 +9,25 @@ namespace DLHBuilder
 {
     public class DataArtifact
     {
-        public string Name { get; set; }
+        [JsonIgnore]
+        public EventHandler PropertyUpdated;
+
+        void OnPropertyUpdated()
+        {
+            PropertyUpdated?.Invoke(null, null);
+        }
+
+        public string Name
+        {
+            get => name;
+            set
+            {
+                name = value;
+                OnPropertyUpdated();
+            }
+        }
+
+        private string name { get; set; }
 
         public string Description { get; set; }
 

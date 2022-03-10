@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    class SQLServerDataApplication : DataApplication
+    public interface IDataApplication
     {
+        string Name { get; set; }
+
+        DataStageCollection Stages { get; set; }
     }
 }

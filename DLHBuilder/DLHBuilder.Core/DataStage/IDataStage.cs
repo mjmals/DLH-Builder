@@ -13,5 +13,7 @@ namespace DLHBuilder
         string Name { get; set; }
 
         string Description { get; set; }
+
+        DataArtifactCollection Artifacts { get; set; }
     }
 }

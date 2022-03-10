@@ -7,56 +7,30 @@ using System.IO;
 
 namespace DLHBuilder
 {
-    public class DataApplicationCollection : List<DataApplication>
+    public class DataApplicationCollection : BuilderCollection<IDataApplication>
     {
-        const string DirectoryPath = "Data Applications";
+        protected override string DirectoryName => "Data Applications";
 
-        internal void Save(string path)
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
+
+        internal override void Save(string path)
         {
-            path = Path.Combine(path, DirectoryPath);
+            base.Save(path);
 
-            if (!Directory.Exists(path))
+            foreach(IDataApplication application in this)
             {
-                Directory.CreateDirectory(path);
-            }
-
-            foreach (DataApplication application in this)
-            {
-                string filepath = Path.Combine(path, application.Name, string.Format("{0}.{1}.json", application.Name, application.GetType().Name));
-
-                if (!Directory.Exists(Path.GetDirectoryName(filepath)))
-                {
-                    Directory.CreateDirectory(Path.GetDirectoryName(filepath));
-                }
-
-                FileMetadataExtractor extractor = new FileMetadataExtractor(filepath);
-                extractor.Write(application);
+                application.Stages.Save(Path.Combine(path, DirectoryName, application.Name));
             }
         }
 
-        internal static DataApplicationCollection Load(string path)
+        internal override void Load(string path)
         {
-            path = Path.Combine(path, DirectoryPath);
+            base.Load(path);
 
-            DataApplicationCollection output = new DataApplicationCollection();
-
-            foreach (string folder in Directory.GetDirectories(path))
+            foreach (IDataApplication application in this)
             {
-                foreach (string file in Directory.GetFiles(path))
-                {
-                    string fileshort = Path.GetFileNameWithoutExtension(file);
-                    int startpos = fileshort.IndexOf(".") + 1;
-
-                    string filetype = string.Concat(typeof(DataApplicationCollection).Namespace, ".", fileshort.Substring(startpos));
-
-                    Type type = Type.GetType(filetype);
-
-                    FileMetadataExtractor extractor = new FileMetadataExtractor(file);
-                    output.Add((DataApplication)extractor.LoadFile(type));
-                }
+                application.Stages.Load(Path.Combine(path, DirectoryName, application.Name));
             }
-
-            return output;
         }
     }
 }

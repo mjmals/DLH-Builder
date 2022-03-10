@@ -6,17 +6,71 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataApplicationNode : ProjectTreeNode
+    abstract class DataApplicationNode : ProjectTreeNode
     {
-        public DataApplicationNode(DataApplication application)
+        public DataApplicationNode(IDataApplication application)
         {
+            Application = application;
+            Text = Application.Name;
 
+            AddStages();
         }
 
-        public DataApplication Application
+        public IDataApplication Application
         {
             get => (DataApplication)Tag;
-            set => Tag = value;
+            set
+            {
+                ((DataApplication)value).PropertyUpdated += OnPropertyUpdated;
+                value.Stages.CollectionAdded += OnStageAdded;
+                Tag = value;
+            }
+        }
+
+        public override string CollapsedImage => "Data Application";
+
+        public override string ExpandedImage => "Data Application";
+
+        public static DataApplicationNode New(IDataApplication application)
+        {
+            if(application is SQLDataApplication)
+            {
+                return new SQLDataApplicationNode((SQLDataApplication)application);
+            }
+
+            return null;
+        }
+
+        public override void LabelChanged(string text)
+        {
+            Application.Name = text;
+            base.LabelChanged(text);
+        }
+
+        void OnPropertyUpdated(object sender, EventArgs e)
+        {
+            Text = Application.Name;
+        }
+
+        void OnStageAdded(object sender, EventArgs e)
+        {
+            DataStageNode node = AddStage((IDataStage)sender);
+            Tree.SelectedNode = node;
+        }
+
+        void AddStages()
+        {
+            foreach (IDataStage stage in Application.Stages)
+            {
+                AddStage(stage);
+            }
+        }
+
+        DataStageNode AddStage(IDataStage stage)
+        {
+            DataStageNode output = new DataStageNode(stage);
+            Nodes.Add(output);
+            return output;
         }
     }
 }

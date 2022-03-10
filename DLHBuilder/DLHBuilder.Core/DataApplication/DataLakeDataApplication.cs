@@ -10,22 +10,6 @@ namespace DLHBuilder
 {
     public class DataLakeDataApplication : DataApplication
     {
-        [JsonIgnore]
-        [Browsable(false)]
-        public DataStageCollection Stages
-        {
-            get
-            {
-                if(stages == null)
-                {
-                    stages = new DataStageCollection();
-                }
-
-                return stages;
-            }
-            set => stages = value;
-        }
-
-        private DataStageCollection stages { get; set; }
+        
     }
 }

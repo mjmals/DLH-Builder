@@ -54,39 +54,22 @@ namespace DLHBuilder
         private DataConnectionCollection connections { get; set; }
 
         [JsonIgnore]
-        public DataArtifactGroupCollection ArtifactGroups
+        public DataApplicationCollection Applications
         {
             get
             {
-                if(artifactgroups == null)
+                if(applications == null)
                 {
-                    artifactgroups = new DataArtifactGroupCollection();
+                    applications = new DataApplicationCollection();
                 }
 
-                return artifactgroups;
+                return applications;
             }
-            set => artifactgroups = value;
+            set => applications = value;
         }
 
-        private DataArtifactGroupCollection artifactgroups { get; set; }
+        private DataApplicationCollection applications { get; set; }
 
-        [JsonIgnore]
-        [Browsable(false)]
-        public DataStageCollection Stages
-        {
-            get
-            {
-                if(stages == null)
-                {
-                    stages = new DataStageCollection();
-                }
-
-                return stages;
-            }
-            set => stages = value;
-        }
-
-        private DataStageCollection stages { get; set; }
 
         public void Save(string path)
         {
@@ -102,8 +85,7 @@ namespace DLHBuilder
             extractor.Write(this);
 
             Connections.Save(path);
-            ArtifactGroups.Save(path);
-            Stages.Save(path);
+            Applications.Save(path);
         }
 
         public static Project Load(string file)
@@ -111,15 +93,8 @@ namespace DLHBuilder
             string path = Path.GetDirectoryName(file);
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
-            
-            output.Connections = new DataConnectionCollection();
             output.Connections.Load(path);
-
-            output.ArtifactGroups = new DataArtifactGroupCollection();
-            output.ArtifactGroups.Load(path);
-            
-            output.Stages = new DataStageCollection();
-            output.Stages.Load(path);
+            output.Applications.Load(path);
 
             return output;
         }

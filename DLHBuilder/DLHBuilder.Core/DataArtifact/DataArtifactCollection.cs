@@ -40,8 +40,7 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
-                artifact.Schema = new DataArtifactSchemaItemCollection();
-                artifact.Schema.Load(Path.Combine(path, DirectoryName));
+                artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.Name));
             }
         }
     }

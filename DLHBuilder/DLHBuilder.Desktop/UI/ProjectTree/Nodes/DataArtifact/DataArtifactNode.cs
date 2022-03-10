@@ -19,11 +19,26 @@ namespace DLHBuilder.Desktop.UI
         public DataArtifact Artifact
         {
             get => (DataArtifact)Tag;
-            set => Tag = value;
+            set
+            {
+                value.PropertyUpdated += OnPropertyUpdated;
+                Tag = value;
+            }
         }
 
         public override string CollapsedImage => "Data Artifact";
 
         public override string ExpandedImage => "Data Artifact";
+
+        void OnPropertyUpdated(object sender, EventArgs e)
+        {
+            Text = Artifact.Name;
+        }
+
+        public override void LabelChanged(string text)
+        {
+            Artifact.Name = text;
+            base.LabelChanged(text);
+        }
     }
 }

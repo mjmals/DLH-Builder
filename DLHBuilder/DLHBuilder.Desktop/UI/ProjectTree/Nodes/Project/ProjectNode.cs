@@ -14,18 +14,18 @@ namespace DLHBuilder.Desktop.UI
             Project = project;
             Text = project.Name;
             Nodes.Add(new ConnectionsNode(project.Connections));
-            Nodes.Add(new DataArtifactGroupsNode(project.ArtifactGroups));
-            Nodes.Add(new DataStagesNode(project.Stages));
+            AddApplications();
 
             Expand();
         }
 
-        Project Project 
+        public Project Project 
         { 
             get => (Project)Tag;
             set
             {
                 value.PropertyUpdated += OnProjectUpdated;
+                value.Applications.CollectionAdded += OnApplicationAdded;
                 Tag = value;
             }
         }
@@ -33,6 +33,8 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Project";
 
         public override string ExpandedImage => "Project";
+
+        public override ContextMenuStrip ContextMenuStrip => new ProjectMenu(this);
 
         public override EditorCollection Editors()
         {
@@ -48,6 +50,27 @@ namespace DLHBuilder.Desktop.UI
         void OnProjectUpdated(object sender, EventArgs e)
         {
 
+        }
+
+        void OnApplicationAdded(object sender, EventArgs e)
+        {
+            DataApplicationNode node = AddApplication((IDataApplication)sender);
+            Tree.SelectedNode = node;
+        }
+
+        void AddApplications()
+        {
+            foreach(IDataApplication application in Project.Applications)
+            {
+                AddApplication(application);
+            }
+        }
+
+        DataApplicationNode AddApplication(IDataApplication application)
+        {
+            DataApplicationNode output = DataApplicationNode.New(application);
+            Nodes.Add(output);
+            return output;
         }
     }
 }

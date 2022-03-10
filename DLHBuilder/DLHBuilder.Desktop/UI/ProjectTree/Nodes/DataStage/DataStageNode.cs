@@ -13,17 +13,24 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             Text = stage.Name;
+            AddArtifacts();
         }
 
-        protected IDataStage Stage
+        public IDataStage Stage
         {
             get => (IDataStage)Tag;
-            set => Tag = value;
+            set
+            {
+                value.Artifacts.CollectionAdded += OnArtifactAdded;
+                Tag = value;
+            }
         }
 
         public override string CollapsedImage => "Data Stage";
 
         public override string ExpandedImage => "Data Stage";
+
+        public override ContextMenuStrip ContextMenuStrip => new DataStageMenu(this);
 
         public override EditorCollection Editors()
         {
@@ -37,6 +44,27 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage.Name = text;
             base.LabelChanged(text);
+        }
+
+        void OnArtifactAdded(object sender, EventArgs e)
+        {
+            DataArtifactNode node = AddArtifact((DataArtifact)sender);
+            Tree.SelectedNode = node;
+        }
+
+        DataArtifactNode AddArtifact(DataArtifact artifact)
+        {
+            DataArtifactNode output = new DataArtifactNode(artifact);
+            Nodes.Add(output);
+            return output;
+        }
+
+        void AddArtifacts()
+        {
+            foreach(DataArtifact artifact in Stage.Artifacts)
+            {
+                AddArtifact(artifact);
+            }
         }
     }
 }

@@ -16,5 +16,21 @@ namespace DLHBuilder
         public string Name { get; set; }
 
         public string Description { get; set; }
+
+        [JsonIgnore]
+        public DataArtifactCollection Artifacts
+        {
+            get
+            {
+                if(artifacts == null)
+                {
+                    artifacts = new DataArtifactCollection();
+                }
+                return artifacts;
+            }
+            set => artifacts = value;
+        }
+
+        private DataArtifactCollection artifacts { get; set; }
     }
 }

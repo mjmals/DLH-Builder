@@ -30,7 +30,7 @@ namespace DLHBuilder.Desktop.UI
 
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new SchemaItemTransformationEditor(Item.Transformations, Tree.Project.Stages));
+            return null; //new EditorCollection(new SchemaItemTransformationEditor(Item.Transformations, Tree.Project.Stages));
         }
 
         void OnPropertyUpdated(object sender, EventArgs e)
