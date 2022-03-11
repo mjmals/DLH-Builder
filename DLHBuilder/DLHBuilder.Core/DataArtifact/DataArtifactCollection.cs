@@ -12,6 +12,8 @@ namespace DLHBuilder
     {
         protected override string DirectoryName => string.Empty;
 
+        protected override string FileNameProperty => "FullName";
+
         protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
 
         [JsonIgnore]
@@ -30,7 +32,7 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
-                artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.Name));
+                artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.FullName));
             }
         }
 
@@ -40,7 +42,7 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
-                artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.Name));
+                artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.FullName));
             }
         }
     }

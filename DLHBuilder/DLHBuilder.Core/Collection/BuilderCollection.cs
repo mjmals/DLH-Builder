@@ -139,7 +139,7 @@ namespace DLHBuilder
             foreach (string file in Directory.GetFiles(path))
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
-                int startpos = filename.IndexOf(".") + 1;
+                int startpos = filename.LastIndexOf(".") + 1;
 
                 string filetype = string.Concat(typeof(DataConnectionCollection).Namespace, ".", filename.Substring(startpos));
 

@@ -6,29 +6,30 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataStageMenu : ProjectTreeMenu
+    class DataArtifactFolderMenu : ProjectTreeMenu
     {
-        public DataStageMenu(DataStageNode node)
+        public DataArtifactFolderMenu(DataArtifactFolderNode node)
         {
             Node = node;
             Items.Add(new ProjectTreeMenuButton("Add Artifact", AddArtifact));
             Items.Add(new ProjectTreeMenuButton("Add Artifact Folder", AddArtifactFolder));
         }
 
-        DataStageNode Node
+        DataArtifactFolderNode Node
         {
-            get => (DataStageNode)Tag;
+            get => (DataArtifactFolderNode)Tag;
             set => Tag = value;
         }
 
         void AddArtifact(object sender, EventArgs e)
         {
-            Node.Stage.Artifacts.Add(DataArtifact.New());
+            string path = Node.FolderPath();
+            Node.ParentStage.Stage.Artifacts.Add(DataArtifact.New(Node.FolderPath()));
         }
 
         void AddArtifactFolder(object sender, EventArgs e)
         {
-            DataArtifactFolderNode node = new DataArtifactFolderNode("<New Folder>", null, Node);
+            DataArtifactFolderNode node = new DataArtifactFolderNode("<New Folder>", Node, Node.ParentStage);
             Node.Nodes.Add(node);
             Node.Tree.SelectedNode = node;
         }

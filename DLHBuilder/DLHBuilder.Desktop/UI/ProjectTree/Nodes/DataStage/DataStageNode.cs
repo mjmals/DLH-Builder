@@ -13,6 +13,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             Text = stage.Name;
+            AddFolders();
             AddArtifacts();
         }
 
@@ -55,7 +56,14 @@ namespace DLHBuilder.Desktop.UI
         DataArtifactNode AddArtifact(DataArtifact artifact)
         {
             DataArtifactNode output = new DataArtifactNode(artifact);
-            Nodes.Add(output);
+            ProjectTreeNode node = this;
+
+            if(!string.IsNullOrEmpty(artifact.ArtifactPath))
+            {
+                node = (ProjectTreeNode)Nodes.Find(artifact.ArtifactPath, true).FirstOrDefault();
+            }
+            
+            node.Nodes.Add(output);
             return output;
         }
 
@@ -64,6 +72,31 @@ namespace DLHBuilder.Desktop.UI
             foreach(DataArtifact artifact in Stage.Artifacts)
             {
                 AddArtifact(artifact);
+            }
+        }
+
+        void AddFolders()
+        {
+            foreach(DataArtifact artifact in Stage.Artifacts)
+            {
+                DataArtifactFolderNode parent = null;
+
+                foreach (string folder in artifact.ArtifactNamespace)
+                {
+                    DataArtifactFolderNode node = new DataArtifactFolderNode(folder, parent, this);
+
+                    switch (parent != null)
+                    {
+                        case true:
+                            parent.Nodes.Add(node);
+                            break;
+                        default:
+                            this.Nodes.Add(node);
+                            break;
+                    }
+
+                    parent = node;
+                }
             }
         }
     }

@@ -29,6 +29,31 @@ namespace DLHBuilder
 
         private string name { get; set; }
 
+        public List<string> ArtifactNamespace
+        {
+            get
+            {
+                if(artifactnamespace == null)
+                {
+                    artifactnamespace = new List<string>();
+                }
+                return artifactnamespace;
+            }
+            set
+            {
+                OnPropertyUpdated();
+                artifactnamespace = value;
+            }
+        }
+
+        private List<string> artifactnamespace { get; set; }
+
+        [JsonIgnore]
+        public string ArtifactPath => string.Join('.', ArtifactNamespace);
+
+        [JsonIgnore]
+        public string FullName => ArtifactNamespace.Count == 0 ? Name : string.Format("{0}.{1}", ArtifactPath, Name);
+
         public string Description { get; set; }
 
         [JsonIgnore]
@@ -47,10 +72,15 @@ namespace DLHBuilder
 
         private DataArtifactSchemaItemCollection schema { get; set; }
 
-        public static DataArtifact New()
+        public static DataArtifact New(string path = null)
         {
             DataArtifact output = new DataArtifact();
             output.Name = "<New Artifact>";
+
+            if (!string.IsNullOrEmpty(path))
+            {
+                output.ArtifactNamespace.AddRange(path.Split('.'));
+            }
 
             return output;
         }
