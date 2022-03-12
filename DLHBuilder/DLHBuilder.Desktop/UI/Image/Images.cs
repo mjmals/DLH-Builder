@@ -18,6 +18,7 @@ namespace DLHBuilder.Desktop.UI
                 output.Images.Add("Connection", Properties.Resources.Plugged_16x);
                 output.Images.Add("Data Application", Properties.Resources.DatabaseApplication_16x);
                 output.Images.Add("Data Artifact", Properties.Resources.DatabaseStoredProcedures_16x);
+                output.Images.Add("Data Source", Properties.Resources.DataSourceReference_16x);
                 output.Images.Add("Data Stage", Properties.Resources.RouteService_16x);
                 output.Images.Add("Folder Closed", Properties.Resources.FolderClosed_16x);
                 output.Images.Add("Folder Open", Properties.Resources.FolderOpened_16x);

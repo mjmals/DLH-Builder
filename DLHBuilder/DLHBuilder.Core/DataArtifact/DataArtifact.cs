@@ -57,6 +57,22 @@ namespace DLHBuilder
         public string Description { get; set; }
 
         [JsonIgnore]
+        public DataSourceCollection DataSources
+        {
+            get
+            {
+                if(datasources == null)
+                {
+                    datasources = new DataSourceCollection();
+                }
+                return datasources;
+            }
+            set => datasources = value;
+        }
+
+        private DataSourceCollection datasources { get; set; }
+
+        [JsonIgnore]
         public DataArtifactSchemaItemCollection Schema
         { 
             get

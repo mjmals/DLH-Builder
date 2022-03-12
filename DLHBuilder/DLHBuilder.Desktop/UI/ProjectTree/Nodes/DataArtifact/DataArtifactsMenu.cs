@@ -23,7 +23,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddFromConnection(object sender, EventArgs e)
         {
-            DataArtifactConnectionDialog dialog = new DataArtifactConnectionDialog(Node.Tree.Project.Connections);
+            ConnectionSelectionDialog dialog = new ConnectionSelectionDialog(Node.Tree.Project.Connections);
             dialog.ShowDialog();
 
             if(dialog.DialogResult == DialogResult.OK)

@@ -32,6 +32,7 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
+                artifact.DataSources.Save(Path.Combine(path, DirectoryName, artifact.FullName));
                 artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.FullName));
             }
         }
@@ -42,6 +43,7 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
+                artifact.DataSources.Load(Path.Combine(path, DirectoryName, artifact.FullName));
                 artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.FullName));
             }
         }

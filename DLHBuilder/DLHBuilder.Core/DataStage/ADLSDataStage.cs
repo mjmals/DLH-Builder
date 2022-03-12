@@ -42,21 +42,5 @@ namespace DLHBuilder
         }
 
         private ADLSDataStageParameterCollection parameters { get; set; }
-
-        public DataArtifactCollection Artifacts
-        {
-            get
-            {
-                if(artifacts == null)
-                {
-                    artifacts = new DataArtifactCollection();
-                }
-
-                return artifacts;
-            }
-            set => artifacts = value;
-        }
-
-        private DataArtifactCollection artifacts { get; set; }
     }
 }
