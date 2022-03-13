@@ -17,35 +17,13 @@ namespace DLHBuilder
     {
         static void Main(string[] args)
         {
-            Environment environment = new Environment()
-            {
-                TenantID = Guid.NewGuid(),
-                SubscriptionID = Guid.NewGuid(),
-                ResourceGroup = "MyResourceGroup"
-            };
-
-            ScriptEngine builder = new ScriptEngine("Terraform.Variables.VariableData", environment);
-
-            Console.WriteLine(builder.Render());
+            DataTypeCollection datatypes = new DataTypeCollection();
+            datatypes.ForEach(x => Console.WriteLine(x.Name));
 
             Console.ReadKey();
         }
 
-        public class Template
-        {
-            public string Name { get; set; }
-
-            public int Age { get; set; }
-        }
-
-        public class Environment
-        {
-            public Guid TenantID { get; set; }
-
-            public Guid SubscriptionID { get; set; }
-
-            public string ResourceGroup { get; set; }
-        }
+        
 
         List<Type> DataTypes()
         {
