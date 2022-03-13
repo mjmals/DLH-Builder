@@ -13,6 +13,12 @@ namespace DLHBuilder
 
         protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
 
+        public new void Add(IDataStage stage)
+        {
+            base.Add(stage);
+            stage.Ordinal = this.IndexOf(stage);
+        }
+
         internal override void Save(string path)
         {
             base.Save(path);

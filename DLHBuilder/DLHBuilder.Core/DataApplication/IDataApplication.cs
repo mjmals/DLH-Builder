@@ -10,6 +10,8 @@ namespace DLHBuilder
     {
         string Name { get; set; }
 
+        int Ordinal { get; set; }
+
         DataStageCollection Stages { get; set; }
     }
 }

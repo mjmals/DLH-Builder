@@ -17,6 +17,9 @@ namespace DLHBuilder
 
         public string Description { get; set; }
 
+        [Browsable(false)]
+        public int Ordinal { get; set; }
+
         [JsonIgnore]
         public DataArtifactCollection Artifacts
         {

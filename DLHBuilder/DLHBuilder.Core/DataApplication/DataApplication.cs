@@ -30,6 +30,9 @@ namespace DLHBuilder
 
         private string name { get; set; }
 
+        [Browsable(false)]
+        public int Ordinal { get; set; }
+
         [JsonIgnore]
         [Browsable(false)]
         public DataStageCollection Stages

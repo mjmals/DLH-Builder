@@ -10,6 +10,12 @@ namespace DLHBuilder
 {
     public class DataLakeDataApplication : DataApplication
     {
-        
+        public static DataLakeDataApplication New()
+        {
+            DataLakeDataApplication output = new DataLakeDataApplication();
+            output.Name = "<New Data Lake Application>";
+
+            return output;
+        }
     }
 }

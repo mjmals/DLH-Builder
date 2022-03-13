@@ -14,6 +14,8 @@ namespace DLHBuilder
 
         string Description { get; set; }
 
+        int Ordinal { get; set; }
+
         DataArtifactCollection Artifacts { get; set; }
     }
 }

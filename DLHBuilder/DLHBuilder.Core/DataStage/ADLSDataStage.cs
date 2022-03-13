@@ -42,5 +42,14 @@ namespace DLHBuilder
         }
 
         private ADLSDataStageParameterCollection parameters { get; set; }
+
+        public static ADLSDataStage New()
+        {
+            ADLSDataStage output = new ADLSDataStage();
+            output.ID = Guid.NewGuid();
+            output.Name = "<New ADLS Stage>";
+
+            return output;
+        }
     }
 }

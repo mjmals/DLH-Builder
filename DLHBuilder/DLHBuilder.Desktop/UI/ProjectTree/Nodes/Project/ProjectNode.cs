@@ -60,7 +60,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddApplications()
         {
-            foreach(IDataApplication application in Project.Applications)
+            foreach(IDataApplication application in Project.Applications.OrderBy(x => x.Ordinal))
             {
                 AddApplication(application);
             }

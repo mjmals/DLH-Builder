@@ -38,6 +38,11 @@ namespace DLHBuilder.Desktop.UI
                 return new SQLDataApplicationNode((SQLDataApplication)application);
             }
 
+            if (application is DataLakeDataApplication)
+            {
+                return new DataLakeDataApplicationNode((DataLakeDataApplication)application);
+            }
+
             return null;
         }
 
@@ -60,7 +65,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddStages()
         {
-            foreach (IDataStage stage in Application.Stages)
+            foreach (IDataStage stage in Application.Stages.OrderBy(x => x.Ordinal))
             {
                 AddStage(stage);
             }
