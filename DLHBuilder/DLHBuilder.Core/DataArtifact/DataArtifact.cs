@@ -88,6 +88,21 @@ namespace DLHBuilder
 
         private DataArtifactSchemaItemCollection schema { get; set; }
 
+        public DataArtifactTransformationCollection Transformations
+        {
+            get
+            {
+                if(transformations == null)
+                {
+                    transformations = new DataArtifactTransformationCollection();
+                }
+                return transformations;
+            }
+            set => transformations = value;
+        }
+
+        private DataArtifactTransformationCollection transformations { get; set; }
+
         public static DataArtifact New(string path = null)
         {
             DataArtifact output = new DataArtifact();
