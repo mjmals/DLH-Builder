@@ -8,9 +8,10 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactSchemaItemNode : ProjectTreeNode
     {
-        public DataArtifactSchemaItemNode(DataArtifactSchemaItem item)
+        public DataArtifactSchemaItemNode(DataArtifactSchemaItem item, DataSourceCollection sources)
         {
             Item = item;
+            Sources = sources;
             Text = Item.Name;
         }
 
@@ -24,13 +25,15 @@ namespace DLHBuilder.Desktop.UI
             }
         }
 
+        public DataSourceCollection Sources { get; set; }
+
         public override string CollapsedImage => "Schema Item";
 
         public override string ExpandedImage => "Schema Item";
 
         public override EditorCollection Editors()
         {
-            return null; //new EditorCollection(new SchemaItemTransformationEditor(Item.Transformations, Tree.Project.Stages));
+            return new EditorCollection(new TransformationEditor(Item.Transformations, Sources));
         }
 
         void OnPropertyUpdated(object sender, EventArgs e)

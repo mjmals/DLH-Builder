@@ -12,6 +12,18 @@ namespace DLHBuilder.Desktop.UI
         public EditorGrid()
         {
             CellValueChanged += OnCellValueChanged;
+            Columns.AddRange(EditorColumns().ToArray());
+            Rows.AddRange(EditorRows().ToArray());
+        }
+
+        protected virtual EditorGridColumnCollection EditorColumns()
+        {
+            return new EditorGridColumnCollection();
+        }
+
+        protected virtual EditorGridRowCollection EditorRows()
+        {
+            return new EditorGridRowCollection();
         }
 
         void OnCellValueChanged(object sender, EventArgs e)

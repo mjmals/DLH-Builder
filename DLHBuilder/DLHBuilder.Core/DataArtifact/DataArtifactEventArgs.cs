@@ -8,11 +8,11 @@ namespace DLHBuilder
 {
     public class DataArtifactEventArgs : EventArgs
     {
-        public DataArtifactEventArgs(DataArtifact artifact)
+        public DataArtifactEventArgs(IDataArtifact artifact)
         {
             Artifact = artifact;
         }
 
-        public DataArtifact Artifact { get; set; }
+        public IDataArtifact Artifact { get; set; }
     }
 }

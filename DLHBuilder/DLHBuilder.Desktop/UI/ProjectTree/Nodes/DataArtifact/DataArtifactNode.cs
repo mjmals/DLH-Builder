@@ -14,7 +14,7 @@ namespace DLHBuilder.Desktop.UI
 
             Text = Artifact.Name;
             Nodes.Add(new DataSourcesNode(artifact.DataSources));
-            Nodes.Add(new DataArtifactSchemaItemsNode(artifact.Schema));
+            Nodes.Add(new DataArtifactSchemaItemsNode(artifact.Schema, artifact.DataSources));
         }
 
         public DataArtifact Artifact

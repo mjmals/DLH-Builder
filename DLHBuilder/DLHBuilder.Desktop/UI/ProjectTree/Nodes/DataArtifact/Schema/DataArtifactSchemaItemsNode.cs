@@ -9,7 +9,7 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactSchemaItemsNode : ProjectTreeNode
     {
-        public DataArtifactSchemaItemsNode(DataArtifactSchemaItemCollection items)
+        public DataArtifactSchemaItemsNode(DataArtifactSchemaItemCollection items, DataSourceCollection sources)
         {
             Text = "Schema";
             Items = items;
@@ -25,6 +25,8 @@ namespace DLHBuilder.Desktop.UI
                 Tag = value;
             }
         }
+
+        DataSourceCollection Sources { get; set; }
 
         public override ContextMenuStrip ContextMenuStrip => new DataArtifactSchemaItemsMenu(this);
 
@@ -44,7 +46,7 @@ namespace DLHBuilder.Desktop.UI
 
         DataArtifactSchemaItemNode AddItem(DataArtifactSchemaItem item)
         {
-            DataArtifactSchemaItemNode output = new DataArtifactSchemaItemNode(item);
+            DataArtifactSchemaItemNode output = new DataArtifactSchemaItemNode(item, Sources);
             Nodes.Add(output);
             return output;
         }

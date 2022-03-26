@@ -47,7 +47,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddArtifacts()
         {
-            foreach(DataArtifact artifact in ParentStage.Stage.Artifacts.Where(x => x.ArtifactPath == FolderPath()))
+            foreach(DataArtifact artifact in ParentStage.Stage.Artifacts.Where(x => ((DataArtifact)x).ArtifactPath == FolderPath()))
             {
                 Nodes.Add(new DataArtifactNode(artifact));
             }

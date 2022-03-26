@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
-    public class DataArtifact
+    public class DataArtifact : IDataArtifact
     {
         [JsonIgnore]
         public EventHandler PropertyUpdated;
@@ -16,6 +16,10 @@ namespace DLHBuilder
         {
             PropertyUpdated?.Invoke(null, null);
         }
+
+        public Guid ID { get; set; }
+
+        public Guid MasterDataArtifactID { get; set; }
 
         public string Name
         {
@@ -106,6 +110,7 @@ namespace DLHBuilder
         public static DataArtifact New(string path = null)
         {
             DataArtifact output = new DataArtifact();
+            output.ID = Guid.NewGuid();
             output.Name = "<New Artifact>";
 
             if (!string.IsNullOrEmpty(path))
