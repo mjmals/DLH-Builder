@@ -9,6 +9,10 @@ namespace DLHBuilder
 {
     public class DataArtifactSchemaItem
     {
+        public Guid ID { get; set; }
+
+        internal Guid MasterSchemaItemID { get; set; }
+
         public string Name 
         { 
             get => name;

@@ -84,13 +84,23 @@ namespace DLHBuilder
                 if(schema == null)
                 {
                     schema = new DataArtifactSchemaItemCollection();
+                    schema.SchemaItemAdded += OnSchemaItemAdded;
                 }
                 return schema;
             }
-            set => schema = value; 
+            set
+            {
+                schema = value;
+                schema.SchemaItemAdded += OnSchemaItemAdded;
+            }
         }
 
         private DataArtifactSchemaItemCollection schema { get; set; }
+
+        private void OnSchemaItemAdded(object sender, DataArtifactSchemaItemEventArgs e)
+        {
+            MasterDataArtifactHandler.PostSchemaItem(MasterDataArtifactID, e.Item);
+        }
 
         public DataArtifactTransformationCollection Transformations
         {

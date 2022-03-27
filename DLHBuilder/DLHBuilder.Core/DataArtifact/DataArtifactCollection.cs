@@ -31,7 +31,7 @@ namespace DLHBuilder
             {
                 if(((DataArtifact)artifact).MasterDataArtifactID == Guid.Empty)
                 {
-                    NewArtifactCreated?.Invoke(null, new DataArtifactEventArgs(artifact));
+                    MasterDataArtifactHandler.PostArtifact((DataArtifact)artifact);
                 }
             }
         }
