@@ -8,7 +8,7 @@ using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
-    public class DataArtifactCollection : BuilderCollection<IDataArtifact>
+    public class DataArtifactCollection : BuilderCollection<DataArtifact>
     {
         protected override string DirectoryName => string.Empty;
 
@@ -22,18 +22,18 @@ namespace DLHBuilder
         [JsonIgnore]
         public EventHandler<DataArtifactEventArgs> NewArtifactCreated;
 
-        public new void Add(IDataArtifact artifact)
+        public new void Add(DataArtifact artifact)
         {
             base.Add(artifact);
             ArtifactAdded?.Invoke(this, new DataArtifactEventArgs(artifact));
 
-            if(artifact is DataArtifact)
-            {
-                if(((DataArtifact)artifact).MasterDataArtifactID == Guid.Empty)
-                {
-                    MasterDataArtifactHandler.PostArtifact((DataArtifact)artifact);
-                }
-            }
+            //if(artifact is DataArtifact)
+            //{
+            //    if(((DataArtifact)artifact).MasterDataArtifactID == Guid.Empty)
+            //    {
+            //        MasterDataArtifactHandler.PostArtifact((DataArtifact)artifact);
+            //    }
+            //}
         }
 
         internal override void Save(string path)

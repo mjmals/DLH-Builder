@@ -15,8 +15,8 @@ namespace DLHBuilder
             master.Name = artifact.Name;
             master.Schema = new DataArtifactSchemaItemCollection();
 
-            Artifacts.Add(master);
-            artifact.MasterDataArtifactID = master.ID;
+            //Artifacts.Add(master);
+            //artifact.MasterDataArtifactID = master.ID;
         }
 
         public static void PostSchemaItem(Guid masterartifactid, DataArtifactSchemaItem item)
@@ -35,7 +35,8 @@ namespace DLHBuilder
 
         public static MasterDataArtifact Find(Guid id)
         {
-            return (MasterDataArtifact)Artifacts.FirstOrDefault(x => x.ID == id);
+            return null;
+            //return (MasterDataArtifact)Artifacts.FirstOrDefault(x => x.ID == id);
         }
     }
 }

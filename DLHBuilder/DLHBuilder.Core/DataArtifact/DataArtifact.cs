@@ -7,7 +7,7 @@ using Newtonsoft.Json;
 
 namespace DLHBuilder
 {
-    public class DataArtifact : IDataArtifact
+    public class DataArtifact
     {
         [JsonIgnore]
         public EventHandler PropertyUpdated;
@@ -19,7 +19,7 @@ namespace DLHBuilder
 
         public Guid ID { get; set; }
 
-        public Guid MasterDataArtifactID { get; set; }
+        //public Guid MasterDataArtifactID { get; set; }
 
         public string Name
         {
@@ -99,7 +99,7 @@ namespace DLHBuilder
 
         private void OnSchemaItemAdded(object sender, DataArtifactSchemaItemEventArgs e)
         {
-            MasterDataArtifactHandler.PostSchemaItem(MasterDataArtifactID, e.Item);
+            //MasterDataArtifactHandler.PostSchemaItem(MasterDataArtifactID, e.Item);
         }
 
         public DataArtifactTransformationCollection Transformations

@@ -71,19 +71,19 @@ namespace DLHBuilder
         private DataApplicationCollection applications { get; set; }
 
 
-        [JsonIgnore]
-        private DataArtifactCollection MasterArtifacts
-        {
-            get
-            {
-                if(MasterDataArtifactHandler.Artifacts == null)
-                {
-                    MasterDataArtifactHandler.Artifacts = new DataArtifactCollection();
-                }
-                return MasterDataArtifactHandler.Artifacts;
-            }
-            set => MasterDataArtifactHandler.Artifacts = value;
-        }
+        //[JsonIgnore]
+        //private DataArtifactCollection MasterArtifacts
+        //{
+        //    get
+        //    {
+        //        if(MasterDataArtifactHandler.Artifacts == null)
+        //        {
+        //            MasterDataArtifactHandler.Artifacts = new DataArtifactCollection();
+        //        }
+        //        return MasterDataArtifactHandler.Artifacts;
+        //    }
+        //    set => MasterDataArtifactHandler.Artifacts = value;
+        //}
 
 
         public void Save(string path)
@@ -101,7 +101,7 @@ namespace DLHBuilder
 
             Connections.Save(path);
             Applications.Save(path);
-            MasterArtifacts.Save(path);
+            //MasterArtifacts.Save(path);
         }
 
         public static Project Load(string file)
@@ -111,7 +111,7 @@ namespace DLHBuilder
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
             output.Connections.Load(path);
             output.Applications.Load(path);
-            output.MasterArtifacts.Load(path);
+            //output.MasterArtifacts.Load(path);
 
             return output;
         }
