@@ -16,4 +16,8 @@
     <PackageReference Include="StringTemplate4" Version="4.0.8" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+  </ItemGroup>
+
 </Project>
