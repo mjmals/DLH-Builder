@@ -14,6 +14,7 @@ namespace DLHBuilder.Desktop.UI
             Project = project;
             Text = project.Name;
             Nodes.Add(new ConnectionsNode(project.Connections));
+            Nodes.Add(new ScriptTemplatesNode(project.ScriptTemplates));
             AddApplications();
 
             Expand();
