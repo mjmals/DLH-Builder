@@ -76,7 +76,7 @@ namespace DLHBuilder
         {
             get
             {
-                if(scripttemplates != null)
+                if(scripttemplates == null)
                 {
                     scripttemplates = new ScriptTemplateCollection();
                 }

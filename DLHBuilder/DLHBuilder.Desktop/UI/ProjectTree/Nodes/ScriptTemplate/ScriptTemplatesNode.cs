@@ -24,8 +24,9 @@ namespace DLHBuilder.Desktop.UI
         {
             foreach(string templatetype in Enum.GetNames(typeof(ScriptTemplateType)))
             {
-                bool allowupdate = ((ScriptTemplateType)Enum.Parse(typeof(ScriptTemplateType), templatetype)) == ScriptTemplateType.BuiltIn ? false : true; 
-                Nodes.Add(new ScriptTemplateFolderNode(templatetype, string.Empty, allowupdate));
+                ScriptTemplateType type = (ScriptTemplateType)Enum.Parse(typeof(ScriptTemplateType), templatetype);
+                bool allowupdate = type == ScriptTemplateType.BuiltIn ? false : true; 
+                Nodes.Add(new ScriptTemplateFolderNode(templatetype, type, string.Empty, allowupdate));
             }
         }
     }

@@ -8,11 +8,12 @@ namespace DLHBuilder.Desktop.UI
 {
     class ScriptTemplateFolderNode : ProjectTreeNode
     {
-        public ScriptTemplateFolderNode(string name, string path, bool allowupdate)
+        public ScriptTemplateFolderNode(string name, ScriptTemplateType templatetype, string path, bool allowupdate)
         {
+            Text = name;
+            TemplateType = templatetype;
             Path = string.Concat(path, ".", name);
             Name = path;
-            Text = name;
             AllowUpdate = allowupdate;
 
             if(AllowUpdate)
@@ -24,6 +25,8 @@ namespace DLHBuilder.Desktop.UI
         public bool AllowUpdate { get; set; }
 
         public string Path { get; set; }
+
+        public ScriptTemplateType TemplateType { get; set; }
 
         public override void LabelChanged(string text)
         {
