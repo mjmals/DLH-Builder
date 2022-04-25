@@ -48,7 +48,10 @@ namespace DLHBuilder
                 using (FileStream stream = new FileStream(templatefile, FileMode.OpenOrCreate))
                 {
                     stream.SetLength(0);
-                    new StreamWriter(stream).Write(template.Content);
+                    using (StreamWriter writer = new StreamWriter(stream))
+                    {
+                        writer.Write(template.Content);
+                    }
                 }
             }
         }

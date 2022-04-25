@@ -24,6 +24,11 @@ namespace DLHBuilder.Desktop.UI
 
         public override string CollapsedImage => "Template";
 
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection(new TextPropertyEditor(Template, "Content"));
+        }
+
         public override void LabelChanged(string text)
         {
             base.LabelChanged(text);
