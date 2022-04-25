@@ -11,6 +11,7 @@ namespace DLHBuilder.Desktop.UI
         public ScriptTemplatesNode(ScriptTemplateCollection templates)
         {
             Text = "Script Templates";
+            Templates = templates;
             AddTemplates();
         }
 
@@ -27,6 +28,26 @@ namespace DLHBuilder.Desktop.UI
                 ScriptTemplateType type = (ScriptTemplateType)Enum.Parse(typeof(ScriptTemplateType), templatetype);
                 bool allowupdate = type == ScriptTemplateType.BuiltIn ? false : true; 
                 Nodes.Add(new ScriptTemplateFolderNode(templatetype, type, string.Empty, allowupdate));
+            }
+
+            foreach(ScriptTemplate template in Templates)
+            {
+                string templatepath = string.Empty;
+
+                foreach(string folder in template.Hierarchy)
+                {
+                    templatepath += templatepath == string.Empty ? folder : string.Format(".{0}", folder);
+
+                    if(this.Nodes.Find(templatepath, true).Count() == 0)
+                    {
+                        string parentpath = templatepath.Contains(".") ? templatepath.Substring(0, templatepath.LastIndexOf(".")) : templatepath;
+                        ScriptTemplateFolderNode parentnode = (ScriptTemplateFolderNode)this.Nodes.Find(parentpath, true).FirstOrDefault();
+                        parentnode.Nodes.Add(new ScriptTemplateFolderNode(folder, parentnode.TemplateType, parentnode.Path, parentnode.AllowUpdate));
+                    }
+                }
+
+                ScriptTemplateFolderNode foldernode = (ScriptTemplateFolderNode)this.Nodes.Find(string.Join('.', template.Path()), true).FirstOrDefault();
+                foldernode.Nodes.Add(new ScriptTemplateNode(template));
             }
         }
     }

@@ -14,7 +14,7 @@ namespace DLHBuilder
         internal override void Load(string path)
         {
             string searchpath = Path.Combine(path, DirectoryName);
-            string[] files = Directory.GetDirectories(path, "*.json", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(searchpath, "*.json", SearchOption.AllDirectories);
 
             foreach(string file in files)
             {
@@ -22,7 +22,7 @@ namespace DLHBuilder
                 ScriptTemplate template = extractor.LoadFile<ScriptTemplate>();
                 Add(template);
 
-                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace(".json", ".st"), FileMode.Open)))
+                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace(".json", ".st"), FileMode.OpenOrCreate)))
                 {
                     template.Content = rdr.ReadToEnd();
                 }
@@ -33,13 +33,22 @@ namespace DLHBuilder
         {
             foreach(ScriptTemplate template in this.Where(x => x.Type != ScriptTemplateType.BuiltIn))
             {
-                string filepath = Path.Combine(path, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".json");
+                string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".json");
+
+                if (!Directory.Exists(Path.GetDirectoryName(filepath)))
+                {
+                    Directory.CreateDirectory(Path.GetDirectoryName(filepath));
+                }
+
                 FileMetadataExtractor extractor = new FileMetadataExtractor(filepath);
                 extractor.Write(template);
 
-                using (StreamWriter writer = new StreamWriter(new FileStream(filepath.Replace(".json", ".st"), FileMode.Truncate)))
+                string templatefile = filepath.Replace(".json", ".st");
+
+                using (FileStream stream = new FileStream(templatefile, FileMode.OpenOrCreate))
                 {
-                    writer.Write(template.Content);
+                    stream.SetLength(0);
+                    new StreamWriter(stream).Write(template.Content);
                 }
             }
         }

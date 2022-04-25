@@ -20,5 +20,10 @@ namespace DLHBuilder
 
         [JsonIgnore]
         public string Content { get; set; }
+
+        public string Path()
+        {
+            return string.Join('.', Hierarchy);
+        }
     }
 }

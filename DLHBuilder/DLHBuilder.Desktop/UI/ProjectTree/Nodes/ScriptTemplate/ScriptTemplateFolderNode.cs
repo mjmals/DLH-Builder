@@ -12,8 +12,8 @@ namespace DLHBuilder.Desktop.UI
         {
             Text = name;
             TemplateType = templatetype;
-            Path = string.Concat(path, ".", name);
-            Name = path;
+            Path = path == String.Empty ? name : string.Concat(path, ".", name);
+            Name = Path;
             AllowUpdate = allowupdate;
 
             if(AllowUpdate)

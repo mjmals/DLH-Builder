@@ -10,11 +10,25 @@ namespace DLHBuilder.Desktop.UI
     {
         public ScriptTemplateNode(ScriptTemplate template)
         {
+            Template = template;
             Text = template.Name;
+        }
+
+        public ScriptTemplate Template
+        {
+            get => (ScriptTemplate)Tag;
+            set => Tag = value;
         }
 
         public override string ExpandedImage => "Template";
 
         public override string CollapsedImage => "Template";
+
+        public override void LabelChanged(string text)
+        {
+            base.LabelChanged(text);
+
+            Template.Name = text;
+        }
     }
 }
