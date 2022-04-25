@@ -26,7 +26,7 @@ namespace DLHBuilder.Desktop.UI
 
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new TextPropertyEditor(Template, "Content"));
+            return new EditorCollection(new TextPropertyEditor(Template, "Content", (Template.Type == ScriptTemplateType.BuiltIn ? false : true)));
         }
 
         public override void LabelChanged(string text)

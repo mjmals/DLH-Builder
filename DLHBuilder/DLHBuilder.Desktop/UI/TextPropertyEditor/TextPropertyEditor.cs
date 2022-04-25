@@ -10,7 +10,7 @@ namespace DLHBuilder.Desktop.UI
 {
     class TextPropertyEditor : Editor
     {
-        public TextPropertyEditor(object baseobject, string propertyname)
+        public TextPropertyEditor(object baseobject, string propertyname, bool enabled = true)
         {
             Text = "Template Editor";
 
@@ -19,7 +19,13 @@ namespace DLHBuilder.Desktop.UI
 
             PropertyText = new RichTextBox() { Dock = DockStyle.Fill };
             PropertyText.Text = (string)BaseObject.GetType().GetProperty(PropertyName).GetValue(BaseObject);
-            PropertyText.TextChanged += PropertyTextChanged;
+            PropertyText.Enabled = enabled;
+
+            if (enabled)
+            {
+                PropertyText.TextChanged += PropertyTextChanged;
+            }
+            
             Controls.Add(PropertyText);
         }
 

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DLHBuilder.Generator;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -30,7 +31,11 @@ namespace DLHBuilder.Desktop.UI
                 Nodes.Add(new ScriptTemplateFolderNode(templatetype, type, string.Empty, allowupdate));
             }
 
-            foreach(ScriptTemplate template in Templates)
+            ScriptTemplateCollection templates = new ScriptTemplateCollection();
+            Templates.ForEach(delegate (ScriptTemplate template) { templates.Add(template); });
+            new BuiltInScriptTemplateCollection().ForEach(delegate (ScriptTemplate template) { templates.Add(template); });
+
+            foreach (ScriptTemplate template in templates)
             {
                 string templatepath = string.Empty;
 
