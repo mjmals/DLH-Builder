@@ -37,6 +37,7 @@ namespace DLHBuilder.Desktop.UI
         {
             return new EditorCollection
             (
+                new ScriptTemplateMappingEditor(Tree.Project.ScriptTemplates, Stage.ScriptTemplates),
                 new PropertyEditor(Stage)
             );
         }

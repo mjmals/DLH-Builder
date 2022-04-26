@@ -35,5 +35,20 @@ namespace DLHBuilder
         }
 
         private DataArtifactCollection artifacts { get; set; }
+
+        public ScriptTemplateReferenceCollection ScriptTemplates
+        {
+            get
+            {
+                if (scripttemplates == null)
+                {
+                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Mapped };
+                }
+                return scripttemplates;
+            }
+            set => scripttemplates = value;
+        }
+
+        private ScriptTemplateReferenceCollection scripttemplates { get; set; }
     }
 }

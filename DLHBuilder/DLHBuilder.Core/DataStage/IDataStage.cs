@@ -17,5 +17,7 @@ namespace DLHBuilder
         int Ordinal { get; set; }
 
         DataArtifactCollection Artifacts { get; set; }
+
+        ScriptTemplateReferenceCollection ScriptTemplates { get; set; }
     }
 }

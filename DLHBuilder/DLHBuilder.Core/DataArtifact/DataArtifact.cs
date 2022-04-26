@@ -117,6 +117,21 @@ namespace DLHBuilder
 
         private DataArtifactTransformationCollection transformations { get; set; }
 
+        public ScriptTemplateReferenceCollection ScriptTemplates
+        {
+            get
+            {
+                if(scripttemplates == null)
+                {
+                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Inherited };
+                }
+                return scripttemplates;
+            }
+            set => scripttemplates = value;
+        }
+
+        private ScriptTemplateReferenceCollection scripttemplates { get; set; }
+
         public static DataArtifact New(string path = null)
         {
             DataArtifact output = new DataArtifact();
