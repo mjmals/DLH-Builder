@@ -19,6 +19,7 @@ namespace DLHBuilder.Desktop.UI
             Controls.Add(explorerpanel);
             Controls.Add(tools);
             Controls.Add(menu);
+            Controls.Add(statbar);
 
             editorpanel.SetControls(new EditorCollection(new PropertyEditor()));
 
@@ -32,6 +33,8 @@ namespace DLHBuilder.Desktop.UI
         MainMenu menu = new MainMenu();
 
         ToolBar tools = new ToolBar();
+
+        StatusBar statbar = new StatusBar();
 
         ProjectTree tree = null;
 
@@ -61,6 +64,7 @@ namespace DLHBuilder.Desktop.UI
                     tree = new ProjectTree(project);
                     explorerpanel.Reset(tree);
                     ProjectTreeLoaded(null, null);
+                    SetTitle();
                     break;
                 default:
                     break;
@@ -88,12 +92,25 @@ namespace DLHBuilder.Desktop.UI
                 if (!string.IsNullOrEmpty(projectpath))
                 {
                     project.Save(projectpath);
+                    MessageBox.Show("Project saved successfully...");
+                    SetTitle();
                 }
 
                 return;
             }
 
             MessageBox.Show("No Project currently open.  Create or load project to continue.");
+        }
+
+        void SetTitle()
+        {
+            if(project != null)
+            {
+                Text = string.Format("DLH Builder - {0}", Path.Combine(projectpath, project.Name));
+                return;
+            }
+
+            Text = "DLH Builder";
         }
 
         void ProjectTreeLoaded(object sender, EventArgs e)

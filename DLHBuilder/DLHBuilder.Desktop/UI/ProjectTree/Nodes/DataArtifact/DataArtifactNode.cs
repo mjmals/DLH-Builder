@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -40,6 +41,14 @@ namespace DLHBuilder.Desktop.UI
         {
             Artifact.Name = text;
             base.LabelChanged(text);
+        }
+
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection
+                (
+                    new ScriptTemplateMappingEditor(Tree.Project.ScriptTemplates, Artifact.ScriptTemplates)
+                );
         }
     }
 }

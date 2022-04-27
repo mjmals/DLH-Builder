@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
-namespace DLHBuilder
+namespace DLHBuilder.Desktop.UI
 {
-    public enum ScriptTemplateReferenceType
+    class StatusBar : StatusStrip
     {
-        Inherited,
-        Selected,
-        InheritedAndSelected
+
     }
 }

@@ -42,7 +42,7 @@ namespace DLHBuilder
             {
                 if (scripttemplates == null)
                 {
-                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Mapped };
+                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Selected };
                 }
                 return scripttemplates;
             }
