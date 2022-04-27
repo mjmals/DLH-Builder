@@ -12,13 +12,13 @@ namespace DLHBuilder.Generator
 {
     public class ScriptEngine
     {
-        public ScriptEngine(string template, params object[] baseobjects)
+        public ScriptEngine(ScriptTemplate template, params object[] baseobjects)
         {
             Template = template;
             BaseObjects = baseobjects;
         }
 
-        string Template { get; set; }
+        ScriptTemplate Template { get; set; }
 
         object[] BaseObjects { get; set; }
 
@@ -34,7 +34,7 @@ namespace DLHBuilder.Generator
         public string Render()
         {
             char delimiter = '$';
-            string content = TemplateContent();
+            string content = Template.Content;
             Template output = new Template(content, delimiter, delimiter);
 
             foreach(object baseobject in BaseObjects)

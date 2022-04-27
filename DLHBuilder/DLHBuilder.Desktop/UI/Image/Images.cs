@@ -16,6 +16,7 @@ namespace DLHBuilder.Desktop.UI
                 ImageList output = new ImageList();
                 output.Images.Add("Column", Properties.Resources.Column_16x);
                 output.Images.Add("Connection", Properties.Resources.Plugged_16x);
+                output.Images.Add("Copy", Properties.Resources.Copy_16x);
                 output.Images.Add("Data Application", Properties.Resources.DatabaseApplication_16x);
                 output.Images.Add("Data Artifact", Properties.Resources.DatabaseStoredProcedures_16x);
                 output.Images.Add("Data Source", Properties.Resources.DataSourceReference_16x);
@@ -27,6 +28,7 @@ namespace DLHBuilder.Desktop.UI
                 output.Images.Add("Run", Properties.Resources.Run_16x);
                 output.Images.Add("Save", Properties.Resources.Save_16x);
                 output.Images.Add("Schema Item", Properties.Resources.PropertySnippet_16x);
+                output.Images.Add("Script", Properties.Resources.SQLScript_16x);
                 output.Images.Add("SQL", Properties.Resources.SQL_16x);
                 output.Images.Add("Table", Properties.Resources.Table_16x);
                 output.Images.Add("Template", Properties.Resources.Template_16x);

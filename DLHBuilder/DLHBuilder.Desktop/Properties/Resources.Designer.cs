@@ -103,6 +103,16 @@ namespace DLHBuilder.Desktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Copy_16x {
+            get {
+                object obj = ResourceManager.GetObject("Copy_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap DatabaseApplication_16x {
             get {
                 object obj = ResourceManager.GetObject("DatabaseApplication_16x", resourceCulture);
@@ -280,6 +290,16 @@ namespace DLHBuilder.Desktop.Properties {
         internal static System.Drawing.Bitmap SQL_16x {
             get {
                 object obj = ResourceManager.GetObject("SQL_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap SQLScript_16x {
+            get {
+                object obj = ResourceManager.GetObject("SQLScript_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
