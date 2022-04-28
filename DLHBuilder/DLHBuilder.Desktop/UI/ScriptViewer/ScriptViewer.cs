@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using DLHBuilder.Generator;
+using DLHBuilder.Desktop.Model;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -13,7 +14,7 @@ namespace DLHBuilder.Desktop.UI
         public ScriptViewer(object baseobject, ScriptTemplateReference reference, ScriptTemplateCollection templates)
         {
             string script = string.Format("Script {0} could not be found", reference.Template);
-            ScriptTemplate template = templates.FirstOrDefault(x => x.Path() + "." + x.Name == reference.Template);
+            ScriptTemplate template = new CollatedScriptTemplateCollection(templates).FirstOrDefault(x => x.Path() + "." + x.Name == reference.Template);
 
             if (template != null)
             {

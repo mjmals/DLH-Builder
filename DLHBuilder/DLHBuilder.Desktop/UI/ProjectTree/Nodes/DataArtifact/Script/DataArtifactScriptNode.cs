@@ -14,6 +14,8 @@ namespace DLHBuilder.Desktop.UI
             Text = reference.DisplayName;
             Reference = reference;
             Artifact = artifact;
+
+            Reference.PropertyUpdated += OnReferenceUpdated;
         }
 
         ScriptTemplateReference Reference { get; set; }
@@ -30,6 +32,11 @@ namespace DLHBuilder.Desktop.UI
                 (
                     new ScriptViewer(Artifact, Reference, Tree.Project.ScriptTemplates)
                 );
+        }
+
+        void OnReferenceUpdated(object sender, EventArgs e)
+        {
+            Text = Reference.DisplayName;
         }
     }
 }

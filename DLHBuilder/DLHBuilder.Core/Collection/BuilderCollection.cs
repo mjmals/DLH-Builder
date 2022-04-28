@@ -28,10 +28,20 @@ namespace DLHBuilder
         [JsonIgnore]
         public EventHandler CollectionAdded;
 
+        [JsonIgnore]
+        public EventHandler CollectionModified;
+
         public new void Add(T item)
         {
             base.Add(item);
             CollectionAdded?.Invoke(item, null);
+            CollectionModified?.Invoke(item, null);
+        }
+
+        public new void Remove(T item)
+        {
+            base.Remove(item);
+            CollectionModified?.Invoke(item, null);
         }
 
         string DirectoryPath

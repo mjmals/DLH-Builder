@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.ComponentModel;
+using DLHBuilder.Desktop.Model;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -12,7 +13,7 @@ namespace DLHBuilder.Desktop.UI
     {
         public ScriptTemplateMappingEditor(ScriptTemplateCollection templates, ScriptTemplateReferenceCollection templatererences)
         {
-            Templates = templates;
+            Templates = new CollatedScriptTemplateCollection(templates);
             TemplateReferences = templatererences;
 
             Text = "Script Template Mapping";
