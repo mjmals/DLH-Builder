@@ -13,6 +13,7 @@ namespace DLHBuilder.Desktop.UI
             Node = node;
             Items.Add(new ProjectTreeMenuButton("Add Artifact", AddArtifact));
             Items.Add(new ProjectTreeMenuButton("Add Artifact Folder", AddArtifactFolder));
+            Items.Add(new ProjectTreeMenuButton("Import from Connection", ImportArtifact));
         }
 
         DataStageNode Node
@@ -31,6 +32,25 @@ namespace DLHBuilder.Desktop.UI
             DataArtifactFolderNode node = new DataArtifactFolderNode("<New Folder>", null, Node);
             Node.Nodes.Add(node);
             Node.Tree.SelectedNode = node;
+        }
+
+        void ImportArtifact(object sender, EventArgs e)
+        {
+            DataArtifactImportDialog importdialog;
+
+            if(Node.Stage.GetType() == typeof(MSSQLDataStage))
+            {
+                SQLConnectionSelectionDialog conndialog = new SQLConnectionSelectionDialog(Node.Tree.Project.Connections);
+                conndialog.ShowDialog();
+
+                if(conndialog.DialogResult != System.Windows.Forms.DialogResult.OK)
+                {
+                    return;
+                }
+
+                importdialog = new SQLDataArtifactImportDialog((SQLDataConnection)conndialog.SelectedConnection);
+                importdialog.ShowDialog();
+            }
         }
     }
 }
