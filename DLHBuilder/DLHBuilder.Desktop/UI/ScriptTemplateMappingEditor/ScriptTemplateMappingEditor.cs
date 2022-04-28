@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Drawing;
 using System.ComponentModel;
 using DLHBuilder.Desktop.Model;
 
@@ -51,6 +52,7 @@ namespace DLHBuilder.Desktop.UI
             output.AllowUserToAddRows = false;
             output.CellValueChanged += CellUpdated;
             output.Rows.CollectionChanged += RowCreated;
+            output.MouseClick += GridClicked;
 
             DataGridViewComboBoxColumn templateselector = new DataGridViewComboBoxColumn() { HeaderText = "Template", Width = 400 };
             Templates.ForEach(delegate(ScriptTemplate template) { templateselector.Items.Add(template.Path() + "." + template.Name); });
@@ -62,6 +64,7 @@ namespace DLHBuilder.Desktop.UI
             foreach(ScriptTemplateReference reference in TemplateReferences)
             {
                 DataGridViewRow newrow = new DataGridViewRow();
+                newrow.Tag = reference;
 
                 DataGridViewComboBoxCell templatecell = new DataGridViewComboBoxCell();
                 Templates.ForEach(delegate (ScriptTemplate template) { templatecell.Items.Add(template.Path() + "." + template.Name); });
@@ -106,6 +109,57 @@ namespace DLHBuilder.Desktop.UI
         void RowCreated(object sender, CollectionChangeEventArgs e)
         {
             
+        }
+
+        void GridClicked(object sender, MouseEventArgs e)
+        {
+            DataGridView grid = (DataGridView)sender;
+            grid.DefaultCellStyle.BackColor = Color.White;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                int rowindex = grid.HitTest(e.X, e.Y).RowIndex;
+
+                if (rowindex > -1)
+                {
+                    DataGridViewRow row = grid.Rows[rowindex];
+                    ScriptTemplateReference reference = (ScriptTemplateReference)row.Tag;
+
+                    grid.Rows[rowindex].DefaultCellStyle.BackColor = grid.DefaultCellStyle.SelectionBackColor;
+                    //grid.ContextMenuStrip.Show(GridMenu(reference), new Point(e.X, e.Y));
+                    grid.ContextMenuStrip = GridMenu(reference);
+                    grid.ContextMenuStrip.Show(MousePosition.X, MousePosition.Y);
+                }
+            }
+        }
+
+        ContextMenuStrip GridMenu(ScriptTemplateReference reference)
+        {
+            ContextMenuStrip output = new ContextMenuStrip();
+            output.Items.Add("Delete Template Mapping", null, DeleteMapping);
+
+            foreach (ToolStripMenuItem item in output.Items)
+            {
+                item.Tag = reference;
+            }
+
+            return output;
+        }
+
+        void DeleteMapping(object sender, EventArgs e)
+        {
+            ToolStripMenuItem menuitem = (ToolStripMenuItem)sender;
+            ScriptTemplateReference reference = (ScriptTemplateReference)menuitem.Tag;
+
+            foreach (DataGridViewRow row in MappingTable.Rows)
+            {
+                if(row.Tag == reference)
+                {
+                    MappingTable.Rows.Remove(row);
+                }
+            }
+
+            TemplateReferences.Remove(reference);
         }
     }
 }
