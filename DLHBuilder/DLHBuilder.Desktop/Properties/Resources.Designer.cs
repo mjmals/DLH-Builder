@@ -295,6 +295,21 @@ namespace DLHBuilder.Desktop.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to SELECT
+        ///	TABLE_NAME AS [Name],
+        ///	CONCAT(TABLE_CATALOG, &apos;,&apos;, TABLE_SCHEMA, &apos;,&apos;, TABLE_NAME) AS [ArtifactNamespace],
+        ///	COLUMN_NAME AS [Schema.Name],
+        ///	TABLE_SCHEMA AS [DataSource.Schema]
+        ///FROM
+        ///	INFORMATION_SCHEMA.COLUMNS.
+        /// </summary>
+        internal static string SQLArtifactImport {
+            get {
+                return ResourceManager.GetString("SQLArtifactImport", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap SQLScript_16x {
