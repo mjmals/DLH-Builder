@@ -16,11 +16,14 @@ namespace DLHBuilder.Desktop.UI
             Connection = connection;
             TransformSourceObjects();
             
-            ObjectPanel.Controls.Add(ObjectTree = new DataArtifactImportObjectTree(connection, SourceArtifacts));
-            Controls.Add(ObjectPanel);
-
+            SelectorPanel.Controls.Add(SchemaTree = new DataArtifactImportSchemaItemTree(null, null));
             Controls.Add(SelectorPanel);
             Controls.Add(ControlPanel);
+
+            ObjectPanel.Controls.Add(ObjectTree = new DataArtifactImportObjectTree(connection, SourceArtifacts));
+            ObjectTree.AfterSelect += ObjectTreeSelectionChanged;
+            ObjectTree.AfterCheck += ObjectTreeChecked;
+            Controls.Add(ObjectPanel);
 
             WindowState = FormWindowState.Maximized;
         }
@@ -29,7 +32,11 @@ namespace DLHBuilder.Desktop.UI
 
         public DataArtifact Artifact { get; set; }
 
+        public DataArtifactImportSelectionCollection SelectedArtifacts = new DataArtifactImportSelectionCollection();
+
         DataArtifactImportObjectTree ObjectTree { get; set; }
+
+        DataArtifactImportSchemaItemTree SchemaTree { get; set; }
 
         Panel ObjectPanel = new Panel() { Dock = DockStyle.Left, Width = 400 };
 
@@ -81,6 +88,41 @@ namespace DLHBuilder.Desktop.UI
                 schemaItem.Name = row["Schema.Name"].ToString();
                 artifact.Schema.Add(schemaItem);
             }
+        }
+
+        protected virtual void ObjectTreeSelectionChanged(object sender, TreeViewEventArgs e)
+        {
+            DataArtifact artifact = (DataArtifact)e.Node.Tag;
+            SetSchemaTree(artifact);
+        }
+
+        protected virtual void ObjectTreeChecked(object sender, TreeViewEventArgs e)
+        {
+            DataArtifact artifact = (DataArtifact)e.Node.Tag;
+
+            switch(e.Node.Checked)
+            {
+                case true:
+                    if(!SelectedArtifacts.ContainsKey(artifact))
+                    {
+                        DataArtifactSchemaItemCollection items = new DataArtifactSchemaItemCollection();
+                        items.AddRange(artifact.Schema);
+                        SelectedArtifacts.Add(artifact, items);
+                    }
+                    break;
+                case false:
+                    SelectedArtifacts.Remove(artifact);
+                    break;
+            }
+
+            SetSchemaTree(artifact);
+        }
+
+        void SetSchemaTree(DataArtifact artifact)
+        {
+            SelectorPanel.Controls.Clear();
+            SchemaTree = new DataArtifactImportSchemaItemTree(artifact, SelectedArtifacts);
+            SelectorPanel.Controls.Add(SchemaTree);
         }
     }
 }
