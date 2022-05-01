@@ -18,6 +18,8 @@ namespace DLHBuilder.Desktop.UI
             
             SelectorPanel.Controls.Add(SchemaTree = new DataArtifactImportSchemaItemTree(null, null));
             Controls.Add(SelectorPanel);
+
+            ControlPanel.ImportButton.Click += ImportButtonClicked;
             Controls.Add(ControlPanel);
 
             ObjectPanel.Controls.Add(ObjectTree = new DataArtifactImportObjectTree(connection, SourceArtifacts));
@@ -42,7 +44,7 @@ namespace DLHBuilder.Desktop.UI
 
         Panel SelectorPanel = new Panel() { Dock = DockStyle.Fill };
 
-        Panel ControlPanel = new Panel() { Dock = DockStyle.Bottom, Height = 50 };
+        DataArtifactImportControls ControlPanel = new DataArtifactImportControls();
 
         protected DataArtifactCollection SourceArtifacts = new DataArtifactCollection();
 
@@ -123,6 +125,17 @@ namespace DLHBuilder.Desktop.UI
             SelectorPanel.Controls.Clear();
             SchemaTree = new DataArtifactImportSchemaItemTree(artifact, SelectedArtifacts);
             SelectorPanel.Controls.Add(SchemaTree);
+        }
+
+        void ImportButtonClicked(object sender, EventArgs e)
+        {
+            foreach(DataArtifact artifact in SelectedArtifacts.Keys)
+            {
+                artifact.Schema.Clear();
+                artifact.Schema.AddRange(SelectedArtifacts[artifact]);
+            }
+
+            DialogResult = DialogResult.OK;
         }
     }
 }

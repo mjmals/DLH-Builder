@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -41,15 +42,21 @@ namespace DLHBuilder.Desktop.UI
             if(Node.Stage.GetType() == typeof(MSSQLDataStage))
             {
                 SQLConnectionSelectionDialog conndialog = new SQLConnectionSelectionDialog(Node.Tree.Project.Connections);
-                conndialog.ShowDialog();
-
-                if(conndialog.DialogResult != System.Windows.Forms.DialogResult.OK)
+                
+                if(conndialog.ShowDialog() != DialogResult.OK)
                 {
                     return;
                 }
 
                 importdialog = new SQLDataArtifactImportDialog((SQLDataConnection)conndialog.SelectedConnection);
-                importdialog.ShowDialog();
+
+                if(importdialog.ShowDialog() == DialogResult.OK)
+                {
+                    foreach(DataArtifact artifact in importdialog.SelectedArtifacts.Keys)
+                    {
+                        Node.Stage.Artifacts.Add(artifact);
+                    }
+                }
             }
         }
     }
