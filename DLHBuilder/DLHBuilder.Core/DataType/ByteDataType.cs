@@ -10,6 +10,8 @@ namespace DLHBuilder
     {
         public Type BaseType => typeof(byte);
 
+        public int Length { get; set; }
+
         public override string ToString()
         {
             return "Byte";
