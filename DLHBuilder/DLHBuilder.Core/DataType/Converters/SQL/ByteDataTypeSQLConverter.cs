@@ -10,14 +10,18 @@ namespace DLHBuilder.DataType.Converters.SQL
     {
         public Dictionary<Type, string[]> SourceTypes => new Dictionary<Type, string[]>
         {
-            { typeof(SQLDataConnection), new string[] { "binary" } }
+            { typeof(SQLDataConnection), new string[] { "binary", "image" } }
         };
 
         public IDataType ConvertSourceType(string sourceType)
         {
             ByteDataType output = new ByteDataType();
-            string length = sourceType.Split('(', ')').Where(x => !string.IsNullOrEmpty(x)).ToArray().Last();
-            output.Length = length.ToLower() == "max" ? 8000 : Convert.ToInt32(length);
+
+            if (sourceType.ToLower() != "image")
+            {
+                string length = sourceType.Split('(', ')').Where(x => !string.IsNullOrEmpty(x)).ToArray().Last();
+                output.Length = length.ToLower() == "max" ? 8000 : Convert.ToInt32(length);
+            }
 
             return output;
         }

@@ -10,7 +10,7 @@ namespace DLHBuilder.DataType.Converters.SQL
     {
         public Dictionary<Type, string[]> SourceTypes => new Dictionary<Type, string[]>
         {
-            { typeof(SQLDataConnection), new string[] { "int", "bigint", "smallint", "tinyint" } }
+            { typeof(SQLDataConnection), new string[] { "int", "bigint", "smallint", "tinyint", "float", "real" } }
         };
 
         public IDataType ConvertSourceType(string sourceType)

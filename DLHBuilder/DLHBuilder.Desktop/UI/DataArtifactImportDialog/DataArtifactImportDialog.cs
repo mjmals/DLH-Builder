@@ -88,6 +88,7 @@ namespace DLHBuilder.Desktop.UI
                 DataArtifactSchemaItem schemaItem = new DataArtifactSchemaItem();
                 schemaItem.ID = Guid.NewGuid();
                 schemaItem.Name = row["Schema.Name"].ToString();
+                schemaItem.DataType = new DataTypeConverter(Connection.GetType(), row["Schema.DataType"].ToString()).GetDataType();
                 artifact.Schema.Add(schemaItem);
             }
         }
