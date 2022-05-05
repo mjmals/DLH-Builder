@@ -88,7 +88,7 @@ namespace DLHBuilder.Desktop.UI
                 DataArtifactSchemaItem schemaItem = new DataArtifactSchemaItem();
                 schemaItem.ID = Guid.NewGuid();
                 schemaItem.Name = row["Schema.Name"].ToString();
-                schemaItem.DataType = new DataTypeConverter(Connection.GetType(), row["Schema.DataType"].ToString()).GetDataType();
+                schemaItem.DataType = new SourceDataType(row["Schema.DataType"].ToString());
                 artifact.Schema.Add(schemaItem);
             }
         }
@@ -134,6 +134,7 @@ namespace DLHBuilder.Desktop.UI
             {
                 artifact.Schema.Clear();
                 artifact.Schema.AddRange(SelectedArtifacts[artifact]);
+                artifact.Schema.ForEach(delegate(DataArtifactSchemaItem schemaItem) { schemaItem.DataType = new DataTypeConverter(Connection.GetType(), ((SourceDataType)schemaItem.DataType).DataTypeName).GetDataType(); });
             }
 
             DialogResult = DialogResult.OK;
