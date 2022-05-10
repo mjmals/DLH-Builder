@@ -13,8 +13,6 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             Text = stage.Name;
-            AddFolders();
-            AddArtifacts();
         }
 
         public IDataStage Stage
@@ -66,49 +64,6 @@ namespace DLHBuilder.Desktop.UI
             
             node.Nodes.Add(output);
             return output;
-        }
-
-        void AddArtifacts()
-        {
-            foreach(DataArtifact artifact in Stage.Artifacts)
-            {
-                AddArtifact(artifact);
-            }
-        }
-
-        void AddFolders()
-        {
-            foreach(DataArtifact artifact in Stage.Artifacts)
-            {
-                DataArtifactFolderNode parent = null;
-                string path = "";
-
-                foreach (string folder in artifact.ArtifactNamespace)
-                {
-                    TreeNode findnode = Nodes.Find(path == string.Empty ? "#" : path, true).FirstOrDefault();
-                    parent = findnode != null ? (DataArtifactFolderNode)findnode : parent;
-                    path += path == string.Empty ? folder : string.Format(".{0}", folder);
-
-                    if (Nodes.Find(path, true).Count() > 0)
-                    {
-                        continue;
-                    }
-
-                    DataArtifactFolderNode node = new DataArtifactFolderNode(folder, parent, this);
-
-                    switch (parent != null)
-                    {
-                        case true:
-                            parent.Nodes.Add(node);
-                            break;
-                        default:
-                            this.Nodes.Add(node);
-                            break;
-                    }
-
-                    parent = node;
-                }
-            }
         }
     }
 }

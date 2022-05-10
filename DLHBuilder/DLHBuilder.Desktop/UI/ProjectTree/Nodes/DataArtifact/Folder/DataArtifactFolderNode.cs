@@ -9,48 +9,31 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactFolderNode : ProjectTreeNode
     {
-        public DataArtifactFolderNode(string folder, DataArtifactFolderNode parentfolder, DataStageNode parentstage)
+        public DataArtifactFolderNode(DataArtifactFolder folder)
         {
-            Text = folder;
-            ParentFolder = parentfolder;
-            ParentStage = parentstage;
-
-            Name = FolderPath();
+            Folder = folder;
+            Text = Folder.Name;
+            SetName();
         }
 
-        public DataArtifactFolderNode ParentFolder { get; set; }
-
-        public DataStageNode ParentStage { get; set; }
-
-        public string FolderPath()
+        public DataArtifactFolder Folder
         {
-            string output = Text;
-
-            DataArtifactFolderNode parent = ParentFolder;
-
-            while(parent != null)
-            {
-                output = string.Format("{0}.{1}", parent.Text, output);
-                parent = parent.ParentFolder;
-            }
-
-            return output;
+            get => (DataArtifactFolder)Tag;
+            set => Tag = value;
         }
 
         public override ContextMenuStrip ContextMenuStrip => new DataArtifactFolderMenu(this);
 
+        void SetName()
+        {
+            Name = "Data Artifacts." + Folder.FullPath;
+        }
+
         public override void LabelChanged(string text)
         {
             base.LabelChanged(text);
-            Name = FolderPath();
-        }
-
-        void AddArtifacts()
-        {
-            foreach(DataArtifact artifact in ParentStage.Stage.Artifacts.Where(x => ((DataArtifact)x).ArtifactPath == FolderPath()))
-            {
-                Nodes.Add(new DataArtifactNode(artifact));
-            }
+            Folder.Name = text;
+            SetName();
         }
     }
 }

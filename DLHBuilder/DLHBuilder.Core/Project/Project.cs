@@ -52,6 +52,38 @@ namespace DLHBuilder
         } 
 
         private DataConnectionCollection connections { get; set; }
+        
+        [JsonIgnore]
+        public DataArtifactFolderCollection ArtifactFolders
+        {
+            get
+            {
+                if(artifactFolders == null)
+                {
+                    artifactFolders = new DataArtifactFolderCollection();
+                }
+                return artifactFolders;
+            }
+            set => artifactFolders = value;
+        }
+
+        private DataArtifactFolderCollection artifactFolders { get; set; }
+
+        [JsonIgnore]
+        public DataArtifactCollection Artifacts
+        {
+            get
+            {
+                if(artifacts == null)
+                {
+                    artifacts = new DataArtifactCollection();
+                }
+                return artifacts;
+            }
+            set => artifacts = value;
+        }
+
+        private DataArtifactCollection artifacts { get; set; }
 
         [JsonIgnore]
         public DataApplicationCollection Applications
@@ -76,16 +108,16 @@ namespace DLHBuilder
         {
             get
             {
-                if(scripttemplates == null)
+                if(scriptTemplates == null)
                 {
-                    scripttemplates = new ScriptTemplateCollection();
+                    scriptTemplates = new ScriptTemplateCollection();
                 }
-                return scripttemplates;
+                return scriptTemplates;
             }
-            set => scripttemplates = value;
+            set => scriptTemplates = value;
         }
 
-        private ScriptTemplateCollection scripttemplates { get; set; }
+        private ScriptTemplateCollection scriptTemplates { get; set; }
 
         public void Save(string path)
         {
@@ -101,6 +133,8 @@ namespace DLHBuilder
             extractor.Write(this);
 
             Connections.Save(path);
+            ArtifactFolders.Save(path);
+            Artifacts.Save(path);
             Applications.Save(path);
             ScriptTemplates.Save(path);
         }
@@ -111,6 +145,8 @@ namespace DLHBuilder
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
             output.Connections.Load(path);
+            output.ArtifactFolders.Load(path);
+            output.Artifacts.Load(path);
             output.Applications.Load(path);
             output.ScriptTemplates.Load(path);
 

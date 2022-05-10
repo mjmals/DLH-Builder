@@ -14,6 +14,8 @@ namespace DLHBuilder
 
         protected override string FileNameProperty => "FullName";
 
+        protected override string FileSearchPattern => "*DataArtifact.json";
+
         protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
 
         [JsonIgnore]

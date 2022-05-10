@@ -15,7 +15,11 @@ namespace DLHBuilder
 
         protected virtual string FileNameProperty => "Name";
 
+        protected virtual string SubfolderProperty => string.Empty;
+
         protected virtual BuilderCollectionItemType CollectionType => BuilderCollectionItemType.File;
+
+        protected virtual string FileSearchPattern => "*.json";
 
         [JsonIgnore]
         public EventHandler CollectionSaved;
@@ -84,16 +88,17 @@ namespace DLHBuilder
         {
             foreach(T item in this)
             {
-                Type objecttype = item.GetType();
-                string objecttitle = (string)objecttype.GetProperty(FileNameProperty).GetValue(item);
-                string subfolder = CollectionType == BuilderCollectionItemType.FolderAndFile ? objecttitle : string.Empty;
+                Type objectType = item.GetType();
+                string objectTitle = (string)objectType.GetProperty(FileNameProperty).GetValue(item);
+                string subFolder = (string)objectType.GetProperty(SubfolderProperty).GetValue(item);
+                string directory = !string.IsNullOrEmpty(subFolder) ? Path.Combine(DirectoryPath, subFolder.Replace(".", @"\")) : DirectoryPath;
 
-                if(!string.IsNullOrEmpty(subfolder) && !Directory.Exists(Path.Combine(DirectoryPath, subfolder)))
+                if(!Directory.Exists(directory))
                 {
-                    Directory.CreateDirectory(Path.Combine(DirectoryPath, subfolder));
+                    Directory.CreateDirectory(directory);
                 }
 
-                string filename = Path.Combine(DirectoryPath, subfolder, string.Format("{0}.{1}.json", objecttitle, objecttype.Name));
+                string filename = Path.Combine(directory, string.Format("{0}.{1}.json", objectTitle, objectType.Name));
 
                 new FileMetadataExtractor(filename).Write(item);
             }
@@ -103,9 +108,11 @@ namespace DLHBuilder
         {
             foreach(T item in this)
             {
-                string directory = Path.Combine(DirectoryPath, (string)item.GetType().GetProperty(FileNameProperty).GetValue(item));
+                Type objectType = item.GetType();
+                string subFolder = (string)objectType.GetProperty(SubfolderProperty).GetValue(item);
+                string directory = !string.IsNullOrEmpty(subFolder) ? Path.Combine(DirectoryPath, subFolder.Replace(".", @"\")) : DirectoryPath;
 
-                if(!Directory.Exists(directory))
+                if (!Directory.Exists(directory))
                 {
                     Directory.CreateDirectory(directory);
                 }
@@ -146,7 +153,7 @@ namespace DLHBuilder
 
         void LoadFiles(string path)
         {
-            foreach (string file in Directory.GetFiles(path))
+            foreach (string file in Directory.GetFiles(path, FileSearchPattern, SearchOption.AllDirectories))
             {
                 string filename = Path.GetFileNameWithoutExtension(file);
                 int startpos = filename.LastIndexOf(".") + 1;

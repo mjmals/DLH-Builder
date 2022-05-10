@@ -31,6 +31,8 @@ namespace DLHBuilder
 
         internal override void Save(string path)
         {
+            base.Save(path);
+
             foreach(ScriptTemplate template in this.Where(x => x.Type != ScriptTemplateType.BuiltIn))
             {
                 string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".json");
