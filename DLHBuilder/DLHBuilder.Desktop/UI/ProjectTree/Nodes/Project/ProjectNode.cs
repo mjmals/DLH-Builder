@@ -16,7 +16,7 @@ namespace DLHBuilder.Desktop.UI
             Nodes.Add(new ConnectionsNode(project.Connections));
             Nodes.Add(new ScriptTemplatesNode(project.ScriptTemplates));
             Nodes.Add(new DataArtifactFoldersNode(project.ArtifactFolders, project.Artifacts));
-            AddApplications();
+            Nodes.Add(new DataApplicationsNode(project.Applications));
 
             Expand();
         }
@@ -27,7 +27,6 @@ namespace DLHBuilder.Desktop.UI
             set
             {
                 value.PropertyUpdated += OnProjectUpdated;
-                value.Applications.CollectionAdded += OnApplicationAdded;
                 Tag = value;
             }
         }
@@ -52,27 +51,6 @@ namespace DLHBuilder.Desktop.UI
         void OnProjectUpdated(object sender, EventArgs e)
         {
 
-        }
-
-        void OnApplicationAdded(object sender, EventArgs e)
-        {
-            DataApplicationNode node = AddApplication((IDataApplication)sender);
-            Tree.SelectedNode = node;
-        }
-
-        void AddApplications()
-        {
-            foreach(IDataApplication application in Project.Applications.OrderBy(x => x.Ordinal))
-            {
-                AddApplication(application);
-            }
-        }
-
-        DataApplicationNode AddApplication(IDataApplication application)
-        {
-            DataApplicationNode output = DataApplicationNode.New(application);
-            Nodes.Add(output);
-            return output;
         }
     }
 }

@@ -29,6 +29,8 @@ namespace DLHBuilder.Desktop.UI
 
         public override ContextMenuStrip ContextMenuStrip => new DataArtifactFolderMenu(this);
 
+        public override bool AllowLabelChange => false;
+
         void AddFolders()
         {
             foreach(DataArtifactFolder folder in Folders)

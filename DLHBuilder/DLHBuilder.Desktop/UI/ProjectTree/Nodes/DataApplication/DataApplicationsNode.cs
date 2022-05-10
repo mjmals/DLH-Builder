@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -11,13 +12,44 @@ namespace DLHBuilder.Desktop.UI
         public DataApplicationsNode(DataApplicationCollection applications)
         {
             Applications = applications;
-            Text = "Applications";
+            Text = "Data Applications";
+            AddApplications();
         }
 
         public DataApplicationCollection Applications
         {
             get => (DataApplicationCollection)Tag;
-            set => Tag = value;
+            set
+            {
+                value.CollectionAdded += OnApplicationAdded;
+                Tag = value;
+            }
+        }
+
+        public override ContextMenuStrip ContextMenuStrip => new DataApplicationsMenu(this);
+
+        public override bool AllowLabelChange => false;
+
+        void AddApplications()
+        {
+            foreach(IDataApplication application in Applications.OrderBy(x => x.Ordinal))
+            {
+                AddApplication(application);
+            }
+        }
+
+        void OnApplicationAdded(object sender, EventArgs e)
+        {
+            DataApplicationNode node = AddApplication((IDataApplication)sender);
+            Tree.SelectedNode = node;
+        }
+
+
+        DataApplicationNode AddApplication(IDataApplication application)
+        {
+            DataApplicationNode output = DataApplicationNode.New(application);
+            Nodes.Add(output);
+            return output;
         }
     }
 }

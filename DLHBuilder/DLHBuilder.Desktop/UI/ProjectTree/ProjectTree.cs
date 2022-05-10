@@ -46,6 +46,12 @@ namespace DLHBuilder.Desktop.UI
 
         void OnLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
+            if(string.IsNullOrEmpty(e.Label))
+            {
+                e.CancelEdit = true;
+                return;
+            }
+
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
             node.LabelChanged(e.Label);
         }
