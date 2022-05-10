@@ -20,6 +20,22 @@ namespace DLHBuilder
         [Browsable(false)]
         public int Ordinal { get; set; }
 
+        [JsonIgnore]
+        public DataStageFolderCollection Folders
+        {
+            get
+            {
+                if(folders == null)
+                {
+                    folders = new DataStageFolderCollection();
+                }
+                return folders;
+            }
+            set => folders = value;
+        }
+
+        private DataStageFolderCollection folders { get; set; }
+
         public ScriptTemplateReferenceCollection ScriptTemplates
         {
             get

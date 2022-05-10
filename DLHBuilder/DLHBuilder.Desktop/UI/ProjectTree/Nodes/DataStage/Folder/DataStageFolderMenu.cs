@@ -3,21 +3,20 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataStageMenu : ProjectTreeMenu
+    class DataStageFolderMenu : ProjectTreeMenu
     {
-        public DataStageMenu(DataStageNode node)
+        public DataStageFolderMenu(DataStageFolderNode node)
         {
             Node = node;
             Items.Add(new ProjectTreeMenuButton("Add Folder", AddFolder));
         }
 
-        DataStageNode Node
+        public DataStageFolderNode Node
         {
-            get => (DataStageNode)Tag;
+            get => (DataStageFolderNode)Tag;
             set => Tag = value;
         }
 
@@ -27,8 +26,10 @@ namespace DLHBuilder.Desktop.UI
             folder.ID = Guid.NewGuid();
             folder.Name = "<New Data Stage Folder>";
             folder.Path = new List<string>();
+            folder.Path.AddRange(Node.Folder.Path);
+            folder.Path.Add(Node.Folder.Name);
 
-            Node.Stage.Folders.Add(folder);
+            Node.ParentStage.Folders.Add(folder);
         }
     }
 }

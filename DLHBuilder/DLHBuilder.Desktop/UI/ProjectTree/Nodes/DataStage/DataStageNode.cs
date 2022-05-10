@@ -13,6 +13,8 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage = stage;
             Text = stage.Name;
+            Name = "Data Stages." + stage.Name;
+            AddFolders();
         }
 
         public IDataStage Stage
@@ -20,6 +22,7 @@ namespace DLHBuilder.Desktop.UI
             get => (IDataStage)Tag;
             set
             {
+                value.Folders.CollectionAdded += OnFolderAdded;
                 Tag = value;
             }
         }
@@ -42,7 +45,42 @@ namespace DLHBuilder.Desktop.UI
         public override void LabelChanged(string text)
         {
             Stage.Name = text;
+            Name = "Data Stages." + text;
             base.LabelChanged(text);
+        }
+
+        void OnFolderAdded(object sender, EventArgs e)
+        {
+            DataStageFolder folder = (DataStageFolder)sender;
+            Tree.SelectedNode = AddFolder(folder);
+        }
+
+        void AddFolders()
+        {
+            foreach(DataStageFolder folder in Stage.Folders)
+            {
+                AddFolder(folder);
+            }
+        }
+
+        DataStageFolderNode AddFolder(DataStageFolder folder)
+        {
+            DataStageFolderNode output = new DataStageFolderNode(folder, Stage);
+            output.Name = Name + "." + (folder.Path.Count > 0 ? folder.FullPath : folder.Name);
+            
+            string parentNodeName = Name + (folder.Path.Count > 0 ? "." + string.Join('.', folder.Path) : "");
+            
+            if(parentNodeName == this.Name)
+            {
+                Nodes.Add(output);
+            }
+            else
+            {
+                ProjectTreeNode parentNode = (ProjectTreeNode)Nodes.Find(parentNodeName, true).FirstOrDefault();
+                parentNode.Nodes.Add(output);
+            }
+
+            return output;
         }
     }
 }

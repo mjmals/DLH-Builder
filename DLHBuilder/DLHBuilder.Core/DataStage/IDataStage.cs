@@ -16,6 +16,8 @@ namespace DLHBuilder
 
         int Ordinal { get; set; }
 
+        DataStageFolderCollection Folders { get; set; }
+
         ScriptTemplateReferenceCollection ScriptTemplates { get; set; }
     }
 }

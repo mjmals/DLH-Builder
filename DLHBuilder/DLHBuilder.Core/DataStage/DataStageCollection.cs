@@ -28,11 +28,21 @@ namespace DLHBuilder
         internal override void Save(string path)
         {
             base.Save(path);
+
+            foreach(IDataStage stage in this)
+            {
+                stage.Folders.Save(Path.Combine(path, DirectoryName, stage.Name));
+            }
         }
 
         internal override void Load(string path)
         {
             base.Load(path);
+
+            foreach (IDataStage stage in this)
+            {
+                stage.Folders.Load(Path.Combine(path, DirectoryName, stage.Name));
+            }
         }
     }
 }
