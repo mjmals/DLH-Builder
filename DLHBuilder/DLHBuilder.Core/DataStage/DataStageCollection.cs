@@ -11,6 +11,12 @@ namespace DLHBuilder
     {
         protected override string DirectoryName => "Data Stages";
 
+        protected override string FileNameProperty => "Name";
+
+        protected override string SubfolderProperty => "Name";
+
+        protected override string FileSearchPattern => "*DataStage.json";
+
         protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
 
         public new void Add(IDataStage stage)
@@ -22,21 +28,11 @@ namespace DLHBuilder
         internal override void Save(string path)
         {
             base.Save(path);
-
-            foreach(IDataStage stage in this)
-            {
-                stage.Artifacts.Save(Path.Combine(path, DirectoryName, stage.Name));
-            }
         }
 
         internal override void Load(string path)
         {
             base.Load(path);
-
-            foreach (IDataStage stage in this)
-            {
-                stage.Artifacts.Load(Path.Combine(path, DirectoryName, stage.Name));
-            }
         }
     }
 }

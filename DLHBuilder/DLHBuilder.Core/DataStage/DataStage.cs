@@ -20,22 +20,6 @@ namespace DLHBuilder
         [Browsable(false)]
         public int Ordinal { get; set; }
 
-        [JsonIgnore]
-        public DataArtifactCollection Artifacts
-        {
-            get
-            {
-                if(artifacts == null)
-                {
-                    artifacts = new DataArtifactCollection();
-                }
-                return artifacts;
-            }
-            set => artifacts = value;
-        }
-
-        private DataArtifactCollection artifacts { get; set; }
-
         public ScriptTemplateReferenceCollection ScriptTemplates
         {
             get

@@ -20,7 +20,6 @@ namespace DLHBuilder.Desktop.UI
             get => (IDataStage)Tag;
             set
             {
-                value.Artifacts.CollectionAdded += OnArtifactAdded;
                 Tag = value;
             }
         }
@@ -44,26 +43,6 @@ namespace DLHBuilder.Desktop.UI
         {
             Stage.Name = text;
             base.LabelChanged(text);
-        }
-
-        void OnArtifactAdded(object sender, EventArgs e)
-        {
-            DataArtifactNode node = AddArtifact((DataArtifact)sender);
-            Tree.SelectedNode = node;
-        }
-
-        DataArtifactNode AddArtifact(DataArtifact artifact)
-        {
-            DataArtifactNode output = new DataArtifactNode(artifact);
-            ProjectTreeNode node = this;
-
-            if(!string.IsNullOrEmpty(artifact.ArtifactPath))
-            {
-                node = (ProjectTreeNode)Nodes.Find(artifact.ArtifactPath, true).FirstOrDefault();
-            }
-            
-            node.Nodes.Add(output);
-            return output;
         }
     }
 }

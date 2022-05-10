@@ -11,6 +11,12 @@ namespace DLHBuilder
     {
         protected override string DirectoryName => "Data Applications";
 
+        protected override string FileNameProperty => "Name";
+
+        protected override string SubfolderProperty => "Name";
+
+        protected override string FileSearchPattern => "*DataApplication.json";
+
         protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
 
         public new void Add(IDataApplication application)
