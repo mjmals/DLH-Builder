@@ -25,6 +25,7 @@ namespace DLHBuilder
 
         private string name { get; set; }
 
+        [JsonIgnore]
         public IDataType DataType { get; set; }
 
         [JsonIgnore]

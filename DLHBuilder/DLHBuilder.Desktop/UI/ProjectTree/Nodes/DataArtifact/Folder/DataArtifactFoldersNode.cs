@@ -9,12 +9,14 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactFoldersNode : ProjectTreeNode
     {
-        public DataArtifactFoldersNode(DataArtifactFolderCollection folders)
+        public DataArtifactFoldersNode(DataArtifactFolderCollection folders, DataArtifactCollection artifacts)
         {
             Folders = folders;
+            Artifacts = artifacts;
             Text = "Data Artifacts";
             Name = "Data Artifacts";
             AddFolders();
+            AddArtifacts();
         }
 
         public DataArtifactFolderCollection Folders
@@ -22,6 +24,8 @@ namespace DLHBuilder.Desktop.UI
             get => (DataArtifactFolderCollection)Tag;
             set => Tag = value;
         }
+
+        public DataArtifactCollection Artifacts { get; set; }
 
         public override ContextMenuStrip ContextMenuStrip => new DataArtifactFolderMenu(this);
 
@@ -32,6 +36,17 @@ namespace DLHBuilder.Desktop.UI
                 DataArtifactFolderNode node = new DataArtifactFolderNode(folder);
 
                 ProjectTreeNode parentNode = folder.Path.Count == 0 ? this : (ProjectTreeNode)this.Nodes.Find("Data Artifacts." + string.Join('.', folder.Path), true).FirstOrDefault();
+                parentNode.Nodes.Add(node);
+            }
+        }
+
+        void AddArtifacts()
+        {
+            foreach(DataArtifact artifact in Artifacts)
+            {
+                DataArtifactNode node = new DataArtifactNode(artifact);
+
+                ProjectTreeNode parentNode = artifact.ArtifactNamespace.Count == 0 ? this : (ProjectTreeNode)this.Nodes.Find("Data Artifacts." + string.Join('.', artifact.ArtifactNamespace), true).FirstOrDefault();
                 parentNode.Nodes.Add(node);
             }
         }

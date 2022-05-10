@@ -90,7 +90,7 @@ namespace DLHBuilder
             {
                 Type objectType = item.GetType();
                 string objectTitle = (string)objectType.GetProperty(FileNameProperty).GetValue(item);
-                string subFolder = (string)objectType.GetProperty(SubfolderProperty).GetValue(item);
+                string subFolder = SubfolderProperty != string.Empty ? (string)objectType.GetProperty(SubfolderProperty).GetValue(item) : string.Empty;
                 string directory = !string.IsNullOrEmpty(subFolder) ? Path.Combine(DirectoryPath, subFolder.Replace(".", @"\")) : DirectoryPath;
 
                 if(!Directory.Exists(directory))
@@ -109,7 +109,7 @@ namespace DLHBuilder
             foreach(T item in this)
             {
                 Type objectType = item.GetType();
-                string subFolder = (string)objectType.GetProperty(SubfolderProperty).GetValue(item);
+                string subFolder = SubfolderProperty != string.Empty ? (string)objectType.GetProperty(SubfolderProperty).GetValue(item) : string.Empty;
                 string directory = !string.IsNullOrEmpty(subFolder) ? Path.Combine(DirectoryPath, subFolder.Replace(".", @"\")) : DirectoryPath;
 
                 if (!Directory.Exists(directory))

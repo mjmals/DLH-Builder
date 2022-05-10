@@ -10,9 +10,11 @@ namespace DLHBuilder
 {
     public class DataArtifactCollection : BuilderCollection<DataArtifact>
     {
-        protected override string DirectoryName => string.Empty;
+        protected override string DirectoryName => "Data Artifacts";
 
-        protected override string FileNameProperty => "FullName";
+        protected override string FileNameProperty => "Name";
+
+        protected override string SubfolderProperty => "FullName";
 
         protected override string FileSearchPattern => "*DataArtifact.json";
 
@@ -44,8 +46,8 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
-                artifact.DataSources.Save(Path.Combine(path, DirectoryName, artifact.FullName));
-                artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.FullName));
+                artifact.DataSources.Save(Path.Combine(path, DirectoryName, artifact.FullName.Replace(".", @"\")));
+                artifact.Schema.Save(Path.Combine(path, DirectoryName, artifact.FullName.Replace(".", @"\")));
             }
         }
 
@@ -55,8 +57,8 @@ namespace DLHBuilder
 
             foreach(DataArtifact artifact in this)
             {
-                artifact.DataSources.Load(Path.Combine(path, DirectoryName, artifact.FullName));
-                artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.FullName));
+                artifact.DataSources.Load(Path.Combine(path, DirectoryName, artifact.FullName.Replace(".", @"\")));
+                artifact.Schema.Load(Path.Combine(path, DirectoryName, artifact.FullName.Replace(".", @"\")));
             }
         }
     }
