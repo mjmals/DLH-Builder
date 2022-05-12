@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DataArtifactTransformationCollection : BuilderCollection<DataArtifactTransformation>
+    public class DataArtifactTransformationCollection : BuilderCollection<IDataArtifactTransformation>
     {
 
     }

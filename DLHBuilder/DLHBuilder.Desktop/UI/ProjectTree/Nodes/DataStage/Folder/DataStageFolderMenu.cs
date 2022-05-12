@@ -12,6 +12,7 @@ namespace DLHBuilder.Desktop.UI
         {
             Node = node;
             Items.Add(new ProjectTreeMenuButton("Add Folder", AddFolder));
+            Items.Add(new ProjectTreeMenuButton("Link Data Artifact", LinkArtifact));
         }
 
         public DataStageFolderNode Node
@@ -30,6 +31,23 @@ namespace DLHBuilder.Desktop.UI
             folder.Path.Add(Node.Folder.Name);
 
             Node.ParentStage.Folders.Add(folder);
+        }
+
+        void LinkArtifact(object sender, EventArgs e)
+        {
+            DataArtifactReferenceDialog refDialog = new DataArtifactReferenceDialog(Node.Tree.Project.Artifacts);
+
+            if(refDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                foreach(DataArtifactReference reference in refDialog.SelectedReferences.Keys)
+                {
+                    Node.ParentStage.ArtifactReferences.Add(reference);
+
+                    DataArtifactReferenceNode node = new DataArtifactReferenceNode(reference);
+                    Node.Nodes.Add(node);
+                    Node.Tree.SelectedNode = node;
+                }
+            }
         }
     }
 }

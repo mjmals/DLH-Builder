@@ -18,6 +18,8 @@ namespace DLHBuilder
 
         DataStageFolderCollection Folders { get; set; }
 
+        DataArtifactReferenceCollection ArtifactReferences { get; set; }
+
         ScriptTemplateReferenceCollection ScriptTemplates { get; set; }
     }
 }

@@ -19,17 +19,17 @@ namespace DLHBuilder.Desktop.UI
 
         protected override void AddRows()
         {
-            foreach(DataSource source in Sources)
-            {
-                if(!Transformations.Exists(x => x.DataSourceID == source.ID))
-                {
-                    Transformations.Add(new DataArtifactTransformation() { DataSourceID = source.ID });
-                }
+            //foreach(DataSource source in Sources)
+            //{
+            //    if(!Transformations.Exists(x => x.DataSourceID == source.ID))
+            //    {
+            //        Transformations.Add(new DataArtifactTransformation() { DataSourceID = source.ID });
+            //    }
 
-                DataArtifactTransformation transformation = Transformations.FirstOrDefault(x => x.DataSourceID == source.ID);
+            //    DataArtifactTransformation transformation = Transformations.FirstOrDefault(x => x.DataSourceID == source.ID);
 
 
-            }
+            //}
         }
     }
 }

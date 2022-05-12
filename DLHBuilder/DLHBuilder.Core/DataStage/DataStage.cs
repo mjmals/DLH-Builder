@@ -36,6 +36,22 @@ namespace DLHBuilder
 
         private DataStageFolderCollection folders { get; set; }
 
+        [JsonIgnore]
+        public DataArtifactReferenceCollection ArtifactReferences
+        {
+            get
+            {
+                if(artifactReferences == null)
+                {
+                    artifactReferences = new DataArtifactReferenceCollection();
+                }
+                return artifactReferences;
+            }
+            set => artifactReferences = value;
+        }
+
+        private DataArtifactReferenceCollection artifactReferences { get; set; }
+
         public ScriptTemplateReferenceCollection ScriptTemplates
         {
             get

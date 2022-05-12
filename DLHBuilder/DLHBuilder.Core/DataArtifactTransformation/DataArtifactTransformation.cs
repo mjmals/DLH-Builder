@@ -8,11 +8,6 @@ namespace DLHBuilder
 {
     public class DataArtifactTransformation
     {
-        public Guid DataSourceID { get; set; }
-
-        // to be de-commissioned
-        public Guid DataStageID { get; set; }
-
-        public string Definition { get; set; }
+        
     }
 }
