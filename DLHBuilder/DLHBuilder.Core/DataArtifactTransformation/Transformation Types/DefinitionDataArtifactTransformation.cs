@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class DefinitionDataArtifactTransformation : IDataArtifactTransformation
+    public class DefinitionDataArtifactTransformation : DataArtifactTransformation
     {
-        public Guid ID { get; set; }
-
-        public string Title => "Definition";
-
-        public Guid ReferencedObjectID { get; set; }
+        public override string Title => "Definition";
 
         public string Definition { get; set; }
     }

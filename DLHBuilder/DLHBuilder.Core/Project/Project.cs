@@ -150,6 +150,11 @@ namespace DLHBuilder
             output.Applications.Load(path);
             output.ScriptTemplates.Load(path);
 
+            foreach(DataArtifactReference reference in output.Applications.SelectMany(x => x.Stages).SelectMany(x => x.ArtifactReferences))
+            {
+                reference.ReferencedArtifact = output.Artifacts.FirstOrDefault(x => x.ID == reference.DataArtifactID);
+            }
+
             return output;
         }
 

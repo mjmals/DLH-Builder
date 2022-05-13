@@ -13,6 +13,29 @@ namespace DLHBuilder
 
         public Guid DataArtifactID { get; set; }
 
+        public List<string> Path { get; set; }
+
+        public string FullPath
+        {
+            get
+            {
+                List<string> output = new List<string>();
+                output.AddRange(Path);
+                output.Add(ID.ToString());
+
+                return string.Join('.', output);
+            }
+        }
+
+        [JsonIgnore]
+        public string Name
+        {
+            get
+            {
+                return ID.ToString();
+            }
+        }
+
         [JsonIgnore]
         public DataArtifact ReferencedArtifact { get; set; }
 

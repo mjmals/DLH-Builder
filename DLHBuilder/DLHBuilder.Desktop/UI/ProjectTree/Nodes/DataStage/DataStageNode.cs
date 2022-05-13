@@ -15,6 +15,7 @@ namespace DLHBuilder.Desktop.UI
             Text = stage.Name;
             Name = "Data Stages." + stage.Name;
             AddFolders();
+            AddReferences();
         }
 
         public IDataStage Stage
@@ -23,6 +24,7 @@ namespace DLHBuilder.Desktop.UI
             set
             {
                 value.Folders.CollectionAdded += OnFolderAdded;
+                value.ArtifactReferences.CollectionAdded += OnReferenceAdded;
                 Tag = value;
             }
         }
@@ -71,6 +73,40 @@ namespace DLHBuilder.Desktop.UI
             string parentNodeName = Name + (folder.Path.Count > 0 ? "." + string.Join('.', folder.Path) : "");
             
             if(parentNodeName == this.Name)
+            {
+                Nodes.Add(output);
+            }
+            else
+            {
+                ProjectTreeNode parentNode = (ProjectTreeNode)Nodes.Find(parentNodeName, true).FirstOrDefault();
+                parentNode.Nodes.Add(output);
+            }
+
+            return output;
+        }
+
+        void OnReferenceAdded(object sender, EventArgs e)
+        {
+            DataArtifactReference reference = (DataArtifactReference)sender;
+            Tree.SelectedNode = AddReference(reference);
+        }
+
+        void AddReferences()
+        {
+            foreach(DataArtifactReference reference in Stage.ArtifactReferences)
+            {
+                AddReference(reference);
+            }
+        }
+
+        DataArtifactReferenceNode AddReference(DataArtifactReference reference)
+        {
+            DataArtifactReferenceNode output = new DataArtifactReferenceNode(reference);
+            output.Name = Name + "." + (reference.Path.Count > 0 ? reference.FullPath : reference.ID);
+
+            string parentNodeName = Name + (reference.Path.Count > 0 ? "." + string.Join('.', reference.Path) : "");
+
+            if (parentNodeName == this.Name)
             {
                 Nodes.Add(output);
             }

@@ -9,9 +9,10 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataArtifactReferenceDialog : Form
     {
-        public DataArtifactReferenceDialog(DataArtifactCollection artifacts)
+        public DataArtifactReferenceDialog(DataArtifactCollection artifacts, string path)
         {
             Artifacts = artifacts;
+            Path = path;
 
             Text = "Link Data Artifact";
             WindowState = FormWindowState.Maximized;
@@ -31,6 +32,8 @@ namespace DLHBuilder.Desktop.UI
         }
 
         DataArtifactCollection Artifacts { get; set; }
+
+        string Path { get; set; }
 
         DataArtifactReferenceObjectTree ObjectTree { get; set; }
 
@@ -125,6 +128,7 @@ namespace DLHBuilder.Desktop.UI
         {
             foreach (DataArtifactReference reference in SelectedReferences.Keys)
             {
+                reference.Path = Path.Split('.').ToList();
                 reference.Transformations.AddRange(SelectedReferences[reference]);
             }
 

@@ -6,13 +6,9 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder
 {
-    public class SchemaInclusionDataArtifactTransformation : IDataArtifactTransformation
+    public class SchemaInclusionDataArtifactTransformation : DataArtifactTransformation
     {
-        public Guid ID { get; set; }
-
-        public string Title => "Schema Item Inclusion";
-
-        public Guid ReferencedObjectID { get; set; }
+        public override string Title => "Schema Item Inclusion";
 
         public bool Include { get; set; }
     }

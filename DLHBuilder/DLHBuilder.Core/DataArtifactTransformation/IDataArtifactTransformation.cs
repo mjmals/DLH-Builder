@@ -13,5 +13,7 @@ namespace DLHBuilder
         public string Title { get; }
 
         public Guid ReferencedObjectID { get; set; }
+
+        public string Name { get; }
     }
 }

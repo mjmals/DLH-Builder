@@ -35,17 +35,13 @@ namespace DLHBuilder.Desktop.UI
 
         void LinkArtifact(object sender, EventArgs e)
         {
-            DataArtifactReferenceDialog refDialog = new DataArtifactReferenceDialog(Node.Tree.Project.Artifacts);
+            DataArtifactReferenceDialog refDialog = new DataArtifactReferenceDialog(Node.Tree.Project.Artifacts, Node.Folder.FullPath);
 
             if(refDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
                 foreach(DataArtifactReference reference in refDialog.SelectedReferences.Keys)
                 {
                     Node.ParentStage.ArtifactReferences.Add(reference);
-
-                    DataArtifactReferenceNode node = new DataArtifactReferenceNode(reference);
-                    Node.Nodes.Add(node);
-                    Node.Tree.SelectedNode = node;
                 }
             }
         }

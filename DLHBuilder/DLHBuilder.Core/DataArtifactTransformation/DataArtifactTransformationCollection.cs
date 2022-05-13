@@ -8,6 +8,10 @@ namespace DLHBuilder
 {
     public class DataArtifactTransformationCollection : BuilderCollection<IDataArtifactTransformation>
     {
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.File;
 
+        protected override string FileNameProperty => "Name";
+
+        protected override string FileSearchPattern => "*DataArtifactTransformation.json";
     }
 }
