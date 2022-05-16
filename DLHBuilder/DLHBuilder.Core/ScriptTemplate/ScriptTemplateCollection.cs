@@ -14,7 +14,7 @@ namespace DLHBuilder
         internal override void Load(string path)
         {
             string searchpath = Path.Combine(path, DirectoryName);
-            string[] files = Directory.GetFiles(searchpath, "*.json", SearchOption.AllDirectories);
+            string[] files = Directory.GetFiles(searchpath, "*.ScriptTemplate.json", SearchOption.AllDirectories);
 
             foreach(string file in files)
             {
@@ -22,7 +22,7 @@ namespace DLHBuilder
                 ScriptTemplate template = extractor.LoadFile<ScriptTemplate>();
                 Add(template);
 
-                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace(".json", ".st"), FileMode.OpenOrCreate)))
+                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace("*.ScriptTemplate.json", ScriptTemplateFileExtension.Name), FileMode.OpenOrCreate)))
                 {
                     template.Content = rdr.ReadToEnd();
                 }
@@ -31,11 +31,9 @@ namespace DLHBuilder
 
         internal override void Save(string path)
         {
-            base.Save(path);
-
             foreach(ScriptTemplate template in this.Where(x => x.Type != ScriptTemplateType.BuiltIn))
             {
-                string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".json");
+                string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".ScriptTemplate.json");
 
                 if (!Directory.Exists(Path.GetDirectoryName(filepath)))
                 {
@@ -45,7 +43,7 @@ namespace DLHBuilder
                 FileMetadataExtractor extractor = new FileMetadataExtractor(filepath);
                 extractor.Write(template);
 
-                string templatefile = filepath.Replace(".json", ".st");
+                string templatefile = filepath.Replace(".ScriptTemplate.json", ScriptTemplateFileExtension.Name);
 
                 using (FileStream stream = new FileStream(templatefile, FileMode.OpenOrCreate))
                 {

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.IO;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DLHBuilder
 {
@@ -14,7 +15,11 @@ namespace DLHBuilder
 
         public string Name { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public ScriptTemplateType Type { get; set; }
+
+        [JsonConverter(typeof(StringEnumConverter))]
+        public ScriptTemplateEngineType Engine { get; set; }
 
         public List<string> Hierarchy = new List<string>();
 

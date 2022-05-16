@@ -10,12 +10,12 @@ namespace DLHBuilder.Desktop.UI
 {
     class TextPropertyEditor : Editor
     {
-        public TextPropertyEditor(object baseobject, string propertyname, bool enabled = true)
+        public TextPropertyEditor(object baseObject, string propertyName, bool enabled = true)
         {
             Text = "Template Editor";
 
-            BaseObject = baseobject;
-            PropertyName = propertyname;
+            BaseObject = baseObject;
+            PropertyName = propertyName;
 
             PropertyText = new RichTextBox() { Dock = DockStyle.Fill };
             PropertyText.Text = (string)BaseObject.GetType().GetProperty(PropertyName).GetValue(BaseObject);
@@ -25,19 +25,33 @@ namespace DLHBuilder.Desktop.UI
             {
                 PropertyText.TextChanged += PropertyTextChanged;
             }
-            
+
             Controls.Add(PropertyText);
+
+            CopyButton.Click += OnCopyButtonPressed;
+            Toolbar.Items.Add(CopyButton);
+            Controls.Add(Toolbar);
         }
 
-        object BaseObject { get; set; }
+        protected object BaseObject { get; set; }
 
-        string PropertyName { get; set; }
+        protected string PropertyName { get; set; }
 
-        RichTextBox PropertyText { get; set; }
+        protected RichTextBox PropertyText { get; set; }
+
+        protected ToolStrip Toolbar = new ToolStrip() { ImageList = Images.Items };
+
+        protected ToolStripMenuItem CopyButton = new ToolStripMenuItem() { ImageKey = "Copy", ToolTipText = "Copy to Clipboard" };
 
         public void PropertyTextChanged(object sender, EventArgs e)
         {
             BaseObject.GetType().GetProperty(PropertyName).SetValue(BaseObject, PropertyText.Text);
+        }
+
+        public void OnCopyButtonPressed(object sender, EventArgs e)
+        {
+            Clipboard.SetText(PropertyText.Text);
+            MessageBox.Show("Copied text to clipboard...");
         }
     }
 }
