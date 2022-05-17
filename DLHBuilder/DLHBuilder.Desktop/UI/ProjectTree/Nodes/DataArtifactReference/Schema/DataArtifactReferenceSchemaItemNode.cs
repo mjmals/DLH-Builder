@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace DLHBuilder.Desktop.UI
 {
-    class DataArtifactReferenceSchemaNode : ProjectTreeNode
+    class DataArtifactReferenceSchemaItemNode : ProjectTreeNode
     {
-        public DataArtifactReferenceSchemaNode(DataArtifactSchemaItem schemaItem, DataArtifactReference reference)
+        public DataArtifactReferenceSchemaItemNode(DataArtifactSchemaItem schemaItem, DataArtifactReference reference)
         {
             SchemaItem = schemaItem;
             Reference = reference;

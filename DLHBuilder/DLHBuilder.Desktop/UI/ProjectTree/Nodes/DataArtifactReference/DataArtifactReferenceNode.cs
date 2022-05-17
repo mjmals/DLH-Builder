@@ -15,8 +15,7 @@ namespace DLHBuilder.Desktop.UI
             Application = application;
             Text = reference.ReferencedArtifact.Name;
             Nodes.Add(new DataArtifactReferenceScriptsNode(reference, stage, application));
-
-            AddSchemaItems();
+            Nodes.Add(new DataArtifactReferenceSchemaItemsNode(reference.ReferencedArtifact.Schema, reference));
         }
 
         public DataArtifactReference Reference
@@ -32,18 +31,5 @@ namespace DLHBuilder.Desktop.UI
         public override string ExpandedImage => "Data Artifact";
 
         public override string CollapsedImage => "Data Artifact";
-
-        void AddSchemaItems()
-        {
-            foreach(DataArtifactSchemaItem schemaItem in Reference.ReferencedArtifact.Schema)
-            {
-                SchemaInclusionDataArtifactTransformation itemInclusion = (SchemaInclusionDataArtifactTransformation)Reference.Transformations.FirstOrDefault(x => x.GetType() == typeof(SchemaInclusionDataArtifactTransformation) && x.ReferencedObjectID == schemaItem.ID);
-
-                if(itemInclusion != null && itemInclusion.Include)
-                {
-                    Nodes.Add(new DataArtifactReferenceSchemaNode(schemaItem, Reference));
-                }
-            }
-        }
     }
 }

@@ -15,6 +15,7 @@ namespace DLHBuilder.Desktop.UI
         {
             string script = string.Format("Script {0} could not be found", reference.Template);
             ScriptTemplate template = new CollatedScriptTemplateCollection(templates).FirstOrDefault(x => x.Path() + "." + x.Name == reference.Template);
+            Text = template?.Name;
 
             if (template != null)
             {
@@ -22,7 +23,7 @@ namespace DLHBuilder.Desktop.UI
                 script = engine.Render();
             }
 
-            Controls.Add(ScriptBox(script));
+            Controls.Add(ScriptBox = NewScriptBox(script));
             Controls.Add(ToolBar());
         }
 
@@ -31,19 +32,30 @@ namespace DLHBuilder.Desktop.UI
             ToolStrip output = new ToolStrip();
             output.ImageList = Images.Items;
 
-            ToolStripButton copybutton = new ToolStripButton();
-            copybutton.ImageKey = "Copy";
+            ToolStripButton copyButton = new ToolStripButton();
+            copyButton.ImageKey = "Copy";
+            copyButton.ToolTipText = "Copy to Clipboard";
+            copyButton.Click += CopyText;
+            output.Items.Add(copyButton);
 
             return output;
         }
 
-        RichTextBox ScriptBox(string text)
+        public RichTextBox ScriptBox { get; set; }
+
+        RichTextBox NewScriptBox(string text)
         {
             RichTextBox output = new RichTextBox();
             output.Dock = DockStyle.Fill;
             output.Text = text;
 
             return output;
+        }
+
+        void CopyText(object sender, EventArgs e)
+        {
+            Clipboard.SetText(ScriptBox.Text);
+            MessageBox.Show("Text copied to Clipboard...");
         }
     }
 }

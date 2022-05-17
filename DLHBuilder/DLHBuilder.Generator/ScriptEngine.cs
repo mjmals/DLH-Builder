@@ -25,14 +25,21 @@ namespace DLHBuilder.Generator
 
         public string Render()
         {
-            switch(Template.Engine)
+            try
             {
-                case ScriptTemplateEngineType.StringTemplate:
-                    return new StringTemplateRenderer(Template, BaseObjects).Render();
-                case ScriptTemplateEngineType.Razor:
-                    return new RazorRenderer(Template, BaseObjects).Render();
-                default:
-                    return Template.Content;
+                switch (Template.Engine)
+                {
+                    case ScriptTemplateEngineType.StringTemplate:
+                        return new StringTemplateRenderer(Template, BaseObjects).Render();
+                    case ScriptTemplateEngineType.Razor:
+                        return new RazorRenderer(Template, BaseObjects).Render();
+                    default:
+                        return Template.Content;
+                }
+            }
+            catch(Exception e)
+            {
+                return "ERROR: Failed to compile script";
             }
         }
     }

@@ -15,6 +15,6 @@ CREATE TABLE @artifact.Name
 (
 @foreach(ICompiledSchemaItem schemaItem in artifact.Schema)
 {
-    @:@schemaItem.Name @schemaItem.DataType @(schemaItem.IsNullable ? "NULL" : "NOT NULL")@(artifact.Schema.Last() == schemaItem ? "" : ",")
+    @:[@schemaItem.Name] @schemaItem.DataType @(schemaItem.IsNullable ? "NULL" : "NOT NULL")@(artifact.Schema.Last() == schemaItem ? "" : ",")
 }
 )
