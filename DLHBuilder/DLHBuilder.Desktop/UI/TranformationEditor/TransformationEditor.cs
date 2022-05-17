@@ -9,21 +9,57 @@ namespace DLHBuilder.Desktop.UI
 {
     class TransformationEditor : Editor
     {
-        public TransformationEditor(DataArtifactTransformationCollection transformations, DataSourceCollection sources)
+        public TransformationEditor(DataArtifactTransformationCollection transformations, Guid itemID)
         {
-            Text = "Transformations";
             Transformations = transformations;
-            Sources = sources;
-            SetControls();
+            ItemID = itemID;
+            Text = "Transformations";
+
+            Controls.Add(PropertyPanel);
+            Controls.Add(GridPanel);
+            Controls.Add(Toolbar = new TransformationEditorToolbar(Transformations, ItemID));
+
+            GridPanel.Controls.Add(Grid = new TransformationEditorGrid(Transformations, ItemID));
+            PropertyPanel.Controls.Add(Properties);
+
+            Grid.SelectionChanged += GridRowChanged;
+
+            Transformations.CollectionModified += TransformationsModified;
+            Resize += OnEditorResize;
         }
 
         DataArtifactTransformationCollection Transformations { get; set; }
 
-        DataSourceCollection Sources { get; set; }
+        Guid ItemID { get; set; }
 
-        protected override Control[] EditorControls()
+        Panel GridPanel = new Panel() { Dock = DockStyle.Top };
+
+        Panel PropertyPanel = new Panel() { Dock = DockStyle.Fill };
+
+        PropertyGrid Properties = new PropertyGrid() { Dock = DockStyle.Fill };
+
+        TransformationEditorGrid Grid { get; set; }
+
+        TransformationEditorToolbar Toolbar { get; set; }
+
+        void OnEditorResize(object sender, EventArgs e)
         {
-            return new Control[] { new TransformationEditorGrid(Transformations, Sources) };
+            GridPanel.Height = this.Height / 2;
+        }
+
+        void GridRowChanged(object sender, EventArgs e)
+        {
+            if (Grid.SelectedCells.Count > 0)
+            {
+                Properties.SelectedObject = Grid.SelectedCells[0].OwningRow.Tag;
+            }
+        }
+
+        void TransformationsModified(object sender, EventArgs e)
+        {
+            GridPanel.Controls.Clear();
+            GridPanel.Controls.Add(Grid = new TransformationEditorGrid(Transformations, ItemID));
+            Grid.SelectionChanged += GridRowChanged;
         }
     }
 }

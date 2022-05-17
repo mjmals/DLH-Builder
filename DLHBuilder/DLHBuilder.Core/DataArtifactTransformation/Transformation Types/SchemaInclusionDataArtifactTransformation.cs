@@ -11,5 +11,10 @@ namespace DLHBuilder
         public override string Title => "Schema Item Inclusion";
 
         public bool Include { get; set; }
+
+        public override string ToString()
+        {
+            return Include.ToString();
+        }
     }
 }

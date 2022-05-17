@@ -29,5 +29,10 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Schema Item";
 
         public override bool AllowLabelChange => false;
+
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection(new TransformationEditor(Reference.Transformations, SchemaItem.ID));
+        }
     }
 }

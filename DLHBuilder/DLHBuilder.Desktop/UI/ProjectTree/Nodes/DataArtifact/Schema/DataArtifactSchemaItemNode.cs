@@ -31,11 +31,6 @@ namespace DLHBuilder.Desktop.UI
 
         public override string ExpandedImage => "Schema Item";
 
-        public override EditorCollection Editors()
-        {
-            return new EditorCollection(new TransformationEditor(Item.Transformations, Sources));
-        }
-
         void OnPropertyUpdated(object sender, EventArgs e)
         {
             Text = Item.Name;

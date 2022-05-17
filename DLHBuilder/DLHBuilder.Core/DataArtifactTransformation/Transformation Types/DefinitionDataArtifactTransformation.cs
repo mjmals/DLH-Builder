@@ -11,5 +11,10 @@ namespace DLHBuilder
         public override string Title => "Definition";
 
         public string Definition { get; set; }
+
+        public override string ToString()
+        {
+            return Definition;
+        }
     }
 }
