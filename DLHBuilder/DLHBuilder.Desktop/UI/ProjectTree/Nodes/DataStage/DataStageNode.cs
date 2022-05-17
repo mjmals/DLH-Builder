@@ -9,9 +9,10 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStageNode : ProjectTreeNode
     {
-        public DataStageNode(IDataStage stage)
+        public DataStageNode(IDataStage stage, IDataApplication parentApplication)
         {
             Stage = stage;
+            ParentApplication = parentApplication;
             Text = stage.Name;
             Name = "Data Stages." + stage.Name;
             AddFolders();
@@ -28,6 +29,8 @@ namespace DLHBuilder.Desktop.UI
                 Tag = value;
             }
         }
+
+        public IDataApplication ParentApplication { get; set; }
 
         public override string CollapsedImage => "Data Stage";
 
@@ -67,7 +70,7 @@ namespace DLHBuilder.Desktop.UI
 
         DataStageFolderNode AddFolder(DataStageFolder folder)
         {
-            DataStageFolderNode output = new DataStageFolderNode(folder, Stage);
+            DataStageFolderNode output = new DataStageFolderNode(folder, Stage, ParentApplication);
             output.Name = Name + "." + (folder.Path.Count > 0 ? folder.FullPath : folder.Name);
             
             string parentNodeName = Name + (folder.Path.Count > 0 ? "." + string.Join('.', folder.Path) : "");
@@ -101,7 +104,7 @@ namespace DLHBuilder.Desktop.UI
 
         DataArtifactReferenceNode AddReference(DataArtifactReference reference)
         {
-            DataArtifactReferenceNode output = new DataArtifactReferenceNode(reference);
+            DataArtifactReferenceNode output = new DataArtifactReferenceNode(reference, Stage, ParentApplication);
             output.Name = Name + "." + (reference.Path.Count > 0 ? reference.FullPath : reference.ID);
 
             string parentNodeName = Name + (reference.Path.Count > 0 ? "." + string.Join('.', reference.Path) : "");

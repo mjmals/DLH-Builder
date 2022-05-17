@@ -22,10 +22,14 @@ namespace DLHBuilder.Generator.Renderers
 
         public string Render()
         {
-            string content = Template.Content.ToUpper().Contains("##CODE START") ? Template.Content.Substring(Template.Content.ToUpper().IndexOf("##CODE START") + "##CODE START".Length) : Template.Content;
+            string headerEndTag = "##ENDHEADER";
+            string content = Template.Content.ToUpper().Contains(headerEndTag) ? Template.Content.Substring(Template.Content.ToUpper().IndexOf(headerEndTag) + headerEndTag.Length) : Template.Content;
 
             IRazorEngine engine = new RazorEngine();
-            IRazorEngineCompiledTemplate template = engine.Compile(content);
+            IRazorEngineCompiledTemplate template = engine.Compile(content, builder => 
+            {
+                builder.AddAssemblyReference(typeof(Project).Assembly);
+            });
 
             string output = CleanCode(template.Run(BaseObjects[0]));
             CleanTempFiles();

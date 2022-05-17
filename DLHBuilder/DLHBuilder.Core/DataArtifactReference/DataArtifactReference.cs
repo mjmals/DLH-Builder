@@ -53,6 +53,21 @@ namespace DLHBuilder
             set => transformations = value;
         }
 
+        public ScriptTemplateReferenceCollection ScriptTemplates
+        {
+            get
+            {
+                if (scripttemplates == null)
+                {
+                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Inherited };
+                }
+                return scripttemplates;
+            }
+            set => scripttemplates = value;
+        }
+
+        private ScriptTemplateReferenceCollection scripttemplates { get; set; }
+
         private DataArtifactTransformationCollection transformations { get; set; }
     }
 }

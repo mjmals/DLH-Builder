@@ -8,10 +8,13 @@ namespace DLHBuilder.Desktop.UI
 { 
     class DataArtifactReferenceNode : ProjectTreeNode
     {
-        public DataArtifactReferenceNode(DataArtifactReference reference)
+        public DataArtifactReferenceNode(DataArtifactReference reference, IDataStage stage, IDataApplication application)
         {
             Reference = reference;
+            Stage = stage;
+            Application = application;
             Text = reference.ReferencedArtifact.Name;
+            Nodes.Add(new DataArtifactReferenceScriptsNode(reference, stage, application));
 
             AddSchemaItems();
         }
@@ -21,6 +24,10 @@ namespace DLHBuilder.Desktop.UI
             get => (DataArtifactReference)Tag;
             set => Tag = value;
         }
+
+        public IDataStage Stage { get; set; }
+
+        public IDataApplication Application { get; set; }
 
         public override string ExpandedImage => "Data Artifact";
 

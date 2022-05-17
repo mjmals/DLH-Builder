@@ -4,14 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DLHBuilder
 {
     public class DataArtifactSchemaItem
     {
         public Guid ID { get; set; }
-
-        internal Guid MasterSchemaItemID { get; set; }
 
         public string Name 
         { 
@@ -43,6 +42,10 @@ namespace DLHBuilder
         }
 
         private DataArtifactTransformationCollection transformations;
+
+        public bool IsNullable { get; set; }
+
+        public int Ordinal { get; set; }
 
         [JsonIgnore]
         public EventHandler PropertyUpdated;

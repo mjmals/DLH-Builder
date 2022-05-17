@@ -8,9 +8,10 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStagesNode : ProjectTreeNode
     {
-        public DataStagesNode(DataStageCollection stages)
+        public DataStagesNode(DataStageCollection stages, IDataApplication parentApplication)
         {
             Stages = stages;
+            ParentApplication = parentApplication;
             Text = "Data Stages";
 
             ContextMenuStrip = new DataStagesMenu(this);
@@ -26,6 +27,8 @@ namespace DLHBuilder.Desktop.UI
                 Tag = value;
             }
         }
+
+        public IDataApplication ParentApplication { get; set; }
 
         public override string CollapsedImage => "Folder Closed";
 
@@ -49,7 +52,7 @@ namespace DLHBuilder.Desktop.UI
 
         DataStageNode AddStage(IDataStage stage)
         {
-            DataStageNode output = new DataStageNode(stage);
+            DataStageNode output = new DataStageNode(stage, ParentApplication);
             Nodes.Add(output);
             return output;
         }

@@ -73,7 +73,7 @@ namespace DLHBuilder.Desktop.UI
 
         DataStageNode AddStage(IDataStage stage)
         {
-            DataStageNode output = new DataStageNode(stage);
+            DataStageNode output = new DataStageNode(stage, Application);
             Nodes.Add(output);
             return output;
         }

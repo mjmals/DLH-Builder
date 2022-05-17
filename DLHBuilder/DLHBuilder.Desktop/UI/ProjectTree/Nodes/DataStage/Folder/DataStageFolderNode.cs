@@ -9,10 +9,11 @@ namespace DLHBuilder.Desktop.UI
 {
     class DataStageFolderNode : ProjectTreeNode
     {
-        public DataStageFolderNode(DataStageFolder folder, IDataStage parentStage)
+        public DataStageFolderNode(DataStageFolder folder, IDataStage parentStage, IDataApplication parentApplication)
         {
             Folder = folder;
             ParentStage = parentStage;
+            ParentApplication = parentApplication;
             Text = folder.Name;
         }
 
@@ -23,6 +24,8 @@ namespace DLHBuilder.Desktop.UI
         }
 
         public IDataStage ParentStage { get; set; }
+
+        public IDataApplication ParentApplication { get; set; }
 
         public override ContextMenuStrip ContextMenuStrip => new DataStageFolderMenu(this);
 
