@@ -5,13 +5,11 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="Templates\Hydr8\Contract\Hydr8 Contract.cshtml" />
     <None Remove="Templates\SQL\Table\Create Table.cshtml" />
     <None Remove="Templates\Terraform\Variables\VariableData.st" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Templates\Hydr8\Contract\Hydr8 Contract.cshtml" />
     <EmbeddedResource Include="Templates\SQL\Table\Create Table.cshtml" />
     <EmbeddedResource Include="Templates\Terraform\Variables\VariableData.st" />
   </ItemGroup>
