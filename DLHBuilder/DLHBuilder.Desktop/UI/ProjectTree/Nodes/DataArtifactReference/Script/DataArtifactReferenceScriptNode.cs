@@ -33,7 +33,7 @@ namespace DLHBuilder.Desktop.UI
 
         public override EditorCollection Editors()
         {
-            DataArtifactCompiler compiler = new DataArtifactCompiler(Reference.ReferencedArtifact, Application, Stage);
+            DataArtifactCompiler compiler = new DataArtifactCompiler(Reference.ReferencedArtifact, Application, Stage, Tree.Project);
 
             return new EditorCollection
                 (

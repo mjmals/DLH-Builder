@@ -22,7 +22,7 @@ namespace DLHBuilder
                 ScriptTemplate template = extractor.LoadFile<ScriptTemplate>();
                 Add(template);
 
-                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace("*.ScriptTemplate.json", ScriptTemplateFileExtension.Name), FileMode.OpenOrCreate)))
+                using (StreamReader rdr = new StreamReader(new FileStream(file.Replace(".ScriptTemplate.json", ScriptTemplateFileExtension.Name), FileMode.OpenOrCreate)))
                 {
                     template.Content = rdr.ReadToEnd();
                 }

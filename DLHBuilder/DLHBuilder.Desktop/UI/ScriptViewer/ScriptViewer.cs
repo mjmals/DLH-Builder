@@ -48,6 +48,7 @@ namespace DLHBuilder.Desktop.UI
             RichTextBox output = new RichTextBox();
             output.Dock = DockStyle.Fill;
             output.Text = text;
+            output.ReadOnly = true;
 
             return output;
         }

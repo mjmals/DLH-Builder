@@ -8,21 +8,24 @@ namespace DLHBuilder
 {
     public class DataArtifactCompiler
     {
-        public DataArtifactCompiler(DataArtifact artifact, IDataApplication application, IDataStage stage)
+        public DataArtifactCompiler(DataArtifact artifact, IDataApplication application, IDataStage stage, Project project)
         {
             Artifact = artifact;
             Application = application;
             Stage = stage;
+            Project = project;
             SetArtifacts();
         }
 
-        DataArtifact Artifact { get; set; }
+        public DataArtifact Artifact { get; set; }
 
-        IDataApplication Application { get; set; }
+        public IDataApplication Application { get; set; }
 
-        IDataStage Stage { get; set; }
+        public IDataStage Stage { get; set; }
 
         public ICompiledDataArtifact[] Artifacts { get; set; }
+
+        public Project Project { get; set; }
 
         void SetArtifacts()
         {
