@@ -27,6 +27,9 @@ namespace DLHBuilder
         [JsonIgnore]
         public IDataType DataType { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
+        public DataArtifactSchemaItemKeyType KeyType { get; set; }
+
         [JsonIgnore]
         public DataArtifactTransformationCollection Transformations
         {

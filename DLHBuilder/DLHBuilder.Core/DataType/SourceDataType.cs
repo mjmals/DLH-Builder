@@ -16,5 +16,7 @@ namespace DLHBuilder
         public Type BaseType => typeof(object);
 
         public string DataTypeName { get; set; }
+
+        public DataTypeConverterProperties Properties { get; set; }
     }
 }

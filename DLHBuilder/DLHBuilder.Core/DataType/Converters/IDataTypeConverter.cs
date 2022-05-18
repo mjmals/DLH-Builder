@@ -10,6 +10,6 @@ namespace DLHBuilder.DataType.Converters
     {
         public Dictionary<Type, string[]> SourceTypes { get; }
 
-        public IDataType ConvertSourceType(string sourceType);
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties);
     }
 }

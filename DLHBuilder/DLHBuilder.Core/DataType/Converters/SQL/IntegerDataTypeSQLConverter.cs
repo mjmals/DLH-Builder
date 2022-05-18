@@ -13,7 +13,7 @@ namespace DLHBuilder.DataType.Converters.SQL
             { typeof(SQLDataConnection), new string[] { "int", "bigint", "smallint", "tinyint", "float", "real" } }
         };
 
-        public IDataType ConvertSourceType(string sourceType)
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties)
         {
             switch(sourceType.ToLower())
             {

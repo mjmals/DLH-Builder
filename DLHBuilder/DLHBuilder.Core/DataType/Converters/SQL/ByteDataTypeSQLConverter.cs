@@ -13,7 +13,7 @@ namespace DLHBuilder.DataType.Converters.SQL
             { typeof(SQLDataConnection), new string[] { "binary", "image" } }
         };
 
-        public IDataType ConvertSourceType(string sourceType)
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties)
         {
             ByteDataType output = new ByteDataType();
 

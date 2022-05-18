@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json
 
 namespace DLHBuilder.DataType
 {
     class DecimalDataType : IDataType
     {
+        [JsonIgnore]
         public Type BaseType => typeof(decimal);
 
         public int Precision { get; set; }

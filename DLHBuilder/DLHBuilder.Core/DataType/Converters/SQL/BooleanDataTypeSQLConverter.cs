@@ -13,7 +13,7 @@ namespace DLHBuilder.DataType.Converters.SQL
             { typeof(SQLDataConnection), new string[] { "bit" } }
         };
 
-        public IDataType ConvertSourceType(string sourceType)
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties)
         {
             return new BooleanDataType();
         }

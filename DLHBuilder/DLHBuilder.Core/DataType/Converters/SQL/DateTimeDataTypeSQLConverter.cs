@@ -13,7 +13,7 @@ namespace DLHBuilder.DataType.Converters.SQL
             { typeof(SQLDataConnection), new string[] { "datetime", "date", "time" } }
         };
 
-        public IDataType ConvertSourceType(string sourceType)
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties)
         {
             DateTimeDataType output = new DateTimeDataType();
             

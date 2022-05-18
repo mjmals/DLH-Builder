@@ -35,6 +35,8 @@ namespace DLHBuilder
             {
                 string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".ScriptTemplate.json");
 
+                if(!Directory.Exists(Path.Combine(path, DirectoryName)))
+
                 if (!Directory.Exists(Path.GetDirectoryName(filepath)))
                 {
                     Directory.CreateDirectory(Path.GetDirectoryName(filepath));

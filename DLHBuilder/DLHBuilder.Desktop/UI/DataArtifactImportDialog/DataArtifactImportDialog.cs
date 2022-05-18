@@ -59,7 +59,6 @@ namespace DLHBuilder.Desktop.UI
         {
             DataTable source = GetSourceObjects();
             DataArtifact artifact = new DataArtifact() { Name = string.Empty };
-            DataSource dataSource;
 
             foreach(DataRow row in source.Rows)
             {
@@ -72,25 +71,45 @@ namespace DLHBuilder.Desktop.UI
                     SourceArtifacts.Add(artifact);
                     
                     artifact.DataSources = new DataSourceCollection();
-                    dataSource = (DataSource)Activator.CreateInstance(DataSourceType());
-                    artifact.DataSources.Add(dataSource);
-
-                    foreach(DataColumn column in source.Columns)
-                    {
-                        if(column.ColumnName.Contains("DataSource."))
-                        {
-                            string propertyName = column.ColumnName.Replace("DataSource.", "");
-                            dataSource.GetType().GetProperty(propertyName).SetValue(dataSource, row[column.ColumnName]);
-                        }
-                    }
+                    artifact.DataSources.Add(TransformDataSource(source, row));
                 }
 
-                DataArtifactSchemaItem schemaItem = new DataArtifactSchemaItem();
-                schemaItem.ID = Guid.NewGuid();
-                schemaItem.Name = row["Schema.Name"].ToString();
-                schemaItem.DataType = new SourceDataType(row["Schema.DataType"].ToString());
-                artifact.Schema.Add(schemaItem);
+                artifact.Schema.Add(TransformSchemaItem(row));
             }
+        }
+
+        DataSource TransformDataSource(DataTable source, DataRow row)
+        {
+            DataSource dataSource = (DataSource)Activator.CreateInstance(DataSourceType());
+
+            foreach (DataColumn column in source.Columns)
+            {
+                if (column.ColumnName.Contains("DataSource."))
+                {
+                    string propertyName = column.ColumnName.Replace("DataSource.", "");
+                    dataSource.GetType().GetProperty(propertyName).SetValue(dataSource, row[column.ColumnName]);
+                }
+            }
+
+            return dataSource;
+        }
+
+        DataArtifactSchemaItem TransformSchemaItem(DataRow row)
+        {
+            DataArtifactSchemaItem schemaItem = new DataArtifactSchemaItem();
+            schemaItem.ID = Guid.NewGuid();
+            schemaItem.Name = row["Schema.Name"].ToString();
+            schemaItem.KeyType = (DataArtifactSchemaItemKeyType)Enum.Parse(typeof(DataArtifactSchemaItemKeyType), row["Schema.KeyType"].ToString());
+            schemaItem.IsNullable = Convert.ToBoolean(row["Schema.IsNullable"].ToString());
+            
+            SourceDataType dataType = new SourceDataType(row["Schema.DataType"].ToString());
+            schemaItem.DataType = dataType;
+            dataType.Properties = new DataTypeConverterProperties();
+
+            dataType.Properties.Add("IsCaseSensitive", Convert.ToBoolean(row["DataType.IsCaseSensitive"].ToString()));
+            dataType.Properties.Add("IsAccentSensitive", Convert.ToBoolean(row["DataType.IsAccentSensitive"].ToString()));
+
+            return schemaItem;
         }
 
         protected virtual void ObjectTreeSelectionChanged(object sender, TreeViewEventArgs e)
@@ -134,7 +153,7 @@ namespace DLHBuilder.Desktop.UI
             {
                 artifact.Schema.Clear();
                 artifact.Schema.AddRange(SelectedArtifacts[artifact]);
-                artifact.Schema.ForEach(delegate(DataArtifactSchemaItem schemaItem) { schemaItem.DataType = new DataTypeConverter(Connection.GetType(), ((SourceDataType)schemaItem.DataType).DataTypeName).GetDataType(); });
+                artifact.Schema.ForEach(delegate(DataArtifactSchemaItem schemaItem) { schemaItem.DataType = new SourceDataTypeConverter(Connection.GetType(), ((SourceDataType)schemaItem.DataType)).GetDataType(); });
             }
 
             DialogResult = DialogResult.OK;

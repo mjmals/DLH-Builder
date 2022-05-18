@@ -13,7 +13,7 @@ namespace DLHBuilder.DataType.Converters.SQL
             { typeof(SQLDataConnection), new string[] { "decimal", "numeric", "money" } }
         };
 
-        public IDataType ConvertSourceType(string sourceType)
+        public IDataType ConvertSourceType(string sourceType, DataTypeConverterProperties properties)
         {
             DecimalDataType output = new DecimalDataType();
             string sizeOptions = sourceType.Trim().Split('(', ')').Where(x => !string.IsNullOrEmpty(x)).ToArray().Last();

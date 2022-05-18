@@ -27,6 +27,12 @@ namespace DLHBuilder
         public new void Add(DataArtifactSchemaItem item)
         {
             base.Add(item);
+
+            for(int i = 0; i < this.Count; i++)
+            {
+                this[i].Ordinal = i + 1;
+            }
+
             SchemaItemAdded?.Invoke(this, new DataArtifactSchemaItemEventArgs(item));
         }
 
@@ -57,6 +63,10 @@ namespace DLHBuilder
                 
                 schemaItem.DataType = (IDataType)extractor.LoadFile(dtType);
             }
+
+            DataArtifactSchemaItem[] items = this.ToArray();
+            this.Clear();
+            this.AddRange(items.OrderBy(x => x.Ordinal));
         }
     }
 }

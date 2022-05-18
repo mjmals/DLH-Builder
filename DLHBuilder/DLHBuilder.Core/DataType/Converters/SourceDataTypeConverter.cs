@@ -8,17 +8,26 @@ using DLHBuilder.DataType.Converters;
 
 namespace DLHBuilder
 {
-    public class DataTypeConverter
+    public class SourceDataTypeConverter
     {
-        public DataTypeConverter(Type sourceConnectionType, string sourceType)
+        public SourceDataTypeConverter(Type sourceConnectionType, string sourceType)
         {
             SourceConnectionType = sourceConnectionType;
             SourceType = sourceType;
         }
 
+        public SourceDataTypeConverter(Type sourceConnectionType, SourceDataType sourceType)
+        {
+            SourceConnectionType = sourceConnectionType;
+            SourceType = sourceType.DataTypeName;
+            Properties = sourceType.Properties;
+        }
+
         Type SourceConnectionType { get; set; }
 
         string SourceType { get; set; }
+
+        DataTypeConverterProperties Properties { get; set; }
 
         IDataTypeConverter GetConverter()
         {
@@ -47,7 +56,7 @@ namespace DLHBuilder
 
         public IDataType GetDataType()
         {
-            return GetConverter().ConvertSourceType(SourceType);
+            return GetConverter().ConvertSourceType(SourceType, Properties);
         }
     }
 }
