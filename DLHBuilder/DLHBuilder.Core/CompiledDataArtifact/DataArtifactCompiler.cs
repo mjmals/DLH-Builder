@@ -41,6 +41,7 @@ namespace DLHBuilder
 
                 if(Application is DataLakeDataApplication)
                 {
+                    artifacts.Add(new ADLSCompiledDataArtifact(Artifact, (ADLSDataStage)Stage, reference));
                     continue;
                 }
             }

@@ -10,12 +10,14 @@ namespace DLHBuilder
     {
         public SQLCompiledDataArtifact(DataArtifact artifact, MSSQLDataStage stage, DataArtifactReference reference) : base(artifact, stage, reference)
         {
-
+            SQLStage = stage;
         }
+
+        public MSSQLDataStage SQLStage { get; set; }
 
         public override string Name
         {
-            get => string.Format("[{0}].[{1}]", Stage.Schema, Artifact.Name);
+            get => string.Format("[{0}].[{1}]", SQLStage.Schema, Artifact.Name);
         }
 
         protected override ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem)

@@ -10,6 +10,8 @@ namespace DLHBuilder
     {
         public string Name { get; }
 
+        public IDataStage Stage { get; set; }
+
         public ICompiledSchemaItem[] Schema { get; set; }
     }
 }

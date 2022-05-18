@@ -8,7 +8,7 @@ namespace DLHBuilder
 {
     public abstract class CompiledDataArtifact : ICompiledDataArtifact
     {
-        public CompiledDataArtifact(DataArtifact artifact, MSSQLDataStage stage, DataArtifactReference reference)
+        public CompiledDataArtifact(DataArtifact artifact, IDataStage stage, DataArtifactReference reference)
         {
             Artifact = artifact;
             Stage = stage;
@@ -18,7 +18,7 @@ namespace DLHBuilder
 
         public DataArtifact Artifact { get; set; }
 
-        public MSSQLDataStage Stage { get; set; }
+        public IDataStage Stage { get; set; }
 
         public DataArtifactReference Reference { get; set; }
 
