@@ -15,7 +15,7 @@
 		WHEN keymap.IsPrimaryKey = 1 THEN 'Primary'
 		WHEN keymap.IsForeignKey = 1 THEN 'Foreign'
 		WHEN keymap.IsUniqueKey = 1 THEN 'Unique'
-		WHEN col.DATA_TYPE = 'rowversion' THEN 'Version'
+		WHEN col.DATA_TYPE IN ('rowversion', 'timestamp') THEN 'Version'
 		ELSE 'None'
 	END AS [Schema.KeyType],
 	CASE col.IS_NULLABLE WHEN 'Yes' THEN 'true' ELSE 'false' END AS [Schema.IsNullable],
