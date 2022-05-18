@@ -23,9 +23,9 @@ namespace DLHBuilder
             get => Artifact.Name;
         }
 
-        protected override ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem)
+        protected override ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem, int ordinal)
         {
-            return new ADLSCompiledSchemaItem(schemaItem, Reference.Transformations);
+            return new ADLSCompiledSchemaItem(schemaItem, Reference.Transformations, ordinal);
         }
 
         protected override ICompiledSchemaItem[] SetSchema()

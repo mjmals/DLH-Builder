@@ -29,7 +29,6 @@ namespace DLHBuilder.Generator.Renderers
             IRazorEngineCompiledTemplate template = engine.Compile(content, builder => 
             {
                 builder.AddAssemblyReference(typeof(Project).Assembly);
-                builder.AddAssemblyReferenceByName("System.Linq");
             });
 
             string output = CleanCode(template.Run(BaseObjects[0]));

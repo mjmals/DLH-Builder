@@ -14,8 +14,12 @@ namespace DLHBuilder
 
         public bool IsNullable { get; set; }
 
+        public DataArtifactSchemaItemKeyType KeyType { get; set; }
+
         public string Definition { get; set; }
 
         public int Ordinal { get; set; }
+
+        public bool IsLast { get; set; }
     }
 }

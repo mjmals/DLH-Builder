@@ -26,7 +26,7 @@ namespace DLHBuilder
 
         public ICompiledSchemaItem[] Schema { get; set; }
 
-        protected virtual ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem)
+        protected virtual ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem, int ordinal)
         {
             return null;
         }
@@ -40,10 +40,15 @@ namespace DLHBuilder
                 .Where(s => Reference.Transformations.Exists(r => r.ReferencedObjectID == s.ID && r.GetType() == typeof(SchemaInclusionDataArtifactTransformation)))
                 .ToArray();
 
+            int ordinal = 1;
+
             foreach (DataArtifactSchemaItem schemaItem in schemaItems)
             {
-                schema.Add(SetSchemaItem(schemaItem));
+                schema.Add(SetSchemaItem(schemaItem, ordinal));
+                ordinal++;
             }
+
+            schema.Last().IsLast = true;
 
             return schema.ToArray();
         }

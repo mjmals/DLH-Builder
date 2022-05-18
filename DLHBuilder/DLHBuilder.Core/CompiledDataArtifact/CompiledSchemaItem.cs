@@ -8,12 +8,14 @@ namespace DLHBuilder
 {
     public abstract class CompiledSchemaItem : ICompiledSchemaItem
     {
-        public CompiledSchemaItem(DataArtifactSchemaItem schemaItem, DataArtifactTransformationCollection transformations)
+        public CompiledSchemaItem(DataArtifactSchemaItem schemaItem, DataArtifactTransformationCollection transformations, int ordinal)
         {
             SchemaItem = schemaItem;
             Transformations = new DataArtifactTransformationCollection();
             Transformations.AddRange(transformations.Where(x => x.ReferencedObjectID == schemaItem.ID));
             Convert();
+            Ordinal = ordinal;
+            IsLast = false;
         }
 
         public DataArtifactSchemaItem SchemaItem { get; set; }
@@ -26,9 +28,13 @@ namespace DLHBuilder
 
         public bool IsNullable { get; set; }
 
+        public DataArtifactSchemaItemKeyType KeyType { get; set; }
+
         public virtual string Definition { get; set; }
 
         public int Ordinal { get; set; }
+
+        public bool IsLast { get; set; }
 
         protected virtual string GetDataType()
         {
@@ -57,6 +63,7 @@ namespace DLHBuilder
             Name = SchemaItem.Name;
             DataType = GetDataType();
             IsNullable = SchemaItem.IsNullable;
+            KeyType = SchemaItem.KeyType;
             Definition = GetDefinition();
         }
     }

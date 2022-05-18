@@ -8,7 +8,7 @@ namespace DLHBuilder
 {
     public class SQLCompiledSchemaItem : CompiledSchemaItem, ICompiledSchemaItem
     {
-        public SQLCompiledSchemaItem(DataArtifactSchemaItem schemaItem, DataArtifactTransformationCollection transformations) : base(schemaItem, transformations)
+        public SQLCompiledSchemaItem(DataArtifactSchemaItem schemaItem, DataArtifactTransformationCollection transformations, int ordinal) : base(schemaItem, transformations, ordinal)
         {
             
         }

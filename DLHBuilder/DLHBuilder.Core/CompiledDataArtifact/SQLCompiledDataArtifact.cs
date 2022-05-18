@@ -20,9 +20,9 @@ namespace DLHBuilder
             get => string.Format("[{0}].[{1}]", SQLStage.Schema, Artifact.Name);
         }
 
-        protected override ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem)
+        protected override ICompiledSchemaItem SetSchemaItem(DataArtifactSchemaItem schemaItem, int ordinal)
         {
-            return new SQLCompiledSchemaItem(schemaItem, Reference.Transformations);
+            return new SQLCompiledSchemaItem(schemaItem, Reference.Transformations, ordinal);
         }
 
         protected override ICompiledSchemaItem[] SetSchema()
