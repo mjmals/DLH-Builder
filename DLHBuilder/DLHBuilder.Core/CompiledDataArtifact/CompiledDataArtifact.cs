@@ -13,6 +13,7 @@ namespace DLHBuilder
             Artifact = artifact;
             Stage = stage;
             Reference = reference;
+            Path = artifact.ArtifactNamespace.ToArray();
             Schema = SetSchema();
         }
 
@@ -23,6 +24,13 @@ namespace DLHBuilder
         public DataArtifactReference Reference { get; set; }
 
         public virtual string Name { get; }
+
+        public string[] Path { get; set; }
+
+        public string FullPath()
+        {
+            return string.Format("{0}.{1}", string.Join('.', Path), Name);
+        }
 
         public ICompiledSchemaItem[] Schema { get; set; }
 
