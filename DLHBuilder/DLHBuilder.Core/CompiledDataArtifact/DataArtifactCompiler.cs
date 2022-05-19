@@ -14,10 +14,13 @@ namespace DLHBuilder
             Application = application;
             Stage = stage;
             Project = project;
+            DataSources = artifact.DataSources.ToArray();
             SetArtifacts();
         }
 
         public DataArtifact Artifact { get; set; }
+
+        public IDataSource[] DataSources { get; set; }
 
         public IDataApplication Application { get; set; }
 
