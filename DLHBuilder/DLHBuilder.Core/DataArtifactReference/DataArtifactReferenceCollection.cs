@@ -27,6 +27,7 @@ namespace DLHBuilder
             {
                 string referencePath = Path.Combine(path, DirectoryName, reference.FullPath.Replace(".", @"\"));
                 reference.Transformations.Save(referencePath);
+                reference.Dependencies.Save(referencePath);
             }
         }
 
@@ -37,8 +38,9 @@ namespace DLHBuilder
             foreach (DataArtifactReference reference in this)
             {
                 string referencePath = Path.Combine(path, DirectoryName, reference.FullPath.Replace(".", @"\"));
-                
-                foreach(string file in Directory.GetFiles(referencePath, "*DataArtifactTransformation.json"))
+                reference.Dependencies.Load(referencePath);
+
+                foreach(string file in Directory.GetFiles(Path.Combine(referencePath, "Transformations"), "*DataArtifactTransformation.json"))
                 {
                     string typeName = Path.GetFileNameWithoutExtension(file).Split('.').LastOrDefault();
                     Type type = this.GetType().Assembly.GetTypes().FirstOrDefault(x => x.Name == typeName);

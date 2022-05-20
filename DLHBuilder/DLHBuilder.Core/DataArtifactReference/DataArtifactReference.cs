@@ -53,6 +53,22 @@ namespace DLHBuilder
             set => transformations = value;
         }
 
+        [JsonIgnore]
+        public DataArtifactDependencyCollection Dependencies
+        {
+            get
+            {
+                if(dependencies == null)
+                {
+                    dependencies = new DataArtifactDependencyCollection();
+                }
+                return dependencies;
+            }
+            set => dependencies = value;
+        }
+
+        private DataArtifactDependencyCollection dependencies { get; set; }
+
         public ScriptTemplateReferenceCollection ScriptTemplates
         {
             get

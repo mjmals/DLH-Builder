@@ -197,6 +197,16 @@ namespace DLHBuilder.Desktop.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Link_16x {
+            get {
+                object obj = ResourceManager.GetObject("Link_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap OpenFile_16x {
             get {
                 object obj = ResourceManager.GetObject("OpenFile_16x", resourceCulture);
@@ -296,12 +306,13 @@ namespace DLHBuilder.Desktop.Properties {
         
         /// <summary>
         ///   Looks up a localized string similar to SELECT
-        ///	TABLE_NAME AS [Name],
-        ///	CONCAT(TABLE_CATALOG, &apos;,&apos;, TABLE_SCHEMA, &apos;,&apos;, TABLE_NAME) AS [ArtifactNamespace],
-        ///	COLUMN_NAME AS [Schema.Name],
-        ///	TABLE_SCHEMA AS [DataSource.Schema]
-        ///FROM
-        ///	INFORMATION_SCHEMA.COLUMNS.
+        ///	col.TABLE_NAME AS [Name],
+        ///	CONCAT(col.TABLE_CATALOG, &apos;,&apos;, col.TABLE_SCHEMA) AS [ArtifactNamespace],
+        ///	col.COLUMN_NAME AS [Schema.Name],
+        ///	CASE
+        ///		WHEN RIGHT(col.DATA_TYPE, 4) IN (&apos;char&apos;, &apos;text&apos;) THEN FORMATMESSAGE(&apos;%s(%s)&apos;, col.DATA_TYPE,CASE WHEN col.CHARACTER_MAXIMUM_LENGTH = -1 THEN &apos;MAX&apos; ELSE CONVERT(VARCHAR(10), col.CHARACTER_MAXIMUM_LENGTH) END)
+        ///		WHEN col.DATA_TYPE IN (&apos;decimal&apos;, &apos;numeric&apos;) THEN FORMATMESSAGE(&apos;%s(%i,%i)&apos;, col.DATA_TYPE, col.NUMERIC_PRECISION, col.NUMERIC_SCALE)
+        ///		WHEN col [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SQLArtifactImport {
             get {

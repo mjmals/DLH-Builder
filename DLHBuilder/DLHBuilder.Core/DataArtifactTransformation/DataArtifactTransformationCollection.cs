@@ -13,5 +13,7 @@ namespace DLHBuilder
         protected override string FileNameProperty => "Name";
 
         protected override string FileSearchPattern => "*DataArtifactTransformation.json";
+
+        protected override string DirectoryName => "Transformations";
     }
 }

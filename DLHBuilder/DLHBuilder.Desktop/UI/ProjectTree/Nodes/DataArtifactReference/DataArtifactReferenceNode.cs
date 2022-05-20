@@ -14,6 +14,7 @@ namespace DLHBuilder.Desktop.UI
             Stage = stage;
             Application = application;
             Text = reference.ReferencedArtifact.Name;
+            Nodes.Add(new DataArtifactReferenceDependenciesNode(reference, stage, application));
             Nodes.Add(new DataArtifactReferenceScriptsNode(reference, stage, application));
             Nodes.Add(new DataArtifactReferenceSchemaItemsNode(reference.ReferencedArtifact.Schema, reference));
         }
