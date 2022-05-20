@@ -82,6 +82,7 @@ namespace DLHBuilder
             }
 
             OnCollectionSaved();
+            CleanUp(path);
         }
 
         protected virtual void SaveFiles()
@@ -165,6 +166,53 @@ namespace DLHBuilder
                 FileMetadataExtractor extractor = new FileMetadataExtractor(file);
                 Add((T)extractor.LoadFile(type));
             }
+        }
+
+        internal virtual void CleanUp(string path)
+        {
+            switch(CollectionType)
+            {
+                case BuilderCollectionItemType.FolderAndFile:
+                    CleanUpFiles(path);
+                    CleanUpFolders(path);
+                    break;
+                case BuilderCollectionItemType.Folder:
+                    CleanUpFolders(path);
+                    break;
+                case BuilderCollectionItemType.File:
+                    CleanUpFiles(path);
+                    break;
+            }
+        }
+
+        void CleanUpFolders(string path)
+        {
+            path = Path.Combine(path, DirectoryPath);
+        }
+
+        void CleanUpFiles(string path)
+        {
+            path = Path.Combine(path, DirectoryPath);
+            var files = Directory.GetFiles(path, FileSearchPattern, SearchOption.AllDirectories)
+                .Select(file => new { Name = GetFileObjectName(file), Type = GetFileObjectType(file), FileName = file });
+
+            var itemList = this.Select(x => x.GetType().GetProperty(FileNameProperty).GetValue(x));
+            var cleanUpFiles = files.Where(file => itemList.Contains(file.Name) == false);
+
+            foreach(var file in cleanUpFiles)
+            {
+                File.Delete(file.FileName);
+            }
+        }
+
+        Type GetFileObjectType(string file)
+        {
+            return this.GetType().Assembly.GetTypes().Where(x => x.Name == Path.GetExtension(Path.GetFileNameWithoutExtension(file)).Substring(1)).FirstOrDefault();
+        }
+
+        string GetFileObjectName(string file)
+        {
+            return Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(file));
         }
     }
 }

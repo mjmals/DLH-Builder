@@ -25,5 +25,7 @@ namespace DLHBuilder.Desktop.UI
         public override string CollapsedImage => "Connection";
 
         public override string ExpandedImage => "Connection";
+
+        public override ContextMenuStrip ContextMenuStrip => new ConnectionMenu(this); 
     }
 }
