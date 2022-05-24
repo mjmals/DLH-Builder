@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
+using System.Reflection;
 using DLHBuilder.Desktop.UI;
 
 namespace DLHBuilder.Desktop
@@ -15,6 +17,14 @@ namespace DLHBuilder.Desktop
         [STAThread]
         static void Main()
         {
+            string appDir = AppDomain.CurrentDomain.BaseDirectory;
+            string extensionDir = Path.Combine(appDir, "Extensions");
+
+            foreach(string dll in Directory.GetFiles(extensionDir, "*.dll"))
+            {
+                Assembly extension = Assembly.LoadFile(dll);
+            }
+
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

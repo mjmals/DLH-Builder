@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHBuilder.Generator;
+using System.Reflection;
+using DLHBuilder.Desktop.Model;
 
 namespace DLHBuilder.Desktop.UI
 {
@@ -31,9 +33,7 @@ namespace DLHBuilder.Desktop.UI
                 Nodes.Add(new ScriptTemplateFolderNode(templatetype, type, string.Empty, allowupdate));
             }
 
-            ScriptTemplateCollection templates = new ScriptTemplateCollection();
-            Templates.ForEach(delegate (ScriptTemplate template) { templates.Add(template); });
-            new BuiltInScriptTemplateCollection().ForEach(delegate (ScriptTemplate template) { templates.Add(template); });
+            ScriptTemplateCollection templates = new CollatedScriptTemplateCollection(Templates);
 
             foreach (ScriptTemplate template in templates)
             {

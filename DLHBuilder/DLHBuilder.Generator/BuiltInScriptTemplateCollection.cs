@@ -10,11 +10,13 @@ namespace DLHBuilder
 {
     public class BuiltInScriptTemplateCollection : ScriptTemplateCollection
     {
-        Dictionary<string, ScriptTemplateEngineType> extensions = new Dictionary<string, ScriptTemplateEngineType>()
+        protected Dictionary<string, ScriptTemplateEngineType> extensions = new Dictionary<string, ScriptTemplateEngineType>()
         {
             { ".st", ScriptTemplateEngineType.StringTemplate },
             { ".cshtml", ScriptTemplateEngineType.Razor }
         };
+
+        protected virtual string ResourcePrefix => "DLHBuilder.Generator.Templates.";
 
         public BuiltInScriptTemplateCollection()
         {
@@ -23,7 +25,7 @@ namespace DLHBuilder
             foreach(string resource in resources)
             {
                 string extension = Path.GetExtension(resource);
-                string templatepath = resource.Replace("DLHBuilder.Generator.Templates.", "").Replace(extension, "");
+                string templatepath = resource.Replace(ResourcePrefix, "").Replace(extension, "");
                 string path = templatepath.Substring(0, templatepath.LastIndexOf("."));
                 string templatename = templatepath.Substring(templatepath.LastIndexOf(".") + 1);
                 StreamReader reader = new StreamReader(this.GetType().Assembly.GetManifestResourceStream(resource));
