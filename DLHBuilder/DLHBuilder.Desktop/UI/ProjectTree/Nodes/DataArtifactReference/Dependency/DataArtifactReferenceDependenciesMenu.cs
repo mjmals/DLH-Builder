@@ -23,7 +23,7 @@ namespace DLHBuilder.Desktop.UI
 
         void AddDataSourceDependency(object sender, EventArgs e)
         {
-            
+            GetDependencies(new DataSourceArtifactDependencyDialog(Node.Reference));
         }
 
         void AddReferenceDependency(object sender, EventArgs e)

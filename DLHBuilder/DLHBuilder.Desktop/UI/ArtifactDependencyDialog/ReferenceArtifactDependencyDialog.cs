@@ -13,7 +13,7 @@ namespace DLHBuilder.Desktop.UI
         {
             foreach (IDataStage stg in application.Stages.OrderBy(x => x.Ordinal))
             {
-                SelectionTree.Nodes.Add(new TreeNode() { Text = stg.Name, Name = stage.Name, Tag = stage, ImageKey = "Data Stage", SelectedImageKey = "Data Stage" }) ;
+                SelectionTree.Nodes.Add(new TreeNode() { Text = stg.Name, Name = stg.Name, Tag = stg, ImageKey = "Data Stage", SelectedImageKey = "Data Stage" }) ;
             }
 
             foreach (var stageFolder in application.Stages.SelectMany(stg => stg.Folders.Select(fldr => new { Stage = stg.Name, Folder = fldr.Name, Path = fldr.Path })).OrderBy(o => o.Path.Count))

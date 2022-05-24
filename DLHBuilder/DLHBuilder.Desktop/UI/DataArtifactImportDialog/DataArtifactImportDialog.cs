@@ -81,6 +81,12 @@ namespace DLHBuilder.Desktop.UI
         DataSource TransformDataSource(DataTable source, DataRow row)
         {
             DataSource dataSource = (DataSource)Activator.CreateInstance(DataSourceType());
+            dataSource.ID = Guid.NewGuid();
+
+            if(dataSource is ConnectionDataSource)
+            {
+                ((ConnectionDataSource)dataSource).ConnectionID = Connection.ID;
+            }
 
             foreach (DataColumn column in source.Columns)
             {
