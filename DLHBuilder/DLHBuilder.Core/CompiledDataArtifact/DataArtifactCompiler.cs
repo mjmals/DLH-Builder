@@ -34,18 +34,21 @@ namespace DLHBuilder
         {
             List<ICompiledDataArtifact> artifacts = new List<ICompiledDataArtifact>();
 
-            foreach(DataArtifactReference reference in Application.Stages.SelectMany(x => x.ArtifactReferences).Where(x => x.DataArtifactID == Artifact.ID))
+            foreach (DataStage stage in Application.Stages)
             {
-                if(Application is SQLDataApplication)
+                foreach (DataArtifactReference reference in stage.ArtifactReferences.Where(x => x.DataArtifactID == Artifact.ID))
                 {
-                    artifacts.Add(new SQLCompiledDataArtifact(Artifact, (MSSQLDataStage)Stage, reference));
-                    continue;
-                }
+                    if (Application is SQLDataApplication)
+                    {
+                        artifacts.Add(new SQLCompiledDataArtifact(Artifact, (MSSQLDataStage)stage, reference));
+                        continue;
+                    }
 
-                if(Application is DataLakeDataApplication)
-                {
-                    artifacts.Add(new ADLSCompiledDataArtifact(Artifact, (ADLSDataStage)Stage, reference));
-                    continue;
+                    if (Application is DataLakeDataApplication)
+                    {
+                        artifacts.Add(new ADLSCompiledDataArtifact(Artifact, (ADLSDataStage)stage, reference));
+                        continue;
+                    }
                 }
             }
 
