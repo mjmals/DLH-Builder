@@ -34,7 +34,7 @@ namespace DLHBuilder
         {
             List<ICompiledDataArtifact> artifacts = new List<ICompiledDataArtifact>();
 
-            foreach (DataStage stage in Application.Stages)
+            foreach (DataStage stage in Application.Stages.OrderBy(x => x.Ordinal))
             {
                 foreach (DataArtifactReference reference in stage.ArtifactReferences.Where(x => x.DataArtifactID == Artifact.ID))
                 {
