@@ -17,6 +17,7 @@ namespace DLHBuilder.Desktop.UI
             AddScripts();
 
             Reference.ScriptTemplates.CollectionModified += OnTemplatesModified;
+            stage.ArtifactDefaultScriptTemplates.CollectionModified += OnTemplatesModified;
         }
 
         DataArtifactReference Reference { get; set; }
@@ -33,7 +34,11 @@ namespace DLHBuilder.Desktop.UI
 
         void AddScripts()
         {
-            foreach (ScriptTemplateReference template in Reference.ScriptTemplates)
+            ScriptTemplateReferenceCollection templates = new ScriptTemplateReferenceCollection();
+            templates.AddRange(Reference.ScriptTemplates);
+            templates.AddRange(Stage.ArtifactDefaultScriptTemplates);
+
+            foreach (ScriptTemplateReference template in templates)
             {
                 Nodes.Add(new DataArtifactReferenceScriptNode(template, Reference, Stage, Application));
             }

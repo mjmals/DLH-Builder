@@ -21,5 +21,7 @@ namespace DLHBuilder
         DataArtifactReferenceCollection ArtifactReferences { get; set; }
 
         ScriptTemplateReferenceCollection ScriptTemplates { get; set; }
+
+        ScriptTemplateReferenceCollection ArtifactDefaultScriptTemplates { get; set; }
     }
 }

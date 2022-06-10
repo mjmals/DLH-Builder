@@ -56,15 +56,32 @@ namespace DLHBuilder
         {
             get
             {
-                if (scripttemplates == null)
+                if (scriptTemplates == null)
                 {
-                    scripttemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Selected };
+                    scriptTemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Selected };
                 }
-                return scripttemplates;
+                return scriptTemplates;
             }
-            set => scripttemplates = value;
+            set => scriptTemplates = value;
         }
 
-        private ScriptTemplateReferenceCollection scripttemplates { get; set; }
+
+        private ScriptTemplateReferenceCollection scriptTemplates { get; set; }
+
+
+        public ScriptTemplateReferenceCollection ArtifactDefaultScriptTemplates
+        {
+            get
+            {
+                if (artifactDefaultScriptTemplates == null)
+                {
+                    artifactDefaultScriptTemplates = new ScriptTemplateReferenceCollection() { Type = ScriptTemplateReferenceType.Selected };
+                }
+                return artifactDefaultScriptTemplates;
+            }
+            set => artifactDefaultScriptTemplates = value;
+        }
+
+        private ScriptTemplateReferenceCollection artifactDefaultScriptTemplates { get; set; }
     }
 }

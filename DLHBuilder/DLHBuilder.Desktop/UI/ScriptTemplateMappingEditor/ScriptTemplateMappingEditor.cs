@@ -12,12 +12,13 @@ namespace DLHBuilder.Desktop.UI
 {
     class ScriptTemplateMappingEditor : Editor
     {
-        public ScriptTemplateMappingEditor(ScriptTemplateCollection templates, ScriptTemplateReferenceCollection templatererences)
+        public ScriptTemplateMappingEditor(ScriptTemplateCollection templates, ScriptTemplateReferenceCollection templatererences, string title = null)
         {
             Templates = new CollatedScriptTemplateCollection(templates);
             TemplateReferences = templatererences;
 
-            Text = "Script Template Mapping";
+            string baseTitle = "Script Template Mapping";
+            Text = string.IsNullOrEmpty(title) ? baseTitle : string.Format("{0}: {1}", title, baseTitle);
             Controls.Add(MappingTable = NewMappingTable());
             Controls.Add(Toolbar());
         }
