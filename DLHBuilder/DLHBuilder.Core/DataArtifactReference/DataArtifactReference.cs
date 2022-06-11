@@ -39,7 +39,7 @@ namespace DLHBuilder
         [JsonIgnore]
         public DataArtifact ReferencedArtifact { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public DataArtifactTransformationCollection Transformations
         {
             get
@@ -53,7 +53,7 @@ namespace DLHBuilder
             set => transformations = value;
         }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public DataArtifactDependencyCollection Dependencies
         {
             get

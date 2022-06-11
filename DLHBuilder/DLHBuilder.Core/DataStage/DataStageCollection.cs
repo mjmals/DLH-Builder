@@ -31,7 +31,7 @@ namespace DLHBuilder
 
             foreach(IDataStage stage in this)
             {
-                stage.Folders.Save(Path.Combine(path, DirectoryName, stage.Name));
+                //stage.Folders.Save(Path.Combine(path, DirectoryName, stage.Name));
                 stage.ArtifactReferences.Save(Path.Combine(path, DirectoryName, stage.Name));
             }
         }
@@ -42,7 +42,7 @@ namespace DLHBuilder
 
             foreach (IDataStage stage in this)
             {
-                stage.Folders.Load(Path.Combine(path, DirectoryName, stage.Name));
+                //stage.Folders.Load(Path.Combine(path, DirectoryName, stage.Name));
                 stage.ArtifactReferences.Load(Path.Combine(path, DirectoryName, stage.Name));
             }
         }

@@ -13,9 +13,11 @@ namespace DLHBuilder
 
         protected override string FileNameProperty => "Name";
 
-        protected override string SubfolderProperty => "FullPath";
+        //protected override string SubfolderProperty => "FullPath";
 
-        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
+        //protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
+
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.File;
 
         protected override string FileSearchPattern => "*DataArtifactReference.json";
 
@@ -26,8 +28,8 @@ namespace DLHBuilder
             foreach(DataArtifactReference reference in this)
             {
                 string referencePath = Path.Combine(path, DirectoryName, reference.FullPath.Replace(".", @"\"));
-                reference.Transformations.Save(referencePath);
-                reference.Dependencies.Save(referencePath);
+                //reference.Transformations.Save(referencePath);
+                //reference.Dependencies.Save(referencePath);
             }
         }
 
@@ -35,7 +37,7 @@ namespace DLHBuilder
         {
             base.Load(path);
 
-            foreach (DataArtifactReference reference in this)
+            /*foreach (DataArtifactReference reference in this)
             {
                 string referencePath = Path.Combine(path, DirectoryName, reference.FullPath.Replace(".", @"\"));
                 reference.Dependencies.Load(referencePath);
@@ -48,7 +50,7 @@ namespace DLHBuilder
                     FileMetadataExtractor extractor = new FileMetadataExtractor(file);
                     reference.Transformations.Add((IDataArtifactTransformation)extractor.LoadFile(type));
                 }
-            }
+            }*/
         }
     }
 }

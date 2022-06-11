@@ -20,7 +20,7 @@ namespace DLHBuilder
         [Browsable(false)]
         public int Ordinal { get; set; }
 
-        [JsonIgnore]
+        //[JsonIgnore]
         public DataStageFolderCollection Folders
         {
             get
