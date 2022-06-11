@@ -17,9 +17,14 @@ namespace DLHBuilder
 
         string FilePath { get; }
 
+        JsonSerializerSettings SerializerSettings = new JsonSerializerSettings()
+        {
+            TypeNameHandling = TypeNameHandling.All
+        };
+
         public void Write(object item)
         {
-            string itemdata = JsonConvert.SerializeObject(item, Formatting.Indented);
+            string itemdata = JsonConvert.SerializeObject(item, Formatting.Indented, SerializerSettings);
             Write(itemdata);
         }
 
@@ -40,14 +45,14 @@ namespace DLHBuilder
         {
             string filedata = File.ReadAllText(FilePath);
 
-            return JsonConvert.DeserializeObject<T>(filedata);
+            return JsonConvert.DeserializeObject<T>(filedata, SerializerSettings);
         }
 
         public object LoadFile(Type type)
         {
             string filedata = File.ReadAllText(FilePath);
 
-            return JsonConvert.DeserializeObject(filedata, type);
+            return JsonConvert.DeserializeObject(filedata, type, SerializerSettings);
         }
     }
 }

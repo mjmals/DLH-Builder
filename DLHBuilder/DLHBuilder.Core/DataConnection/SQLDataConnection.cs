@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.SqlServer.Management.Smo;
 using System.ComponentModel;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 
 namespace DLHBuilder
 {
@@ -19,6 +20,7 @@ namespace DLHBuilder
 
         public string Database { get; set; }
 
+        [JsonConverter(typeof(StringEnumConverter))]
         public AuthenticationType Authentication { get; set; }
 
         public override string ToString()

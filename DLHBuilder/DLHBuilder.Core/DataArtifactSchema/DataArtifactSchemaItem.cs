@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Converters;
+using System.ComponentModel;
 
 namespace DLHBuilder
 {
@@ -24,7 +25,7 @@ namespace DLHBuilder
 
         private string name { get; set; }
 
-        [JsonIgnore]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public IDataType DataType { get; set; }
 
         [JsonConverter(typeof(StringEnumConverter))]

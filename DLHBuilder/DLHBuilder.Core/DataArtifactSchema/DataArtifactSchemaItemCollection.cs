@@ -15,11 +15,11 @@ namespace DLHBuilder
 
         protected override string FileNameProperty => "Name";
 
-        protected override string SubfolderProperty => "Name";
+        //protected override string SubfolderProperty => "Name";
 
         protected override string FileSearchPattern => "*DataArtifactSchemaItem.json";
 
-        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.FolderAndFile;
+        protected override BuilderCollectionItemType CollectionType => BuilderCollectionItemType.File;
 
         [JsonIgnore]
         public EventHandler<DataArtifactSchemaItemEventArgs> SchemaItemAdded;
@@ -40,20 +40,20 @@ namespace DLHBuilder
         {
             base.Save(path);
 
-            foreach(DataArtifactSchemaItem schemaItem in this)
+            /*foreach(DataArtifactSchemaItem schemaItem in this)
             {
                 string dtPath = Path.Combine(path, DirectoryName, schemaItem.Name, schemaItem.Name + "." + schemaItem.DataType.GetType().Name + ".json");
 
                 FileMetadataExtractor extractor = new FileMetadataExtractor(dtPath);
                 extractor.Write(schemaItem.DataType);
-            }
+            }*/
         }
 
         internal override void Load(string path)
         {
             base.Load(path);
 
-            foreach(DataArtifactSchemaItem schemaItem in this)
+            /*foreach(DataArtifactSchemaItem schemaItem in this)
             {
                 string dtFile = Directory.GetFiles(Path.Combine(path, DirectoryName, schemaItem.Name), "*DataType.json").FirstOrDefault();
                 string dtFileType = dtFile.Replace(Path.Combine(path, DirectoryName, schemaItem.Name) + @"\", "").Replace(schemaItem.Name + ".", "").Replace(".json", "");
@@ -62,7 +62,7 @@ namespace DLHBuilder
                 FileMetadataExtractor extractor = new FileMetadataExtractor(dtFile);
                 
                 schemaItem.DataType = (IDataType)extractor.LoadFile(dtType);
-            }
+            }*/
 
             DataArtifactSchemaItem[] items = this.ToArray();
             this.Clear();

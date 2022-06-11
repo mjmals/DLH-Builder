@@ -31,14 +31,14 @@ namespace DLHBuilder
 
         internal override void Save(string path)
         {
-            foreach(ScriptTemplate template in this.Where(x => x.Type != ScriptTemplateType.BuiltIn))
+            if (!Directory.Exists(Path.Combine(path, DirectoryName)))
+            {
+                Directory.CreateDirectory(Path.Combine(path, DirectoryName));
+            }
+
+            foreach (ScriptTemplate template in this.Where(x => x.Type != ScriptTemplateType.BuiltIn))
             {
                 string filepath = Path.Combine(path, DirectoryName, Path.Combine(template.Hierarchy.ToArray()), template.Name + ".ScriptTemplate.json");
-
-                if(!Directory.Exists(Path.Combine(path, DirectoryName)))
-                {
-                    Directory.CreateDirectory(Path.Combine(path, DirectoryName));
-                }
 
                 if (!Directory.Exists(Path.GetDirectoryName(filepath)))
                 {
