@@ -9,16 +9,16 @@ namespace DLHBuilder.Desktop.UI
 {
     class ConnectionNode : ProjectTreeNode
     {
-        public ConnectionNode(DataConnection connection)
+        public ConnectionNode(IDataConnection connection)
         {
             Connection = connection;
-
             Text = connection.Name;
+            Nodes.Add(new ConnectionScriptsNode(connection.ScriptTemplates, connection));
         }
 
-        public DataConnection Connection
+        public IDataConnection Connection
         {
-            get => (DataConnection)Tag;
+            get => (IDataConnection)Tag;
             set => Tag = value;
         }
 
@@ -26,6 +26,12 @@ namespace DLHBuilder.Desktop.UI
 
         public override string ExpandedImage => "Connection";
 
-        public override ContextMenuStrip ContextMenuStrip => new ConnectionMenu(this); 
+        public override ContextMenuStrip ContextMenuStrip => new ConnectionMenu(this);
+
+        public override void LabelChanged(string text)
+        {
+            base.LabelChanged(text);
+            Connection.Name = text;
+        }
     }
 }

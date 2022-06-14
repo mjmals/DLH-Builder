@@ -7,7 +7,7 @@ using System.IO;
 
 namespace DLHBuilder
 {
-    public class DataConnectionCollection : BuilderCollection<DataConnection>
+    public class DataConnectionCollection : BuilderCollection<IDataConnection>
     {
         protected override string DirectoryName => "Connections";
     }

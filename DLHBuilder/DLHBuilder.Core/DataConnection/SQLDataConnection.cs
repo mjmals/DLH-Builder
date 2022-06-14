@@ -10,11 +10,28 @@ using Newtonsoft.Json.Converters;
 
 namespace DLHBuilder
 {
-    public class SQLDataConnection : DataConnection
+    public class SQLDataConnection : DataConnection, IDataConnection
     {
-        [JsonIgnore]
         [Browsable(false)]
-        public override string Name { get => string.Format("{0}_{1}", Server, Database); }
+        public override string Name
+        {
+            get
+            {
+                if(string.IsNullOrEmpty(name))
+                {
+                    name = string.Format("{0}_{1}", Server, Database);
+                }
+
+                return name;
+            }
+            set
+            {
+                OnPropertyUpdated(Name, name, value);
+                name = value;
+            }
+        }
+
+        private string name { get; set; }
 
         public string Server { get; set; }
 
