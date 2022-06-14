@@ -22,6 +22,7 @@ namespace DLHBuilder.Desktop.UI
                 output.Images.Add("Data Source", Properties.Resources.DataSourceReference_16x);
                 output.Images.Add("Data Stage", Properties.Resources.RouteService_16x);
                 output.Images.Add("Dependency", Properties.Resources.Link_16x);
+                output.Images.Add("Environment", Properties.Resources.EnvironmentDefinition_16x);
                 output.Images.Add("Folder Closed", Properties.Resources.FolderClosed_16x);
                 output.Images.Add("Folder Open", Properties.Resources.FolderOpened_16x);
                 output.Images.Add("Open", Properties.Resources.OpenFile_16x);

@@ -36,6 +36,15 @@ namespace DLHBuilder
         private string description { get; set; }
 
         [JsonIgnore]
+        public EnvironmentCollection Environments
+        {
+            get => environments = environments == null ? new EnvironmentCollection() : environments;
+            set => environments = value;
+        }
+
+        private EnvironmentCollection environments { get; set; }
+
+        [JsonIgnore]
         [Browsable(false)]
         public DataConnectionCollection Connections
         {
@@ -132,6 +141,7 @@ namespace DLHBuilder
             FileMetadataExtractor extractor = new FileMetadataExtractor(file);
             extractor.Write(this);
 
+            Environments.Save(path);
             Connections.Save(path);
             ArtifactFolders.Save(path);
             Artifacts.Save(path);
@@ -144,6 +154,7 @@ namespace DLHBuilder
             string path = Path.GetDirectoryName(file);
 
             Project output = new FileMetadataExtractor(file).LoadFile<Project>();
+            output.Environments.Load(path);
             output.Connections.Load(path);
             output.ArtifactFolders.Load(path);
             output.Artifacts.Load(path);
