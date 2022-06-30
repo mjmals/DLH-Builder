@@ -17,10 +17,18 @@ namespace DLHBuilder
     {
         static void Main(string[] args)
         {
-            DataTypeCollection datatypes = new DataTypeCollection();
-            datatypes.ForEach(x => Console.WriteLine(x.Name));
-
+            //DataTypeCollection datatypes = new DataTypeCollection();
+            //datatypes.ForEach(x => Console.WriteLine(x.Name));
+            Console.Write("Enter project path:");
+            string path = Console.ReadLine();
+            Project project = Project.Load(path);
+            DataArtifact dataArtifact = project.Artifacts.First(x=> x.Name== "TableTestSimple");
+            //DataArtifactSchemaItem[] primaryKeys = dataArtifact.ListPrimaryKeys();
+            //Console.WriteLine(string.Join(',', primaryKeys.Select(e => e.Name)));
+            SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)dataArtifact.DataSources[0];
+            Console.WriteLine(sqlDataSource.Schema);
             Console.ReadKey();
+
         }
 
         

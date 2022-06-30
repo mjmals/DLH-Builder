@@ -1,0 +1,151 @@
+﻿@{
+    DLHBuilder.DataArtifactCompiler Model = new DLHBuilder.DataArtifactCompiler(null, null, null, null);
+}
+
+##ENDHEADER
+
+@using DLHBuilder
+@{
+    DataArtifact artifact = Model.Artifact;
+    ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)Model.Artifacts[0];
+    DataArtifactSchemaItem[] primaryKeys = baseArtifact.Artifact.ListPrimaryKeys();
+    string EntityFull = @baseArtifact.Path[1].Replace('-', '_') + "_" + @baseArtifact.Path[2].Replace('-','_');
+
+    //SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)artifact.DataSources[0];
+    //DataSource sqlDataSource = (DataSource)artifact.DataSources[0];// baseArtifact.Artifact.DataSources[0];
+    //string sourceSchemaName = a.Schema;
+    SQLConnectionDataSource source = (SQLConnectionDataSource)Model.DataSources[0];
+    
+
+    string GetSafePrimaryKeyJoin(string TableAliasLeft="a", string TableAliasRight="b")
+    {
+        string ColumnList = "";
+        foreach (DataArtifactSchemaItem schemaItem in primaryKeys)
+        {
+            ColumnList = ColumnList + " AND " + TableAliasLeft+"."+ schemaItem.Name + " = " + TableAliasRight+"."+schemaItem.Name;
+        }
+        //return ColumnList;  //Substring(4, ColumnList.Length - 4);
+        return ColumnList.Substring(4, ColumnList.Length - 4);
+    }
+
+    string GetSafePrimaryKeyList(string TableAlias="")
+    {
+        if (TableAlias != "") TableAlias = TableAlias + ".";
+        string ColumnList = "";
+        foreach (DataArtifactSchemaItem schemaItem in primaryKeys)
+        {
+            ColumnList = ColumnList + ", " + TableAlias + GetSafeColumnName(schemaItem.Name);
+        }
+        //return ColumnList;  //Substring(4, ColumnList.Length - 4);
+        return ColumnList.Substring(1, ColumnList.Length - 1);
+    }
+
+
+    string GetSafeColumnName(string ColumnName)
+    {
+        string ReturnVal = ColumnName.Replace('#', '_');
+        //string result = System.Text.RegularExpressions.Regex.Replace('Some stuff','f','d');
+        return ReturnVal;
+    }
+
+    string GetSafeColumnTransform(string ColumnName, string ColumnDateType)
+    {
+        if (ColumnName.ToLower().Contains("rowversion"))
+            return "CONVERT(NVARCHAR(MAX), CONVERT(BINARY(8), " + "[" + ColumnName + "]" + "), 1)";
+        return "[" + ColumnName + "]";
+    }
+
+    string GetSafeColumnList(string TableAlias="")
+    {
+        string ColumnList = "";
+        string FullTableAlias = "";
+        if (TableAlias != "") FullTableAlias = TableAlias + ".";
+        foreach (ICompiledSchemaItem schemaItem in baseArtifact.Schema)
+        {
+            ColumnList = ColumnList +", "+GetSafeColumnTransform(schemaItem.Name, schemaItem.DataType) + " as ["+GetSafeColumnName(schemaItem.Name) + "]";
+        }
+        return ColumnList.Substring(1, ColumnList.Length - 1);
+    }
+
+    string GetColumnList(string TableAlias = "")
+    {
+        string ColumnList = "";
+        string FullTableAlias = "";
+        if (TableAlias != "") FullTableAlias = TableAlias + ".";
+        foreach (ICompiledSchemaItem schemaItem in baseArtifact.Schema)
+        {
+            ColumnList = ColumnList + ", " + FullTableAlias + GetSafeColumnName(schemaItem.Name);
+        }
+        return ColumnList.Substring(1, ColumnList.Length - 1);
+    }
+
+    string GetDestinationTable(string stage)
+    {
+        return stage + "_" + EntityFull + "." + artifact.Name;
+    }
+
+}
+
+@{
+
+    string srcTableAlias = "a";
+    string destTableAlias = "b";
+    string GroupName = @baseArtifact.Path[1] + "_" + @baseArtifact.Path[2];
+
+    string SourceType = string.Empty;
+    string SourceFileFormat = string.Empty;
+    string SourcePath = string.Empty;
+    string SourceProcessType = string.Empty;
+    string SourceProcessSubType = string.Empty;
+    string ProcessGroup = "PG001";
+    string LastStage = "source";
+    string ConnectionString = "conn-string-mssql-" + @baseArtifact.Path[1].ToLower() + "-" + @baseArtifact.Path[2].ToLower().Replace("_", "-");
+
+
+
+    <group name="@GroupName">
+        @foreach (ICompiledDataArtifact compiledArtifact in Model.Artifacts)
+        {
+            //Get we dont want to create a test for landing so skip that one. Note we need to fix list so it can use the additional functionality
+            if (compiledArtifact.Stage.Name.ToLower()!="landing")
+            {
+                @:<test name="@artifact.Name.@compiledArtifact.Stage.Name.ToLower()">
+                @:  <system-under-test>
+                @:      <execution> 
+                @:          <query connectionString="Driver={Simba Spark ODBC Driver} ;Host=adb-2475052620599506.6.azuredatabricks.net;Port=443;HTTPPath=sql/protocolv1/o/2475052620599506/0517-105805-r1ywt81t;ThriftTransport=2;SSL=1;AuthMech=3;UID=token;PWD=dapic3b7932adef896236600b84979750222">
+                @:              <![CDATA[
+                @:                select @GetColumnList(srcTableAlias)
+                @:                from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower()) @srcTableAlias
+                @:                inner join(select @GetSafePrimaryKeyList(), max(_InputFile) as _InputFile
+                @:                           from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower())
+                @:                           group by @GetSafePrimaryKeyList()) @srcTableAlias
+                @:                on @GetSafePrimaryKeyJoin(srcTableAlias, destTableAlias)
+                @:                and @(srcTableAlias)._InputFile = @(destTableAlias)._InputFile
+                @:                order by @GetSafePrimaryKeyList("a")
+                @:              ]]>
+                @:          </query>
+                @:      </execution>        
+                @:  </system-under-test>
+                @:<assert>
+                @:	<equal-to>
+                @:		<column index="0" role="key" type="numeric" />
+                @:		<column index="1" role="value" type="text" />
+                @:		<column index="2" role="value" type="text" />
+                @:		<column index="3" role="value" type="dateTime" />
+                @:		<column index="4" role="value" type="numeric" />
+                @:		<column index="5" role="value" type="numeric" />
+                @:		<column index="6" role="value" type="text" />
+                @:		<query>
+                @:		<![CDATA[
+                @:			select @GetSafeColumnList(srcTableAlias)
+                @:			from @(source.Schema).@artifact.Name
+                @:			order by @GetSafePrimaryKeyList()
+                @:		]]>
+                @:		</query>
+                @:	</equal-to>
+                @:</assert>
+                @:</test>
+            }
+        }
+    </group>
+ }

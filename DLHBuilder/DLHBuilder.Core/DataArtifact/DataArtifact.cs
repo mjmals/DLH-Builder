@@ -97,7 +97,17 @@ namespace DLHBuilder
 
         private DataArtifactSchemaItemCollection schema { get; set; }
 
-        private void OnSchemaItemAdded(object sender, DataArtifactSchemaItemEventArgs e)
+        public DataArtifactSchemaItem[] ListPrimaryKeys() 
+        {
+            DataArtifactSchemaItem[] schemaitems;//= new []DataArtifactSchemaItem();
+
+            schemaitems = this.Schema
+                .Where(e => e.KeyType == DataArtifactSchemaItemKeyType.Primary)
+                .ToArray();
+            return schemaitems;
+        }
+
+private void OnSchemaItemAdded(object sender, DataArtifactSchemaItemEventArgs e)
         {
             //MasterDataArtifactHandler.PostSchemaItem(MasterDataArtifactID, e.Item);
         }
