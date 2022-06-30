@@ -112,7 +112,7 @@
                 @:<test name="@artifact.Name.@compiledArtifact.Stage.Name.ToLower()">
                 @:  <system-under-test>
                 @:      <execution> 
-                @:          <query connectionString="Driver={Simba Spark ODBC Driver} ;Host=adb-2475052620599506.6.azuredatabricks.net;Port=443;HTTPPath=sql/protocolv1/o/2475052620599506/0517-105805-r1ywt81t;ThriftTransport=2;SSL=1;AuthMech=3;UID=token;PWD=dapic3b7932adef896236600b84979750222">
+                @:          <query connectionString="Driver={Simba Spark ODBC Driver} ;Host=<You need to fill this in>;Port=443;HTTPPath=<You Need to Fill this in>;ThriftTransport=2;SSL=1;AuthMech=3;UID=token;PWD=<User Token>">
                 @:              <![CDATA[
                 @:                select @GetColumnList(srcTableAlias)
                 @:                from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower()) @srcTableAlias
