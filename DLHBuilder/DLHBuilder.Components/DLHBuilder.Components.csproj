@@ -1,0 +1,71 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0-windows</TargetFramework>
+	<UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Scripts\TSQL\DatabaseTableColumns.sql" />
+    <None Remove="Resources\Scripts\TSQL\SQLArtifactImport.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Scripts\TSQL\DatabaseTableColumns.sql" />
+    <EmbeddedResource Include="Resources\Scripts\TSQL\SQLArtifactImport.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Editors\" />
+    <Folder Include="Trees\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dialogs\ArtifactDependencyDialog\ArtifactDependencyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialogs\ArtifactDependencyDialog\DataSourceArtifactDependencyDialog.cs" />
+    <Compile Update="Dialogs\ArtifactDependencyDialog\ReferenceArtifactDependencyDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportObjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportSchemaItemTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\SQLDataArtifactImportDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceObjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceTransformationTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>
