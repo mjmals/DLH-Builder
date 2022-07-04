@@ -16,10 +16,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Trees\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
     <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
   </ItemGroup>
@@ -74,6 +70,12 @@
     <Compile Update="Editors\ScriptTemplateEditor\ScriptTemplateEditor.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Update="Editors\ScriptTemplateMappingEditor\ScriptTemplateMappingEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\ScriptViewer\ScriptViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Update="Editors\TextPropertyEditor\TextPropertyEditor.cs" />
     <Compile Update="Editors\TranformationEditor\Grid\TransformationEditorGrid.cs">
       <SubType>Component</SubType>
@@ -88,6 +90,41 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\ConnectionMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\ConnectionsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\SQLConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\DataApplicationsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\DataLakeDataApplication\DataLakeDataApplicationMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\SQLDataApplication\SQLDataApplicationMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifactReference\Dependency\DataArtifactReferenceDependenciesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactSQLImportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\Folder\DataArtifactFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\Schema\DataArtifactSchemaItemsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataSource\DataSourcesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\DataStageMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\DataStagesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\Folder\DataStageFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Environment\EnvironmentsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Project\ProjectMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\ScriptTemplate\ScriptTemplateFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\ProjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\ProjectTreeMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\ProjectTreeMenuButton.cs">
+      <SubType>Component</SubType>
     </Compile>
   </ItemGroup>
 

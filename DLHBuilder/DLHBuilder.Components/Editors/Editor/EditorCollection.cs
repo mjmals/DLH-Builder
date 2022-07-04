@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace DLHBuilder.Components.Editors
+namespace DLHBuilder.Components
 {
     public class EditorCollection : TabControl
     {
