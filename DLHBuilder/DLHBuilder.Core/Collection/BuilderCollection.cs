@@ -188,6 +188,17 @@ namespace DLHBuilder
         void CleanUpFolders(string path)
         {
             path = Path.Combine(path, DirectoryPath);
+            string[] folders = Directory.GetDirectories(path);
+
+            List<string> itemList = this.Select(x => Path.Combine(path, x.GetType().GetProperty(SubfolderProperty).GetValue(x).ToString().Replace(".", @"\"))).ToList();
+
+            foreach(string folder in folders)
+            {
+                if(!itemList.Contains(folder) && itemList.Where(x => x.StartsWith(folder)).Count() == 0 && Directory.Exists(folder))
+                {
+                    Directory.Delete(folder, true);
+                }
+            }
         }
 
         void CleanUpFiles(string path)

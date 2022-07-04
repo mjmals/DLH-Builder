@@ -32,8 +32,25 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
         public override void LabelChanged(string text)
         {
             base.LabelChanged(text);
+            CascaseRename(text);
             Folder.Name = text;
             SetName();
+        }
+
+        void CascaseRename(string newName)
+        {
+            string searchPath = Folder.FullPath + ".";
+            int replaceIndex = Folder.Path.Count;
+
+            foreach(DataArtifactFolder fldr in Tree.Project.ArtifactFolders.Where(x => x.FullPath.StartsWith(searchPath)))
+            {
+                fldr.Path[replaceIndex] = Text;
+            }
+
+            foreach(DataArtifact artifact in Tree.Project.Artifacts.Where(x => x.ArtifactPath.StartsWith(searchPath)))
+            {
+                artifact.ArtifactNamespace[replaceIndex] = Text;
+            }
         }
     }
 }
