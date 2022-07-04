@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace DLHBuilder.Components
 {
-    static class Images
+    public static class Images
     {
         public static ImageList Items
         {

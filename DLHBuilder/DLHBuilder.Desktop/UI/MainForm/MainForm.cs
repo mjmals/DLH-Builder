@@ -5,6 +5,10 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using DLHBuilder.Components;
+using DLHBuilder.Components.Editors;
+using DLHBuilder.Components.Trees;
+using DLHBuilder.Components.Trees.ProjectTreeView;
 
 namespace DLHBuilder.Desktop.UI
 {

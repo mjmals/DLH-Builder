@@ -8,7 +8,7 @@ using DLHBuilder.Components.Editors;
 
 namespace DLHBuilder.Components.Trees.ProjectTreeView
 {
-    class ProjectTreeNode : TreeNode
+    public class ProjectTreeNode : TreeNode
     {
         public ProjectTreeNode()
         {
