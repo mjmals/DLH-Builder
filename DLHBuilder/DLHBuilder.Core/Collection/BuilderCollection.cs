@@ -35,6 +35,9 @@ namespace DLHBuilder
         [JsonIgnore]
         public EventHandler CollectionModified;
 
+        [JsonIgnore]
+        public EventHandler CollectionRemoved;
+
         public new void Add(T item)
         {
             base.Add(item);
@@ -46,6 +49,7 @@ namespace DLHBuilder
         {
             base.Remove(item);
             CollectionModified?.Invoke(item, null);
+            CollectionRemoved.Invoke(item, null);
         }
 
         string DirectoryPath

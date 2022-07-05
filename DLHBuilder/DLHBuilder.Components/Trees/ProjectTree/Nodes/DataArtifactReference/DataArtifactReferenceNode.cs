@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace DLHBuilder.Components.Trees.ProjectTreeView
 { 
@@ -32,5 +33,7 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
         public override string ExpandedImage => "Data Artifact";
 
         public override string CollapsedImage => "Data Artifact";
+
+        public override ContextMenuStrip ContextMenuStrip => new DataArtifactReferenceMenu(this);
     }
 }
