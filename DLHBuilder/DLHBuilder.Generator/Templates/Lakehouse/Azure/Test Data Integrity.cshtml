@@ -11,11 +11,16 @@
     DataArtifactSchemaItem[] primaryKeys = baseArtifact.Artifact.ListPrimaryKeys();
     string EntityFull = @baseArtifact.Path[1].Replace('-', '_') + "_" + @baseArtifact.Path[2].Replace('-','_');
 
-    //SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)artifact.DataSources[0];
-    //DataSource sqlDataSource = (DataSource)artifact.DataSources[0];// baseArtifact.Artifact.DataSources[0];
-    //string sourceSchemaName = a.Schema;
     SQLConnectionDataSource source = (SQLConnectionDataSource)Model.DataSources[0];
-    
+    //SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)artifact.DataSources[0];
+
+    string ValidateContract()
+    {
+        string validateionString = "";
+        DataArtifactSchemaItem[] schemaItem = baseArtifact.Artifact.ListPrimaryKeys();
+        if (schemaItem.Length == 0) { validateionString= validateionString+"Artifact has no primary keys defined" }
+        return "";
+    }
 
     string GetSafePrimaryKeyJoin(string TableAliasLeft="a", string TableAliasRight="b")
     {
@@ -84,7 +89,32 @@
         return stage + "_" + EntityFull + "." + artifact.Name;
     }
 
-}
+    string GetDataType(string sourceType)
+    {
+        switch(sourceType)
+        {
+            case "String":
+                return "text";
+            case "Integer":
+                return "numeric";
+            case "Boolean":
+                return "BooleanType";
+            case "DateTime":
+                return "dateTime";
+            case "Date":
+                return "dateTime";
+            case "Time":
+                return "dateTime";
+            case "Byte":
+                return "text";
+            case "Decimal":
+                return "numeric";
+            default:
+                return sourceType;
+        }
+    }
+
+    }
 
 @{
 
@@ -109,42 +139,39 @@
             //Get we dont want to create a test for landing so skip that one. Note we need to fix list so it can use the additional functionality
             if (compiledArtifact.Stage.Name.ToLower()!="landing")
             {
-                @:<test name="@artifact.Name.@compiledArtifact.Stage.Name.ToLower()">
-                @:  <system-under-test>
+                @:  <test name="@artifact.Name.@compiledArtifact.Stage.Name.ToLower()">
+                @:    <system-under-test>
                 @:      <execution> 
-                @:          <query connectionString="Driver={Simba Spark ODBC Driver} ;Host=<You need to fill this in>;Port=443;HTTPPath=<You Need to Fill this in>;ThriftTransport=2;SSL=1;AuthMech=3;UID=token;PWD=<User Token>">
-                @:              <![CDATA[
-                @:                select @GetColumnList(srcTableAlias)
-                @:                from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower()) @srcTableAlias
-                @:                inner join(select @GetSafePrimaryKeyList(), max(_InputFile) as _InputFile
-                @:                           from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower())
-                @:                           group by @GetSafePrimaryKeyList()) @srcTableAlias
-                @:                on @GetSafePrimaryKeyJoin(srcTableAlias, destTableAlias)
-                @:                and @(srcTableAlias)._InputFile = @(destTableAlias)._InputFile
-                @:                order by @GetSafePrimaryKeyList("a")
-                @:              ]]>
-                @:          </query>
+                @:        <query>
+                @:          <![CDATA[
+                @:            select @GetColumnList(srcTableAlias)
+                @:            from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower()) @srcTableAlias
+                @:            inner join(select @GetSafePrimaryKeyList(), max(_InputFile) as _InputFile
+                @:                       from @GetDestinationTable(compiledArtifact.Stage.Name.ToLower())
+                @:                       group by @GetSafePrimaryKeyList()) @destTableAlias
+                @:              on @GetSafePrimaryKeyJoin(srcTableAlias, destTableAlias)
+                @:              and @(srcTableAlias)._InputFile = @(destTableAlias)._InputFile
+                @:            order by @GetSafePrimaryKeyList("a")
+                @:          ]]>
+                @:        </query>
                 @:      </execution>        
-                @:  </system-under-test>
-                @:<assert>
-                @:	<equal-to>
-                @:		<column index="0" role="key" type="numeric" />
-                @:		<column index="1" role="value" type="text" />
-                @:		<column index="2" role="value" type="text" />
-                @:		<column index="3" role="value" type="dateTime" />
-                @:		<column index="4" role="value" type="numeric" />
-                @:		<column index="5" role="value" type="numeric" />
-                @:		<column index="6" role="value" type="text" />
-                @:		<query>
-                @:		<![CDATA[
-                @:			select @GetSafeColumnList(srcTableAlias)
-                @:			from @(source.Schema).@artifact.Name
-                @:			order by @GetSafePrimaryKeyList()
-                @:		]]>
-                @:		</query>
-                @:	</equal-to>
-                @:</assert>
-                @:</test>
+                @:    </system-under-test>
+                @:    <assert>
+                @:	    <equal-to>
+                foreach(ICompiledSchemaItem schemaItem in baseArtifact.Schema)
+                {
+                @:		  <column index="@(schemaItem.Ordinal-1)" role="@(schemaItem.KeyType == DataArtifactSchemaItemKeyType.Primary ? "key" : "value")" type="@GetDataType(schemaItem.DataType)" />
+                }
+                @:		  <query>
+                @:		    <![CDATA[
+                @:			    select @GetSafeColumnList(srcTableAlias)
+                @:			    from @(source.Schema).@artifact.Name
+                @:			    order by @GetSafePrimaryKeyList()
+                @:		    ]]>
+                @:		  </query>
+                @:	    </equal-to>
+                @:    </assert>
+                @:  </test>
             }
         }
     </group>

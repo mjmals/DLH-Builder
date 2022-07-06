@@ -26,6 +26,8 @@ namespace DLHBuilder
             //DataArtifactSchemaItem[] primaryKeys = dataArtifact.ListPrimaryKeys();
             //Console.WriteLine(string.Join(',', primaryKeys.Select(e => e.Name)));
             SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)dataArtifact.DataSources[0];
+            //ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)project.Artifacts.First(x => x.Name == "TableTestSimple");
+
             Console.WriteLine(sqlDataSource.Schema);
             Console.ReadKey();
 
