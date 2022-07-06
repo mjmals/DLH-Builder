@@ -20,8 +20,8 @@ namespace DLHBuilder.DataType.Converters.SQL
 
             if (!sourceType.ToLower().EndsWith("money"))
             {
-                output.Scale = Convert.ToInt32(sizeOptions.Split(",").First());
-                output.Precision = Convert.ToInt32(sizeOptions.Split(",").Last());
+                output.Precision = Convert.ToInt32(sizeOptions.Split(",").First());
+                output.Scale = Convert.ToInt32(sizeOptions.Split(",").Last());
             }
 
             return output;
