@@ -8,7 +8,7 @@ namespace DLHBuilder
 {
     class SQLCompiledDataArtifact : CompiledDataArtifact, ICompiledDataArtifact
     {
-        public SQLCompiledDataArtifact(DataArtifact artifact, MSSQLDataStage stage, DataArtifactReference reference) : base(artifact, stage, reference)
+        public SQLCompiledDataArtifact(DataArtifact artifact, MSSQLDataStage stage, DataArtifactReference reference, Project project) : base(artifact, stage, reference, project)
         {
             SQLStage = stage;
         }

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32112.339
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.32413.511
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Core", "DLHBuilder.Core\DLHBuilder.Core.csproj", "{244E10BA-17A5-4C6A-A91A-CAE940AD6A3D}"
 EndProject
@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Desktop", "DLHBu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Generator", "DLHBuilder.Generator\DLHBuilder.Generator.csproj", "{D77AEA51-F099-4DC2-A3ED-5AE56D0CDD51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Components", "DLHBuilder.Components\DLHBuilder.Components.csproj", "{B9619DA4-E745-4152-9374-DA88948DFD05}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHBuilder.Components", "DLHBuilder.Components\DLHBuilder.Components.csproj", "{B9619DA4-E745-4152-9374-DA88948DFD05}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHBuilder.Azure.DataFactory", "DLHBuilder.Azure.DataFactory\DLHBuilder.Azure.DataFactory.csproj", "{E312A1F6-428F-4848-9867-9D9639FBC211}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{B9619DA4-E745-4152-9374-DA88948DFD05}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B9619DA4-E745-4152-9374-DA88948DFD05}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B9619DA4-E745-4152-9374-DA88948DFD05}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E312A1F6-428F-4848-9867-9D9639FBC211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E312A1F6-428F-4848-9867-9D9639FBC211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E312A1F6-428F-4848-9867-9D9639FBC211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E312A1F6-428F-4848-9867-9D9639FBC211}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

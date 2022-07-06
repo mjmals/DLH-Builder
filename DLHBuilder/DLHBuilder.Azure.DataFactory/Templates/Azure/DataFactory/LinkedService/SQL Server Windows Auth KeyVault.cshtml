@@ -1,0 +1,29 @@
+﻿@{
+    DLHBuilder.SQLDataConnection Model = new DLHBuilder.SQLDataConnection();
+}
+
+##ENDHEADER
+
+{
+    "name": "@Model.Name",
+    "properties": {
+        "annotations": [],
+        "type": "SqlServer",
+        "typeProperties": {
+            "connectionString": "@Model.ConnectionString()",
+            "userName": "!#ENTER USER NAME#!",
+            "password": {
+                "type": "AzureKeyVaultSecret",
+                "store": {
+                    "referenceName": "!#ENTER KEYVAULT LINKEDSERVICE#!",
+                    "type": "LinkedServiceReference"
+                },
+                "secretName": "!#ENTER KEYVAULT SECRET NAME#!"
+            }
+        },
+        "connectVia": {
+            "referenceName": "!#ENTER INTEGRATED RUNTIME NAME#!",
+            "type": "IntegrationRuntimeReference"
+        }
+    }
+}

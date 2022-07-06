@@ -22,6 +22,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Azure.DataFactory\DLHBuilder.Azure.DataFactory.csproj" />
     <ProjectReference Include="..\DLHBuilder.Components\DLHBuilder.Components.csproj" />
     <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
     <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />

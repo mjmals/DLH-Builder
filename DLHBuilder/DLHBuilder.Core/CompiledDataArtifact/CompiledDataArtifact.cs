@@ -8,11 +8,12 @@ namespace DLHBuilder
 {
     public abstract class CompiledDataArtifact : ICompiledDataArtifact
     {
-        public CompiledDataArtifact(DataArtifact artifact, IDataStage stage, DataArtifactReference reference)
+        public CompiledDataArtifact(DataArtifact artifact, IDataStage stage, DataArtifactReference reference, Project project)
         {
             Artifact = artifact;
             Stage = stage;
             Reference = reference;
+            Project = project;
             Path = artifact.ArtifactNamespace.ToArray();
             Schema = SetSchema();
         }
@@ -22,6 +23,8 @@ namespace DLHBuilder
         public IDataStage Stage { get; set; }
 
         public DataArtifactReference Reference { get; set; }
+
+        public Project Project { get; set; }
 
         public virtual string Name { get; }
 

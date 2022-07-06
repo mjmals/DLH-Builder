@@ -1,0 +1,26 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\Azure\DataFactory\LinkedService\SQL Server Windows Auth KeyVault.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Azure\DataFactory\LinkedService\SQL Server Windows Auth KeyVault.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+  </ItemGroup>
+
+</Project>

@@ -8,7 +8,7 @@ namespace DLHBuilder
 {
     public class ADLSCompiledDataArtifact : CompiledDataArtifact, ICompiledDataArtifact
     {
-        public ADLSCompiledDataArtifact(DataArtifact artifact, ADLSDataStage stage, DataArtifactReference reference) : base(artifact, stage, reference)
+        public ADLSCompiledDataArtifact(DataArtifact artifact, ADLSDataStage stage, DataArtifactReference reference, Project project) : base(artifact, stage, reference, project)
         {
             ADLSStage = stage;
             Path = reference.Path.ToArray();

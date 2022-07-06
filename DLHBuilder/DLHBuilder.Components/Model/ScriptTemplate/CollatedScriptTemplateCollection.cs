@@ -14,8 +14,11 @@ namespace DLHBuilder.Components.Model
             ScriptTemplateCollection templates = new ScriptTemplateCollection();
 
             templates.AddRange(projecttemplates);
-            
-            foreach(Type collectionType in AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => x.IsAssignableTo(typeof(BuiltInScriptTemplateCollection))))
+
+            Assembly[] assemblies = AppDomain.CurrentDomain.GetAssemblies();
+            Type[] templateCollections = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => x.IsAssignableTo(typeof(BuiltInScriptTemplateCollection))).ToArray();
+
+            foreach (Type collectionType in templateCollections)
             {
                 BuiltInScriptTemplateCollection collection = (BuiltInScriptTemplateCollection)Activator.CreateInstance(collectionType);
                 templates.AddRange(collection);

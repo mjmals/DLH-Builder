@@ -40,6 +40,11 @@ namespace DLHBuilder
         [JsonConverter(typeof(StringEnumConverter))]
         public AuthenticationType Authentication { get; set; }
 
+        public string ConnectionString()
+        {
+            return string.Format("Integrated Security=True;Data Source={0};Initial Catalog={1}", Server, Database);
+        }
+
         public override string ToString()
         {
             return Name;

@@ -40,13 +40,13 @@ namespace DLHBuilder
                 {
                     if (Application is SQLDataApplication)
                     {
-                        artifacts.Add(new SQLCompiledDataArtifact(Artifact, (MSSQLDataStage)stage, reference));
+                        artifacts.Add(new SQLCompiledDataArtifact(Artifact, (MSSQLDataStage)stage, reference, Project));
                         continue;
                     }
 
                     if (Application is DataLakeDataApplication)
                     {
-                        artifacts.Add(new ADLSCompiledDataArtifact(Artifact, (ADLSDataStage)stage, reference));
+                        artifacts.Add(new ADLSCompiledDataArtifact(Artifact, (ADLSDataStage)stage, reference, Project));
                         continue;
                     }
                 }

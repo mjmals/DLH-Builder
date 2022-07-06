@@ -18,9 +18,17 @@ namespace DLHBuilder.Desktop
         static void Main()
         {
             string appDir = AppDomain.CurrentDomain.BaseDirectory;
+
+            // load standard dlls
+            foreach (string dll in Directory.GetFiles(appDir, "*.dll"))
+            {
+                Assembly extension = Assembly.LoadFile(dll);
+            }
+
+            // load extension dlls
             string extensionDir = Path.Combine(appDir, "Extensions");
 
-            foreach(string dll in Directory.GetFiles(extensionDir, "*.dll"))
+            foreach (string dll in Directory.GetFiles(extensionDir, "*.dll"))
             {
                 Assembly extension = Assembly.LoadFile(dll);
             }
@@ -30,5 +38,6 @@ namespace DLHBuilder.Desktop
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());
         }
+
     }
 }
