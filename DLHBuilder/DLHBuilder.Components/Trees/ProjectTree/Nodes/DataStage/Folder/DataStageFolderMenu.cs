@@ -13,6 +13,7 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
         {
             Node = node;
             Items.Add(new ProjectTreeMenuButton("Add Folder", AddFolder));
+            Items.Add(new ProjectTreeMenuButton("Delete Folder", DeleteFolder));
             Items.Add(new ProjectTreeMenuButton("Link Data Artifact", LinkArtifact));
         }
 
@@ -45,6 +46,11 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
                     Node.ParentStage.ArtifactReferences.Add(reference);
                 }
             }
+        }
+
+        void DeleteFolder(object sender, EventArgs e)
+        {
+            Node.ParentStage.Folders.Remove(Node.Folder);
         }
     }
 }

@@ -26,7 +26,9 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
             set
             {
                 value.Folders.CollectionAdded += OnFolderAdded;
+                value.Folders.CollectionRemoved += OnFolderRemoved;
                 value.ArtifactReferences.CollectionAdded += OnReferenceAdded;
+                value.ArtifactReferences.CollectionRemoved += OnReferenceRemoved;
                 Tag = value;
             }
         }
@@ -90,6 +92,28 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
             return output;
         }
 
+        void OnFolderRemoved(object sender, EventArgs e)
+        {
+            DataStageFolder folder = (DataStageFolder)sender;
+
+            foreach(DataStageFolder fldr in Stage.Folders.Where(x => x.FullPath.StartsWith(folder.FullPath + ".")).ToList())
+            {
+                Stage.Folders.Remove(fldr);
+            }
+
+            foreach (DataArtifactReference reference in Stage.ArtifactReferences.Where(x => x.FullPath.StartsWith(folder.FullPath + ".")).ToList())
+            {
+                Stage.ArtifactReferences.Remove(reference);
+            }
+
+            string nodeName = Name + "." + (folder.Path.Count > 0 ? folder.FullPath : folder.Name);
+
+            if (Nodes.Find(nodeName, true) != null)
+            { 
+                Nodes.RemoveByKey(nodeName);
+            }
+        }
+
         void OnReferenceAdded(object sender, EventArgs e)
         {
             DataArtifactReference reference = (DataArtifactReference)sender;
@@ -122,6 +146,17 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
             }
 
             return output;
+        }
+
+        void OnReferenceRemoved(object sender, EventArgs e)
+        {
+            DataArtifactReference reference = (DataArtifactReference)sender;
+            string nodeName = Name + "." + (reference.Path.Count > 0 ? reference.FullPath : reference.ID);
+
+            if (Nodes.Find(nodeName, true) != null)
+            {
+                Nodes.Remove(Nodes.Find(nodeName, true).FirstOrDefault());
+            }
         }
     }
 }

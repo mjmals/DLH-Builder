@@ -37,8 +37,25 @@ namespace DLHBuilder.Components.Trees.ProjectTreeView
             int pos = path.IndexOf(path.Last());
             path[pos] = text;
 
+            CascadeRename(text);
             Folder.Name = text;
             Name = string.Join('.', path);
+        }
+
+        void CascadeRename(string newName)
+        {
+            string searchPath = Folder.FullPath + ".";
+            int replaceIndex = Folder.Path.Count();
+
+            foreach(DataStageFolder folder in ParentStage.Folders.Where(x => x.FullPath.StartsWith(searchPath)))
+            {
+                folder.Path[replaceIndex] = newName;
+            }
+
+            foreach(DataArtifactReference reference in ParentStage.ArtifactReferences)
+            {
+                reference.Path[replaceIndex] = newName;
+            }
         }
     }
 }
