@@ -9,5 +9,7 @@ namespace DLHBuilder
     public interface IDataType
     {
         Type BaseType { get; }
+
+        string FormattedName();
     }
 }

@@ -20,5 +20,11 @@ namespace DLHBuilder
         {
             return "Integer";
         }
+
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }

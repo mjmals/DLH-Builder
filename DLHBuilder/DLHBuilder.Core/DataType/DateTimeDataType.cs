@@ -20,5 +20,10 @@ namespace DLHBuilder
         {
             return Precision.ToString();
         }
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }

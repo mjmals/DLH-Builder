@@ -19,17 +19,35 @@ namespace DLHBuilder
         {
             //DataTypeCollection datatypes = new DataTypeCollection();
             //datatypes.ForEach(x => Console.WriteLine(x.Name));
-            Console.Write("Enter project path:");
-            string path = Console.ReadLine();
-            Project project = Project.Load(path);
-            DataArtifact dataArtifact = project.Artifacts.First(x=> x.Name== "TableTestSimple");
+            //Console.Write("Enter project path:");
+            //string path = Console.ReadLine();
+            Project project = Project.Load("C:\\Users\\jasonhough\\source\\Repos\\Analytics Platform\\Analytics DLH Projects\\Projects\\Hydr8 Contract Testing\\Sunbelt Lakehouse\\Sunbelt Lakehouse.project.json");
+            
+            
+
+            DataArtifact dataArtifact = project.Artifacts.First(x=> x.Name== "SmartToolJob");
+            DataArtifactCompiler dac = new DataArtifactCompiler(dataArtifact,project.Applications[0],project.Applications[0].Stages[0], project);
+            var itemType = dac.Artifacts[0].Schema[0];
+            Console.WriteLine(itemType.DataType);
+            ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)dac.Artifacts[0];
+
+            foreach (CompiledSchemaItem csi in baseArtifact.Schema)
+            {
+                Console.WriteLine(csi.DataTypeFormatted);
+            }
+
+            foreach (DataArtifactSchemaItem dasi in dataArtifact.Schema)
+            {
+                Console.WriteLine(dasi.DataType.FormattedName());
+            }
+            //Console.WriteLine(dataArtifact.Schema[1].DataType.FormattedName());
             //DataArtifactSchemaItem[] primaryKeys = dataArtifact.ListPrimaryKeys();
             //Console.WriteLine(string.Join(',', primaryKeys.Select(e => e.Name)));
             SQLConnectionDataSource sqlDataSource = (SQLConnectionDataSource)dataArtifact.DataSources[0];
             //ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)project.Artifacts.First(x => x.Name == "TableTestSimple");
 
             Console.WriteLine(sqlDataSource.Schema);
-            Console.ReadKey();
+             Console.ReadKey();
 
         }
 

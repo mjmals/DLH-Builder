@@ -18,5 +18,11 @@ namespace DLHBuilder
         {
             return "Byte";
         }
+
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }

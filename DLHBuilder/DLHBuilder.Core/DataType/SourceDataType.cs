@@ -18,5 +18,11 @@ namespace DLHBuilder
         public string DataTypeName { get; set; }
 
         public DataTypeConverterProperties Properties { get; set; }
+
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }

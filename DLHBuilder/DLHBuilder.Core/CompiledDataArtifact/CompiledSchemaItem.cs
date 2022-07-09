@@ -26,6 +26,8 @@ namespace DLHBuilder
 
         public string DataType { get; set; }
 
+        public string DataTypeFormatted { get; set; }
+
         public bool IsNullable { get; set; }
 
         public DataArtifactSchemaItemKeyType KeyType { get; set; }
@@ -39,6 +41,11 @@ namespace DLHBuilder
         protected virtual string GetDataType()
         {
             return SchemaItem.DataType.ToString();
+        }
+
+        protected virtual string GetDataTypeFormatted()
+        {
+            return SchemaItem.DataType.FormattedName().ToString();
         }
 
         protected T GetTransformation<T>()
@@ -62,6 +69,7 @@ namespace DLHBuilder
         {
             Name = SchemaItem.Name;
             DataType = GetDataType();
+            DataTypeFormatted = GetDataTypeFormatted();
             IsNullable = SchemaItem.IsNullable;
             KeyType = SchemaItem.KeyType;
             Definition = GetDefinition();
