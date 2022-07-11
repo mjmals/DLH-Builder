@@ -19,13 +19,13 @@ namespace DLHBuilder
         {
             //DataTypeCollection datatypes = new DataTypeCollection();
             //datatypes.ForEach(x => Console.WriteLine(x.Name));
-            //Console.Write("Enter project path:");
-            //string path = Console.ReadLine();
-            Project project = Project.Load("C:\\Users\\jasonhough\\source\\Repos\\Analytics Platform\\Analytics DLH Projects\\Projects\\Hydr8 Contract Testing\\Sunbelt Lakehouse\\Sunbelt Lakehouse.project.json");
+            Console.Write("Enter project path:");
+            string path = Console.ReadLine();
+            
             
             
 
-            DataArtifact dataArtifact = project.Artifacts.First(x=> x.Name== "SmartToolJob");
+            DataArtifact dataArtifact = project.Artifacts.First(x=> x.Name== "Company");
             DataArtifactCompiler dac = new DataArtifactCompiler(dataArtifact,project.Applications[0],project.Applications[0].Stages[0], project);
             var itemType = dac.Artifacts[0].Schema[0];
             Console.WriteLine(itemType.DataType);

@@ -107,6 +107,16 @@ namespace DLHBuilder
             return schemaitems;
         }
 
+        public DataArtifactSchemaItem[] ListBusinessKeys()
+        {
+            DataArtifactSchemaItem[] schemaitems;//= new []DataArtifactSchemaItem();
+
+            schemaitems = this.Schema
+                .Where(e => e.KeyType == DataArtifactSchemaItemKeyType.Business)
+                .ToArray();
+            return schemaitems;
+        }
+
         public DataArtifactSchemaItem[] ListVersionColumns()
         {
             DataArtifactSchemaItem[] schemaitems;//= new []DataArtifactSchemaItem();
