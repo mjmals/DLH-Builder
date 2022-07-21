@@ -16,5 +16,9 @@ namespace DLHBuilder.DataType
         {
             return "Boolean";
         }
+        public string FormattedName()
+        { 
+            return ToString();
+        }
     }
 }

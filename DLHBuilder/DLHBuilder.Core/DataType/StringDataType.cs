@@ -24,5 +24,10 @@ namespace DLHBuilder
         {
             return "String";
         }
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }

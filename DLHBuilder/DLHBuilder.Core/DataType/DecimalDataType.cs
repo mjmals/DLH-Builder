@@ -20,5 +20,11 @@ namespace DLHBuilder.DataType
         {
             return "Decimal";
         }
+
+        public string FormattedName()
+        {
+            return string.Format("{0}({1},{2})",ToString(),Precision, Scale);
+        }
+
     }
 }

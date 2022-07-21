@@ -12,6 +12,8 @@ namespace DLHBuilder
 
         public string DataType { get; set; }
 
+        public string DataTypeFormatted { get; set; }
+
         public bool IsNullable { get; set; }
 
         public DataArtifactSchemaItemKeyType KeyType { get; set; }

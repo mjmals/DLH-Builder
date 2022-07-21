@@ -16,5 +16,10 @@ namespace DLHBuilder
         {
             return "Data Artifact";
         }
+        public string FormattedName()
+        {
+            return ToString();
+        }
+
     }
 }
