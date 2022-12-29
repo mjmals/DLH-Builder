@@ -1,0 +1,84 @@
+﻿@{
+    DLHBuilder.DataArtifactCompiler Model = new DLHBuilder.DataArtifactCompiler(null, null, null, null);
+}
+
+##ENDHEADER
+
+@using DLHBuilder
+@{
+    DataArtifact artifact = Model.Artifact;
+    ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)Model.Artifacts[0];
+    SQLConnectionDataSource source = (SQLConnectionDataSource)Model.DataSources[0];
+    SQLDataConnection connection = (SQLDataConnection)baseArtifact.Project.Connections.FirstOrDefault(x => x.ID == source.ConnectionID);
+    string tableQualified = string.Format("[{0}].[{1}]", source.Schema, source.Table);
+    string columns = string.Join(',', baseArtifact.Schema.Select(x => !string.IsNullOrEmpty(x.OriginalName) ? string.Format("[{0}] as {1}", x.OriginalName, x.Name) : string.Format("[{0}]", x.Name)));
+}
+
+
+{
+    "name": "@(baseArtifact.Stage.Name)_@(string.Join('_', baseArtifact.Path))_@baseArtifact.Name",
+    "properties": {
+        "activities": [
+            {
+                "name": "Copy Data from @baseArtifact.Name",
+                "type": "Copy",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.02:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlServerSource",
+                        "sqlReaderQuery": {
+                            "value": "SELECT @columns FROM @tableQualified WITH (NOLOCK)",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "sink": {
+                        "type": "ParquetSink",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "ParquetWriteSettings"
+                        }
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "@connection.Name",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "!#ENTER DATASET NAME#!",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "DirectoryName": {
+                                "value": "@('@')concat('/@(string.Join('/', baseArtifact.Path).ToLower())/@baseArtifact.Name.ToLower()/_data/Year=', formatDateTime(utcNow(), 'yyyy'), '/Month=', formatDateTime(utcNow(), 'MM'), '/Day=', formatDateTime(utcNow(), 'dd'), '/Time=', formatDateTime(utcNow(), 'HH-mm'))",
+                                "type": "Expression"
+                            },
+                            "FileName": {
+                                "value": "@baseArtifact.Name.ToLower()",
+                                "type": "Expression"
+                            }
+                        }
+                    }
+                ]
+            }
+        ],
+        "folder": {
+            "name": "@baseArtifact.Stage.Name/@(string.Join('/', baseArtifact.Path).ToLower())"
+        },
+        "annotations": []
+    }
+}

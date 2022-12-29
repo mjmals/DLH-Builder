@@ -1,0 +1,238 @@
+﻿@{
+    DLHBuilder.DataArtifactCompiler Model = new DLHBuilder.DataArtifactCompiler(null, null, null, null);
+}
+
+##ENDHEADER
+
+@using DLHBuilder
+@{
+    DataArtifact artifact = Model.Artifact;
+    ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)Model.Artifacts[0];
+}
+
+@{
+    string SourceType = string.Empty;
+    string SourceFileFormat = string.Empty;
+    string SourcePath = string.Empty;
+    string SourceProcessType = string.Empty;
+    string SourceProcessSubType = string.Empty;
+    string ProcessGroup = "PG001";
+    string EntityFull = @baseArtifact.Path[1] + "_" + @baseArtifact.Path[2];
+    string LastStage = "source";
+    string ConnectionString = "conn-string-mssql-" + @baseArtifact.Path[1].ToLower() + "-" + @baseArtifact.Path[2].ToLower().Replace("_", "-");
+
+
+
+    string SetSourceValues()
+    {
+        if (Model.DataSources[0].GetType() == typeof(SQLConnectionDataSource))
+        {
+            SQLConnectionDataSource source = (SQLConnectionDataSource)Model.DataSources[0];
+
+            SourceType = "sql";
+            SourcePath = string.Format("SELECT {2} FROM [{0}].[{1}]", source.Schema, source.Table, GetSafeColumnList());
+            SourceProcessType = "SQL";
+            SourceProcessSubType = "Table";
+        }
+
+        return "source";
+    }
+
+    string GetDataTypeFormatted(ICompiledSchemaItem sourceType)
+    {
+        switch (sourceType.DataType)
+        {
+            case "String":
+                return "StringType()";
+            case "Integer":
+                return "IntegerType()";
+            case "Boolean":
+                return "BooleanType()";
+            case "DateTime":
+                return "TimestampType()";
+            case "Date":
+                return "DateType()";
+            case "Time":
+                return "TimestampType()";
+            case "Byte":
+                return "BinaryType()";
+            case "Decimal":
+                return sourceType.DataTypeFormatted.Replace("Decimal", "DecimalType");
+            default:
+                return sourceType.DataType;
+        }
+    }
+
+
+    string GetDataType(string sourceType)
+    {
+        switch (sourceType)
+        {
+            case "String":
+                return "StringType";
+            case "Integer":
+                return "IntegerType";
+            case "Boolean":
+                return "BooleanType";
+            case "DateTime":
+                return "TimestampType";
+            case "Date":
+                return "DateType";
+            case "Time":
+                return "TimestampType";
+            case "Byte":
+                return "BinaryType";
+            case "Decimal":
+                return "DecimalType";
+            default:
+                return sourceType;
+        }
+    }
+    string GetStageFileFormat(string Stage)
+    {
+        switch (Stage)
+        {
+            case "landing":
+                return "cloudFiles";
+            case "raw":
+                return "delta";
+            case "base":
+                return "delta";
+            default:
+                return "delta";
+        }
+    }
+
+    string GetProcessType(string Stage)
+    {
+        switch (Stage)
+        {
+            case "landing":
+                return "DataFactory";
+            case "raw":
+                return "Databricks";
+            case "base":
+                return "Databricks";
+            default:
+                return "NotDefined";
+        }
+    }
+    string GetProcessSubType(string Stage)
+    {
+        switch (Stage)
+        {
+            case "landing":
+                return ConnectionString;
+            case "raw":
+                return "/1 - Acquisition/LoadSource - Autoloader - Merge";
+            case "base":
+                return "/2 - Standardisation/CleanseDelta - Stream - Merge";
+            default:
+                return "NotDefined";
+        }
+    }
+    string GetProcessConfig(string Stage)
+    {
+        switch (Stage)
+        {
+            case "landing":
+                return "{\\\"cloudFiles.format\\\":\\\"json\\\",\\\"cloudFiles.schemaEvolutionMode\\\":\\\"rescue\\\"}";
+            case "raw":
+                return "{}";
+            case "base":
+                return "{}";
+            default:
+                return "NotDefined";
+        }
+    }
+    string GetSafeColumnName(string ColumnName)
+    {
+        string ReturnVal = ColumnName.Replace('#', '_');
+        //string result = System.Text.RegularExpressions.Regex.Replace('Some stuff','f','d');
+        return ReturnVal;
+    }
+
+    string GetSafeColumnTransform(string ColumnName, string ColumnDateType)
+    {
+        if (ColumnName.ToLower().Contains("rowversion"))
+            return "CONVERT(NVARCHAR(MAX), CONVERT(BINARY(8), " + "[" + ColumnName + "]" + "), 1)";
+        if (ColumnName.ToLower().Contains("row_version"))
+            return "CONVERT(NVARCHAR(MAX), CONVERT(BINARY(8), " + "[" + ColumnName + "]" + "), 1)";
+        return "[" + ColumnName + "]";
+    }
+
+
+    string GetSafeColumnList()
+    {
+        string ColumnList = "";
+        foreach (ICompiledSchemaItem schemaItem in baseArtifact.Schema)
+        {
+            //ColumnList = ColumnList +", "+"["+schemaItem.Name+"]"+" as ["+GetSafeColumnName(schemaItem.Name) + "]";
+            ColumnList = ColumnList + ", " + GetSafeColumnTransform(schemaItem.Name, schemaItem.DataType) + " as [" + GetSafeColumnName(schemaItem.Name) + "]";
+        }
+        return ColumnList.Substring(1, ColumnList.Length - 1);
+    }
+}
+
+{
+  "EntityName":"@artifact.Name",
+  "EntityType":"Source",
+  "EntityVersion":1,
+  "Classification":"@baseArtifact.Path[0]",
+  "Area":"@EntityFull",
+  "AreaType":"MSSQL",
+  "ProcessGroup":"@ProcessGroup",
+  "Domain":"@baseArtifact.Path[2]",
+  "BusinessDomain":"",
+  "Schema":[
+@foreach (ICompiledSchemaItem schemaItem in baseArtifact.Schema)
+{
+    @:{
+    @:"EntityColumnOrder": @schemaItem.Ordinal,
+    @:"ColumnName":"@GetSafeColumnName(schemaItem.Name)",
+    @:"ColumnType":"@(GetDataTypeFormatted(schemaItem))",
+    @:"ColumnRename":"@GetSafeColumnName(schemaItem.Name)",
+    @:"IsNullable":@(schemaItem.IsNullable ? 1 : 0),
+    @:"IsPrimaryKey":@(schemaItem.KeyType == DataArtifactSchemaItemKeyType.Primary ? 1 : 0),
+    @:"IsChangeTracking":@(schemaItem.KeyType == DataArtifactSchemaItemKeyType.Version ? 1 : 0),
+    @:"TransformationRules":[]
+    @:}@(schemaItem.IsLast ? "" : ",")
+}
+  ],
+  "Stages":[
+    {
+      "StageName":"@SetSourceValues()",
+    "FileFormat":"@SourceType",
+    "Path":"@SourcePath",
+    "ClassificationName":"@baseArtifact.Path[0]",
+    "ProcessType":"@SourceProcessType",
+    "ProcessSubType":"@SourceProcessSubType",
+    "Config":"",
+    "Dependencies":[],
+    "TransformationRules":[]
+    }@foreach (ICompiledDataArtifact compiledArtifact in Model.Artifacts)
+    {@:,
+        @:{
+        @:"StageName":"@compiledArtifact.Stage.Name.ToLower()",
+        @:"FileFormat":"@GetStageFileFormat(@compiledArtifact.Stage.Name.ToLower())",
+        @:"Path":"",
+        @:"ClassificationName":"Public",
+        @:"ProcessType":"@GetProcessType(@compiledArtifact.Stage.Name.ToLower())",
+        @:"ProcessSubType":"@GetProcessSubType(@compiledArtifact.Stage.Name.ToLower())",
+        @:"Config":"@GetProcessConfig(@compiledArtifact.Stage.Name.ToLower())",
+        @:"Dependencies":[
+        @:  {
+        @:    "ProcessGroup":"@ProcessGroup",
+        @:    "EntityName":"@artifact.Name",
+        @:    "EntityVersion":1,
+        @:    "EntityArea":"@EntityFull",
+        @:    "StageName":"@LastStage",
+        @:    "DependencyType":"OnComplete"
+        @:  }
+        @:],
+        @:"TransformationRules":[]
+        @ LastStage = compiledArtifact.Stage.Name.ToLower();
+        @:}
+    }
+    ]
+    }

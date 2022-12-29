@@ -1,0 +1,20 @@
+﻿
+@{ 
+    DLHBuilder.DataArtifactCompiler Model = new DLHBuilder.DataArtifactCompiler(null, null, null, null);
+}
+
+##ENDHEADER
+
+@using DLHBuilder 
+
+@{ 
+    ICompiledDataArtifact artifact = Model.Artifacts[0];
+}
+
+CREATE TABLE @artifact.Name
+(
+@foreach(ICompiledSchemaItem schemaItem in artifact.Schema)
+{
+    @:[@schemaItem.Name] @schemaItem.DataType @(schemaItem.IsNullable ? "NULL" : "NOT NULL")@(artifact.Schema.Last() == schemaItem ? "" : ",")
+}
+)

@@ -1,0 +1,21 @@
+﻿@{
+    DLHBuilder.SQLDataConnection Model = new DLHBuilder.SQLDataConnection();
+}
+
+##ENDHEADER
+
+{
+	"name": "@(Model.Name)_SQL",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "@(Model.Name)",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "SQL"
+		},
+		"annotations": [],
+		"type": "SqlServerTable",
+		"schema": []
+	}
+}

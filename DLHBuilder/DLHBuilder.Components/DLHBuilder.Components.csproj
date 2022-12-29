@@ -1,0 +1,137 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0-windows</TargetFramework>
+	<UseWindowsForms>true</UseWindowsForms>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Scripts\TSQL\DatabaseTableColumns.sql" />
+    <None Remove="Resources\Scripts\TSQL\SQLArtifactImport.sql" />
+    <None Remove="Resources\Scripts\TSQL\SQLArtifactImportStoredProcedure.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Scripts\TSQL\DatabaseTableColumns.sql" />
+    <EmbeddedResource Include="Resources\Scripts\TSQL\SQLArtifactImport.sql" />
+    <EmbeddedResource Include="Resources\Scripts\TSQL\SQLArtifactImportStoredProcedure.sql" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Dialogs\ArtifactDependencyDialog\ArtifactDependencyDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialogs\ArtifactDependencyDialog\DataSourceArtifactDependencyDialog.cs" />
+    <Compile Update="Dialogs\ArtifactDependencyDialog\ReferenceArtifactDependencyDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportObjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\DataArtifactImportSchemaItemTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactImportDialog\SQLDataArtifactImportDialog.cs" />
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceControls.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceObjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Dialogs\DataArtifactReferenceDialog\DataArtifactReferenceSchemaItemTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\Editor\Editor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\Editor\EditorCollection.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\Editor\EditorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\PropertyEditor\PropertyEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\PropertyEditor\PropertyEditorControl.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\ScriptTemplateEditor\ScriptTemplateEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\ScriptTemplateMappingEditor\ScriptTemplateMappingEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\ScriptViewer\ScriptViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\TextPropertyEditor\TextPropertyEditor.cs" />
+    <Compile Update="Editors\TranformationEditor\Grid\TransformationEditorGrid.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\TranformationEditor\TransformationEditor.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Editors\TranformationEditor\TransformationEditorToolbar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\ConnectionMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\ConnectionsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Connection\SQLConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\DataApplicationsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\DataLakeDataApplication\DataLakeDataApplicationMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataApplication\SQLDataApplication\SQLDataApplicationMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifactReference\Dependency\DataArtifactReferenceDependenciesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactConnectionDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\DataArtifactSQLImportDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\Folder\DataArtifactFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataArtifact\Schema\DataArtifactSchemaItemsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataSource\DataSourcesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\DataStageMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\DataStagesMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\DataStage\Folder\DataStageFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Environment\EnvironmentsMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\Project\ProjectMenu.cs" />
+    <Compile Update="Trees\ProjectTree\Nodes\ScriptTemplate\ScriptTemplateFolderMenu.cs" />
+    <Compile Update="Trees\ProjectTree\ProjectTree.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\ProjectTreeMenu.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Update="Trees\ProjectTree\ProjectTreeMenuButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
+  </ItemGroup>
+
+</Project>

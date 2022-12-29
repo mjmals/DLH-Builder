@@ -1,0 +1,57 @@
+﻿using System;
+using System.Text.RegularExpressions;
+using System.Data;
+using Microsoft.Data.SqlClient;
+using System.Windows;
+using Microsoft.Win32;
+using System.Collections.Generic;
+using System.Linq;
+using Newtonsoft.Json;
+using System.IO;
+using System.Reflection;
+using DLHBuilder.Generator;
+using DLHBuilder.Config;
+using DLHBuilder.Build;
+
+namespace DLHBuilder
+{
+    class Program
+    {
+        static void Main(string[] args)
+        {
+<<<<<<< HEAD
+            Project project = Project.Load(@"");
+
+            Azure.DataFactory.Build.AzureDataFactoryBuildEngine build = new Azure.DataFactory.Build.AzureDataFactoryBuildEngine();
+            Console.WriteLine(build.OutputPath);
+            build.Run(project);
+
+=======
+            //DataTypeCollection datatypes = new DataTypeCollection();
+            //datatypes.ForEach(x => Console.WriteLine(x.Name));
+            Console.Write("Enter project path:");
+            string path = Console.ReadLine();
+            
+            
+            
+             Console.ReadKey();
+>>>>>>> origin/main
+
+            Console.ReadKey();
+        }
+
+        
+
+        List<Type> DataTypes()
+        {
+            Assembly syslib = typeof(string).Assembly;
+
+            Type[] types = syslib.GetTypes()
+                .Where(x => x.Namespace == "System")
+                .Where(x => x.IsPrimitive || (new string[] { "String", "Object" }).Contains(x.Name))
+                .ToArray();
+
+            return types.ToList();
+        }
+    }
+}

@@ -1,0 +1,43 @@
+﻿@{
+    DLHBuilder.AzureStorageDataConnection Model = new DLHBuilder.AzureStorageDataConnection();
+}
+
+##ENDHEADER
+
+{
+    "name": "@Model.Name",
+    "properties": {
+        "linkedServiceName": {
+            "referenceName": "@Model.Name",
+            "type": "LinkedServiceReference"
+        },
+        "parameters": {
+            "DirectoryName": {
+                "type": "string"
+            },
+            "FileName": {
+                "type": "string"
+            }
+        },
+        "folder": {
+            "name": "Azure Data Lake"
+        },
+        "annotations": [],
+        "type": "Json",
+        "typeProperties": {
+            "location": {
+                "type": "AzureBlobStorageLocation",
+                "fileName": {
+                    "value": "@('@')dataset().FileName",
+                    "type": "Expression"
+                },
+                "folderPath": {
+                    "value": "@('@')dataset().DirectoryName",
+                    "type": "Expression"
+                },
+                "container": "@Model.ContainerName"
+            }
+        },
+        "schema": {}
+    }
+}

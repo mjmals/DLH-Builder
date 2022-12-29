@@ -1,0 +1,306 @@
+﻿@{
+    DLHBuilder.DataArtifactCompiler Model = new DLHBuilder.DataArtifactCompiler(null, null, null, null);
+}
+
+##ENDHEADER
+
+@using DLHBuilder
+@{
+    DataArtifact artifact = Model.Artifact;
+    ADLSCompiledDataArtifact baseArtifact = (ADLSCompiledDataArtifact)Model.Artifacts[0];
+    
+    // source details
+    SQLConnectionDataSource source = (SQLConnectionDataSource)Model.DataSources[0];
+    SQLDataConnection sourceConnection = (SQLDataConnection)baseArtifact.Project.Connections.FirstOrDefault(x => x.ID == source.ConnectionID);
+    string tableQualified = string.Format("[{0}].[{1}]", source.Schema, source.Table);
+    
+    // destination details
+    AzureStorageDataConnection destConnection = (AzureStorageDataConnection)baseArtifact.Project.Connections.First(x => x.ID == baseArtifact.Stage.ConnectionID);
+    string destPath = string.Concat("/", baseArtifact.Stage.Name,  "/", string.Join('/', baseArtifact.Path),  "/",  baseArtifact.Name);
+    string checkpointPath = string.Concat(destPath, "/", "_checkpoint");
+    string checkpointFile = "Checkpoint.json";
+    string dataPath = string.Concat(destPath, "/", "_data");
+
+    // watermarking variables
+    DataArtifactSchemaItem versionColumn = artifact.Schema.FirstOrDefault(x => x.KeyType == DataArtifactSchemaItemKeyType.Version);
+    string sourceQueryWatermarked = string.Format("'SELECT * FROM {0} WHERE [{1}] > ', variables('LatestCheckpointFile')", tableQualified, versionColumn.Name);
+    string sourceLatestWatermarkQuery = string.Format("SELECT CONVERT(VARCHAR(MAX), CONVERT(VARBINARY(8), MAX([{1}])), 1) AS LoadTo FROM {0} WITH (NOLOCK)", tableQualified, versionColumn.Name);
+    string setLatestWatermarkQuery = string.Format("'SELECT CONVERT(VARCHAR(MAX), CONVERT(VARBINARY(8), ', variables('LatestSource'), '), 1) AS LastLoaded'");
+}
+
+{
+    "name": "@(baseArtifact.Stage.Name)_@(string.Join('_', baseArtifact.Path))_@baseArtifact.Name",
+    "properties": {
+        "activities": [
+            {
+                "name": "Get Last Watermark Extracted",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.02:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "JsonSource",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageReadSettings",
+                            "recursive": true,
+                            "enablePartitionDiscovery": false
+                        },
+                        "formatSettings": {
+                            "type": "JsonReadSettings"
+                        }
+                    },
+                    "dataset": {
+                        "referenceName": "@destConnection.Name",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "DirectoryName": "@checkpointPath",
+                            "FileName": "@checkpointFile"
+                        }
+                    }
+                }
+            },
+            {
+                "name": "Copy to Json Blob",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "Set LatestSource",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    },
+                    {
+                        "activity": "Set LatestCheckpointFile",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.02:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlServerSource",
+                        "sqlReaderQuery": {
+                            "value": "@("@")concat(@sourceQueryWatermarked)\n",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "sink": {
+                        "type": "JsonSink",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "JsonWriteSettings"
+                        }
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "_SQL",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "ADLS_Blob_Landing",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "DirectoryName": {
+                                "value": "@("@")concat('@dataPath/Year=', formatDateTime(utcNow(), 'yyyy'), '/Month=', formatDateTime(utcNow(), 'MM'), '/Day=', formatDateTime(utcNow(), 'dd'), '/Time=', formatDateTime(utcNow(), 'HH-mm'))",
+                                "type": "Expression"
+                            },
+                            "FileName": "TableName.json"
+                        }
+                    }
+                ]
+            },
+            {
+                "name": "Get Latest Watermark from Source",
+                "type": "Lookup",
+                "dependsOn": [],
+                "policy": {
+                    "timeout": "0.02:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlServerSource",
+                        "sqlReaderQuery": {
+                            "value": "@("@")concat('@sourceLatestWatermarkQuery')",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "dataset": {
+                        "referenceName": "_SQL",
+                        "type": "DatasetReference"
+                    }
+                }
+            },
+            {
+                "name": "Set LatestSource",
+                "type": "SetVariable",
+                "dependsOn": [
+                    {
+                        "activity": "Get Latest Watermark from Source",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "variableName": "LatestSource",
+                    "value": {
+                        "value": "@("@")activity('Get Latest Watermark from Source').output.firstRow.LoadTo",
+                        "type": "Expression"
+                    }
+                }
+            },
+            {
+                "name": "Set LatestCheckpointFile",
+                "type": "IfCondition",
+                "dependsOn": [
+                    {
+                        "activity": "Get Last Watermark Extracted",
+                        "dependencyConditions": [
+                            "Completed"
+                        ]
+                    }
+                ],
+                "userProperties": [],
+                "typeProperties": {
+                    "expression": {
+                        "value": "@("@")equals(activity('Get Last Watermark Extracted').status, 'Succeeded')",
+                        "type": "Expression"
+                    },
+                    "ifFalseActivities": [
+                        {
+                            "name": "Set LastLoaded - Default",
+                            "type": "SetVariable",
+                            "dependsOn": [],
+                            "userProperties": [],
+                            "typeProperties": {
+                                "variableName": "LatestCheckpointFile",
+                                "value": {
+                                    "value": "0",
+                                    "type": "Expression"
+                                }
+                            }
+                        }
+                    ],
+                    "ifTrueActivities": [
+                        {
+                            "name": "Set LastLoaded - From File",
+                            "type": "SetVariable",
+                            "dependsOn": [],
+                            "userProperties": [],
+                            "typeProperties": {
+                                "variableName": "LatestCheckpointFile",
+                                "value": {
+                                    "value": "@("@")activity('Get Last Watermark Extracted').output.firstRow.LastLoaded",
+                                    "type": "Expression"
+                                }
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "name": "Export Latest Watermark to File",
+                "type": "Copy",
+                "dependsOn": [
+                    {
+                        "activity": "Copy to Json Blob",
+                        "dependencyConditions": [
+                            "Succeeded"
+                        ]
+                    }
+                ],
+                "policy": {
+                    "timeout": "0.02:00:00",
+                    "retry": 0,
+                    "retryIntervalInSeconds": 30,
+                    "secureOutput": false,
+                    "secureInput": false
+                },
+                "userProperties": [],
+                "typeProperties": {
+                    "source": {
+                        "type": "SqlServerSource",
+                        "sqlReaderQuery": {
+                            "value": "@("@")concat(@setLatestWatermarkQuery)",
+                            "type": "Expression"
+                        },
+                        "queryTimeout": "02:00:00",
+                        "partitionOption": "None"
+                    },
+                    "sink": {
+                        "type": "JsonSink",
+                        "storeSettings": {
+                            "type": "AzureBlobStorageWriteSettings"
+                        },
+                        "formatSettings": {
+                            "type": "JsonWriteSettings"
+                        }
+                    },
+                    "enableStaging": false
+                },
+                "inputs": [
+                    {
+                        "referenceName": "@sourceConnection.Name",
+                        "type": "DatasetReference"
+                    }
+                ],
+                "outputs": [
+                    {
+                        "referenceName": "@destConnection.Name",
+                        "type": "DatasetReference",
+                        "parameters": {
+                            "DirectoryName": {
+                                "value": "@checkpointPath",
+                                "type": "Expression"
+                            },
+                            "FileName": "@checkpointFile"
+                        }
+                    }
+                ]
+            }
+        ],
+        "variables": {
+            "LatestCheckpointFile": {
+                "type": "String"
+            },
+            "LatestSource": {
+                "type": "String"
+            }
+        },
+        "folder": {
+            "name": "Templating"
+        },
+        "annotations": []
+    }
+}

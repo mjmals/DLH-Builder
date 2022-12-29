@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Templates\Azure\DataFactory\Dataset\SQL Server Dataset.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\LinkedService\SQL Server Windows Auth KeyVault.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json Watermarking.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Parquet Watermarking.cshtml" />
+    <None Remove="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Parquet.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Dataset\SQL Server Dataset.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\LinkedService\SQL Server Windows Auth KeyVault.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Parquet Watermarking.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Parquet.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json Watermarking.cshtml" />
+    <EmbeddedResource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\DLHBuilder.Build\DLHBuilder.Build.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Core\DLHBuilder.Core.csproj" />
+    <ProjectReference Include="..\DLHBuilder.Generator\DLHBuilder.Generator.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Templates\Azure\DataFactory\Pipeline\CopyData SQL Server to ADLS Json.cshtml" />
+  </ItemGroup>
+
+</Project>
