@@ -7,6 +7,7 @@ using System.Reflection;
 using DLHApp.Model;
 using DLHApp.Model.Templates;
 using DLHApp.Model.BuildProfiles;
+using DLHApp.Build.TemplateRenderers;
 
 namespace DLHApp.Build
 {
@@ -21,6 +22,8 @@ namespace DLHApp.Build
 
         public void Run()
         {
+            string[] templateFiles = GetTemplateFiles();
+
             Type[] templateCollectionTypes = typeof(TemplateReferenceCollection).Assembly.GetTypes()
                 .Where(x => x.GetFields().Where(y => y.FieldType == typeof(TemplateReferenceCollection)).Count() > 0 && x.IsAbstract == false && x.IsInterface == false)
                 .ToArray();
@@ -36,7 +39,32 @@ namespace DLHApp.Build
 
                     foreach(BuildProfileStage stage in Profile.Stages)
                     {
-                        
+                        foreach(string templateRef in stage.Templates)
+                        {
+                            string[] selectedTemplates = templateFiles.Where(x => x.StartsWith(templateRef)).ToArray();
+                            
+                            foreach(string selectedTemplate in selectedTemplates)
+                            {
+                                TemplateRenderer renderer = TemplateRenderer.GetRenderer(selectedTemplate);
+                                string compiledTemplate = renderer.Render(selectedTemplate, model);
+                                string outputPath = Path.Combine(Profile.UserConfig.TargetFolder, "testing.txt");
+
+                                if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
+                                {
+                                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
+                                }
+
+                                using (FileStream fs = new FileStream(outputPath, FileMode.OpenOrCreate))
+                                {
+                                    fs.SetLength(0);
+
+                                    using (StreamWriter writer = new StreamWriter(fs))
+                                    {
+                                        writer.Write(compiledTemplate);
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
@@ -64,6 +92,27 @@ namespace DLHApp.Build
             {
                 SearchFiles(subDir, fileList);
             }
+        }
+
+        string[] GetTemplateFiles()
+        {
+            List<string> output = new List<string>();
+            List<string> templatesFull = new List<string>();
+
+            string templatePath = Path.Combine(Environment.CurrentDirectory, "Templates");
+            SearchFiles(templatePath, templatesFull);
+
+            foreach(string template in templatesFull)
+            {
+                output.Add(template.Replace(templatePath + @"\", ""));
+            }
+
+            return output.ToArray();
+        }
+
+        void WriteTemplateOutput()
+        {
+            
         }
     }
 }
