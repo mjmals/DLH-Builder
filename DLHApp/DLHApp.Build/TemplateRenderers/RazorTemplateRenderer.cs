@@ -13,7 +13,7 @@ namespace DLHApp.Build.TemplateRenderers
     {
         public override string FileExtension => ".cshtml";
 
-        public override string Render(string templateFile, object baseObject)
+        public override string Render(string templateFile, object baseObject, out string fileName)
         {
             string templateContent = File.ReadAllText(Path.Combine(Environment.CurrentDirectory, "Templates", templateFile));
 
@@ -22,9 +22,30 @@ namespace DLHApp.Build.TemplateRenderers
                 builder.AddAssemblyReference(typeof(Project).Assembly);
             });
 
-            string output = template.Run(baseObject);
+            fileName = "Error.txt";
 
-            return output;
+            try
+            {
+                string compiled = template.Run(baseObject);
+                string output = string.Empty;
+
+                foreach(string line in compiled.Split("\n"))
+                {
+                    if(line.StartsWith("TemplateHeaderFileName:"))
+                    {
+                        fileName = line.Replace("TemplateHeaderFileName:", "").TrimStart().TrimEnd().Replace("\n", "");
+                        continue;
+                    }
+
+                    output += string.IsNullOrEmpty(output) ? line : string.Format("\n{0}", line);
+                }
+
+                return output.TrimStart().TrimEnd();
+            }
+            catch(Exception e)
+            {
+                return e.Message;
+            }
         }
     }
 }

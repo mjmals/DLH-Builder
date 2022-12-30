@@ -30,8 +30,9 @@ namespace DLHApp.Build.TemplateRenderers
             return null;
         }
 
-        public virtual string Render(string templateFile, object baseObject)
+        public virtual string Render(string templateFile, object baseObject, out string fileName)
         {
+            fileName = string.Empty;
             return string.Empty;
         }
     }

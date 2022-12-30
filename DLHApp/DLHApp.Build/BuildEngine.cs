@@ -37,35 +37,8 @@ namespace DLHApp.Build
                     IModelItem model = (IModelItem)modelType.GetMethod("Load").Invoke(null, new[] { file });
                     TemplateReferenceCollection templates = (TemplateReferenceCollection)modelType.GetFields().FirstOrDefault(x => x.FieldType == typeof(TemplateReferenceCollection)).GetValue(model);
 
-                    foreach(BuildProfileStage stage in Profile.Stages)
-                    {
-                        foreach(string templateRef in stage.Templates)
-                        {
-                            string[] selectedTemplates = templateFiles.Where(x => x.StartsWith(templateRef)).ToArray();
-                            
-                            foreach(string selectedTemplate in selectedTemplates)
-                            {
-                                TemplateRenderer renderer = TemplateRenderer.GetRenderer(selectedTemplate);
-                                string compiledTemplate = renderer.Render(selectedTemplate, model);
-                                string outputPath = Path.Combine(Profile.UserConfig.TargetFolder, "testing.txt");
-
-                                if (!Directory.Exists(Path.GetDirectoryName(outputPath)))
-                                {
-                                    Directory.CreateDirectory(Path.GetDirectoryName(outputPath));
-                                }
-
-                                using (FileStream fs = new FileStream(outputPath, FileMode.OpenOrCreate))
-                                {
-                                    fs.SetLength(0);
-
-                                    using (StreamWriter writer = new StreamWriter(fs))
-                                    {
-                                        writer.Write(compiledTemplate);
-                                    }
-                                }
-                            }
-                        }
-                    }
+                    BuildEngineOutputWriter writer = new BuildEngineOutputWriter(Profile, templates, templateFiles, model);
+                    writer.Run();
                 }
             }
 
