@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHApp.Model.Projects;
+using DLHWin.Editors;
 
 namespace DLHWin.ProjectTree
 {
@@ -62,6 +63,11 @@ namespace DLHWin.ProjectTree
             }
 
             return output;
+        }
+
+        public virtual EditorCollection Editors()
+        {
+            return null;
         }
 
         void DeleteNode(object sender, EventArgs e)

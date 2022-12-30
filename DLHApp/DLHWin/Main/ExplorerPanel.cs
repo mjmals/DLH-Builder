@@ -30,11 +30,21 @@ namespace DLHWin.Main
 
         private ProjectController _project { get; set; }
 
+        public ExplorerTreePanel Tree { get; set; }
+
         internal void SetTreePanel()
         {
             Controls.Clear();
-            Controls.Add(new ExplorerTreePanel(Project));
+            Controls.Add(Tree = new ExplorerTreePanel(Project));
+            Tree.TreeSelectionChanged += OnTreeSelectionChanged;
             Controls.Add(Splitter);
+        }
+
+        public EventHandler<TreeViewEventArgs> TreeSelectionChanged { get; set; }
+
+        void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)
+        {
+            TreeSelectionChanged?.Invoke(Tree, new TreeViewEventArgs(e.Node));
         }
     }
 }

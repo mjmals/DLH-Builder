@@ -12,7 +12,17 @@ namespace DLHWin.Main
         public ExplorerTreePanel(ProjectController project)
         {
             Dock = DockStyle.Fill;
-            Controls.Add(new Tree(project));
+            Controls.Add(Tree = new Tree(project));
+            Tree.AfterSelect += OnTreeSelectionChanged;
+        }
+
+        Tree Tree { get; set; }
+
+        public EventHandler<TreeViewEventArgs> TreeSelectionChanged { get; set; }
+
+        void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)
+        {
+            TreeSelectionChanged?.Invoke(Tree, new TreeViewEventArgs(e.Node));
         }
     }
 }

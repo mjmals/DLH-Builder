@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
+using DLHApp.Model.Connections;
+using DLHWin.Editors;
 
 namespace DLHWin.ProjectTree.NodeTypes.Connections
 {
@@ -28,6 +30,11 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
             }
 
             return false;
+        }
+
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection(new ModelItemObjectEditor(this.Name + ".json", typeof(SqlServerConnection)));
         }
     }
 }

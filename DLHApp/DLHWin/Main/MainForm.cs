@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
+using DLHWin.ProjectTree;
 
 namespace DLHWin.Main
 {
@@ -62,9 +63,17 @@ namespace DLHWin.Main
                 if(dialog.ShowDialog() == DialogResult.OK)
                 {
                     Project = ProjectController.Load(dialog.FileName);
+                    Environment.CurrentDirectory = Path.GetDirectoryName(dialog.FileName);
                     ExplorerPanel.Project = Project;
+                    ExplorerPanel.TreeSelectionChanged += OnTreeSelectionChanged;
                 }
             }
+        }
+
+        void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)
+        {
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+            DisplayPanel.EditorPanel.SetControls(node.Editors());
         }
     }
 
