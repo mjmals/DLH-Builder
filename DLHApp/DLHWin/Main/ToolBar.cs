@@ -15,14 +15,28 @@ namespace DLHWin.Main
             AddButton("NewProject", "Project");
             AddButton("OpenProject", "Folder Open");
             AddButton("Save", "Save");
+            AddSeperator();
+            AddButton("Build", "Run", "Build");
         }
 
-        void AddButton(string name, string image)
+        void AddButton(string name, string image, string text = null)
         {
             ToolStripItem item = new ToolStripButton();
             item.Name = name;
             item.ImageKey = image;
+
+            if(!string.IsNullOrEmpty(text))
+            {
+                item.Text = text;
+            }
+
             Items.Add(item);
+        }
+
+        void AddSeperator()
+        {
+            ToolStripSeparator separator = new ToolStripSeparator();
+            Items.Add(separator);
         }
 
         public void SetToolbarItemClick(string name, EventHandler task)

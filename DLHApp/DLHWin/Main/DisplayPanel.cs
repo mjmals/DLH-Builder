@@ -39,6 +39,20 @@ namespace DLHWin.Main
             
         }
 
+        public void HideTerminal()
+        {
+            ShowTerminalPanel = false;
+            UpdateInterface();
+        }
+
+        public void ShowTerminal()
+        {
+            ShowTerminalPanel = true;
+            UpdateInterface();
+        }
+
+        bool ShowTerminalPanel = false;
+
         void UpdateInterface(object? sender = null, EventArgs? e = null)
         {
             foreach(Control ctrl in Controls)
@@ -47,16 +61,18 @@ namespace DLHWin.Main
                 ctrl.Dock = DockStyle.None;
             }
 
-            //if(TerminalPanel.Visible == false)
-            //{
-            //    EditorPanel.Dock = DockStyle.Fill;
-            //    return;
-            //}
-
-            EditorPanel.Height = Convert.ToInt32(this.Height * 0.65);
-            EditorPanel.Location = new Point(0, 0);
-            TerminalPanel.Height = Convert.ToInt32(this.Height * 0.35);
-            TerminalPanel.Location = new Point(0, EditorPanel.Bottom);
+            if(ShowTerminalPanel)
+            {
+                EditorPanel.Height = Convert.ToInt32(this.Height * 0.70);
+                EditorPanel.Location = new Point(0, 0);
+                TerminalPanel.Height = Convert.ToInt32(this.Height * 0.30);
+                TerminalPanel.Location = new Point(0, EditorPanel.Bottom);
+            }
+            else
+            {
+                EditorPanel.Height = Convert.ToInt32(this.Height * 1.00);
+                EditorPanel.Location = new Point(0, 0);
+            }
         }
     }
 }

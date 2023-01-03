@@ -14,6 +14,8 @@ namespace DLHWin.Main
         {
             SetTitle();
             Controls.Add(DisplayPanel = new DisplayPanel());
+            DisplayPanel.TerminalPanel.CommandExecuted += TerminalCommandExecuted;
+
             Controls.Add(ExplorerPanel = new ExplorerPanel());
             
             Controls.Add(ToolBar = new ToolBar());
@@ -48,6 +50,9 @@ namespace DLHWin.Main
             Menu.SetMenuItemClick(@"File\New\Project", NewProject);
             Menu.SetMenuItemClick(@"File\Open", OpenProject);
 
+            Menu.SetMenuItemClick(@"Terminal\Hide Terminal", HideTerminal);
+            Menu.SetMenuItemClick(@"Terminal\Show Terminal", ShowTerminal);
+
             ToolBar.SetToolbarItemClick("OpenProject", OpenProject);
         }
 
@@ -66,6 +71,7 @@ namespace DLHWin.Main
                     Environment.CurrentDirectory = Path.GetDirectoryName(dialog.FileName);
                     ExplorerPanel.Project = Project;
                     ExplorerPanel.TreeSelectionChanged += OnTreeSelectionChanged;
+                    DisplayPanel.TerminalPanel.ResetTerminalCommand();
                 }
             }
         }
@@ -74,6 +80,22 @@ namespace DLHWin.Main
         {
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
             DisplayPanel.EditorPanel.SetControls(node.Editors());
+            DisplayPanel.TerminalPanel.ResetTerminalCommand(node.Name);
+        }
+
+        void TerminalCommandExecuted(object sender, EventArgs e)
+        {
+            ExplorerPanel.Tree.RefreshTree();
+        }
+
+        void HideTerminal(object sender, EventArgs e)
+        {
+            DisplayPanel.HideTerminal();
+        }
+
+        void ShowTerminal(object sender, EventArgs e)
+        {
+            DisplayPanel.ShowTerminal();
         }
     }
 

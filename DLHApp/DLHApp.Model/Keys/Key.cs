@@ -22,7 +22,10 @@ namespace DLHApp.Model.Keys
 
         public static Key Load(string path)
         {
-            return JsonConvert.DeserializeObject<Key>(File.ReadAllText(path));
+            Key output = JsonConvert.DeserializeObject<Key>(File.ReadAllText(path));
+            output.Name = Path.GetFileNameWithoutExtension(path);
+            output.SourcePath = path;
+            return output;
         }
     }
 }

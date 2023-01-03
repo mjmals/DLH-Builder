@@ -24,5 +24,10 @@ namespace DLHWin.Main
         {
             TreeSelectionChanged?.Invoke(Tree, new TreeViewEventArgs(e.Node));
         }
+
+        public void RefreshTree()
+        {
+            Tree.RefreshTree();
+        }
     }
 }

@@ -109,5 +109,28 @@ namespace DLHWin.ProjectTree
 
             return new FolderNode(directoryItem);
         }
+
+        public void RefreshTree()
+        {
+            ProjectDirectory refreshDir = new ProjectDirectory(Environment.CurrentDirectory);
+
+            foreach(ProjectDirectoryItem refreshItem in refreshDir)
+            {
+                if(!Project.Directory.Exists(x => x.FullPath == refreshItem.FullPath))
+                {
+                    AddNode(refreshItem);
+                    Project.Directory.Add(refreshItem);
+                }
+            }
+
+            foreach(ProjectDirectoryItem existingItem in Project.Directory.ToList())
+            {
+                if(!refreshDir.Exists(x => x.FullPath == existingItem.FullPath))
+                {
+                    Project.Directory.Remove(existingItem);
+                    Nodes.RemoveByKey(existingItem.Name);
+                }
+            }
+        }
     }
 }

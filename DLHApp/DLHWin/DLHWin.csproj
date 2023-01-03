@@ -13,6 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\DLHApp.Commands\DLHApp.Commands.csproj" />
     <ProjectReference Include="..\DLHApp.Model\DLHApp.Model.csproj" />
   </ItemGroup>
 
