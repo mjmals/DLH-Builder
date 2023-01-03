@@ -27,7 +27,7 @@ namespace DLHWin.Editors
 
         public Panel ObjectTextEditorPanel = new Panel();
 
-        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, Font = new Font("Cascadia Code", 10) };
+        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, AcceptsTab = true, Font = new Font("Cascadia Code", 10) };
 
         public PropertyGrid PropertyEditor = new PropertyGrid();
 
