@@ -52,6 +52,7 @@ namespace DLHWin
                 ProjectDirectoryItem dirItem = new ProjectDirectoryItem()
                 {
                     Name = Path.GetFileNameWithoutExtension(file),
+                    Extension = Path.GetExtension(file),
                     Parent = directory.Replace(Root, ""),
                     Type = ProjectDirectoryItemType.File
                 };

@@ -13,5 +13,7 @@ namespace DLHWin.ProjectTree.NodeTypes
         {
 
         }
+
+        protected override bool AllowDelete => true;
     }
 }

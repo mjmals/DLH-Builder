@@ -10,6 +10,8 @@ namespace DLHWin
     {
         public string Name { get; set; }
 
+        public string? Extension { get; set; }
+
         public string Parent { get; set; }
 
         public string FullPath => Path.Combine(string.IsNullOrEmpty(Parent) ? "" : Parent, Name);
