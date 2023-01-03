@@ -20,23 +20,7 @@ namespace DLHApp.Model.DataStructs
             parser.Parse();
         }
 
-        public override string BasePath => GetBasePath();
-
-        string GetBasePath()
-        {
-            string structBase = "Data Structures";
-
-            // if the calling application working directory contains structBase variable value then
-            // set the path to be the root of the working directory
-            if(Environment.CurrentDirectory.Contains(structBase))
-            {
-                return string.Empty;
-            }
-
-            return Path.Combine(structBase, string.IsNullOrEmpty(FolderPath) ? string.Empty : FolderPath);
-        }
-
-        public string FolderPath { get; set; }
+        public override string BasePath => GetBasePath("Data Structures");
 
         public DataStructFieldCollection Fields { get; set; }
 

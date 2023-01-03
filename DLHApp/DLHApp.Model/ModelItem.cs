@@ -19,6 +19,21 @@ namespace DLHApp.Model
         [JsonIgnore]
         public virtual string? SourcePath { get; set; }
 
+        [JsonIgnore]
+        public virtual string? FolderPath { get; set; }
+
+        protected virtual string GetBasePath(string basePath)
+        {
+            // if the calling application working directory contains basePath variable value then
+            // set the path to be the root of the working directory
+            if (Environment.CurrentDirectory.Contains(basePath))
+            {
+                return string.Empty;
+            }
+
+            return Path.Combine(basePath, string.IsNullOrEmpty(FolderPath) ? string.Empty : FolderPath);
+        }
+
         protected virtual string OutputPath()
         {
             string outputPath = SourcePath;
