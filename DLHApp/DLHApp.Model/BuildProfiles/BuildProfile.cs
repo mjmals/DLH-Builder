@@ -41,7 +41,7 @@ namespace DLHApp.Model.BuildProfiles
 
         public static BuildProfile Load(string profileName)
         {
-            string profilePath = Path.Combine("Build Profiles", profileName);
+            string profilePath = Path.Combine(profileName.StartsWith("Build Profiles") ? "" : "Build Profiles", profileName);
 
             if(!File.Exists(profilePath + ".json"))
             {
@@ -50,6 +50,8 @@ namespace DLHApp.Model.BuildProfiles
             }
 
             BuildProfile output = JsonConvert.DeserializeObject<BuildProfile>(File.ReadAllText(profilePath + ".json"));
+            output.Name = Path.GetFileNameWithoutExtension(profilePath);
+            output.SourcePath = profilePath + ".json";
             output.UserConfig = JsonConvert.DeserializeObject<BuildProfileUserConfig>(File.ReadAllText(profilePath + ".local.json"));
 
             return output;

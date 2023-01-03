@@ -28,6 +28,8 @@ namespace DLHWin.ProjectTree
 
         protected virtual string[]? Images => new string[] { "Folder Closed", "Folder Open" };
 
+        public virtual bool Ignore => false;
+
         protected virtual bool AllowChild => true;
 
         protected virtual bool AllowDelete => false;

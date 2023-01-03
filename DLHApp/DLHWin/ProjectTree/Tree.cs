@@ -77,6 +77,11 @@ namespace DLHWin.ProjectTree
 
             ProjectTreeNode node = NewNode(directoryItem);
 
+            if(node.Ignore)
+            {
+                return;
+            }
+
             if (string.IsNullOrEmpty(directoryItem.Parent))
             {
                 Nodes[0].Nodes.Add(node);

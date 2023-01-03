@@ -13,6 +13,7 @@ namespace DLHWin.Styles
             get
             {
                 ImageList output = new ImageList();
+                output.Images.Add("Build Profile", Properties.Resources.BuildDefinition_16x);
                 output.Images.Add("Column", Properties.Resources.Column_16x);
                 output.Images.Add("Connection", Properties.Resources.Plugged_16x);
                 output.Images.Add("Copy", Properties.Resources.Copy_16x);

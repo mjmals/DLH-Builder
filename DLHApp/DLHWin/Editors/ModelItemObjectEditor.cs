@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DLHApp.Model;
 using System.Reflection;
 using Newtonsoft.Json;
+using DLHWin.Styles;
 
 namespace DLHWin.Editors
 {
@@ -26,13 +27,32 @@ namespace DLHWin.Editors
 
         public Panel ObjectTextEditorPanel = new Panel();
 
-        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill };
+        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, Font = new Font("Cascadia Code", 10) };
 
         public PropertyGrid PropertyEditor = new PropertyGrid();
 
         public ToolStrip Menu()
         {
-            return new ToolStrip();
+            ToolStrip output = new ToolStrip();
+            output.ImageList = Images.List;
+
+            ToolStripButton updateBtn = new ToolStripButton();
+            updateBtn.Text = "Update from Json";
+            updateBtn.ImageKey = "Run";
+            updateBtn.Click += UpdateFromJson;
+            output.Items.Add(updateBtn);
+
+            return output;
+        }
+
+        void UpdateFromJson(object sender, EventArgs e)
+        {
+            Type type = ModelItem.GetType();
+            string sourcePath = ModelItem.SourcePath;
+            ModelItem = (IModelItem)JsonConvert.DeserializeObject(ObjectTextEditor.Text, type);
+            ModelItem.SourcePath = sourcePath;
+            ModelItem.Save();
+            PropertyEditor.SelectedObject = ModelItem;
         }
 
         protected override Control[] EditorControls()
