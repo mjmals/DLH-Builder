@@ -36,7 +36,7 @@ namespace DLHApp.Model.BuildProfiles
         {
             return new BuildProfile()
             {
-                Stages = new BuildProfileStageCollection() { new BuildProfileStage() { Name = "Default", OutputPath = string.Empty, Templates = new string[] { @"Samples\*" } } },
+                Stages = new BuildProfileStageCollection() { new BuildProfileStage() { Name = "Default", OutputPath = string.Empty, Templates = new string[] { @"Samples\" } } },
                 UserConfig = new BuildProfileUserConfig()
             };
         }
