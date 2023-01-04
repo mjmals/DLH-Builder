@@ -14,7 +14,7 @@ namespace DLHWin.Main
             ImageList = Images.List;
             AddButton("NewProject", "Project");
             AddButton("OpenProject", "Folder Open");
-            AddButton("Save", "Save");
+            AddButton("Refresh", "Refresh");
             AddSeperator();
             AddButton("Build", "Run", "Build");
         }

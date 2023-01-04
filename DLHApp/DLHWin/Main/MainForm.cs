@@ -59,6 +59,7 @@ namespace DLHWin.Main
             Menu.SetMenuItemClick(@"Terminal\Show Terminal", ShowTerminal);
 
             ToolBar.SetToolbarItemClick("OpenProject", OpenProject);
+            ToolBar.SetToolbarItemClick("Refresh", RefreshProject);
         }
 
         void NewProject(object? sender, EventArgs e)
@@ -106,6 +107,11 @@ namespace DLHWin.Main
         void ShowTerminal(object sender, EventArgs e)
         {
             DisplayPanel.ShowTerminal();
+        }
+
+        void RefreshProject(object sender, EventArgs e)
+        {
+            ExplorerPanel.Tree.RefreshTree();
         }
     }
 

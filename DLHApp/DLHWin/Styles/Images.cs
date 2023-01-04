@@ -30,6 +30,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Key Container", Properties.Resources.GroupByAccess_16x);
                 output.Images.Add("Open", Properties.Resources.OpenFile_16x);
                 output.Images.Add("Project", Properties.Resources.ProjectFilterFile_16x);
+                output.Images.Add("Refresh", Properties.Resources.Refresh_16x);
                 output.Images.Add("Run", Properties.Resources.Run_16x);
                 output.Images.Add("Save", Properties.Resources.Save_16x);
                 output.Images.Add("Schema Item", Properties.Resources.PropertySnippet_16x);
