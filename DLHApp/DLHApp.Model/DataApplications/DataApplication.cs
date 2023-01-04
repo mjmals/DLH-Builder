@@ -29,17 +29,36 @@ namespace DLHApp.Model.DataApplications
             }
         }
 
+        public override void Save()
+        {
+            base.Save();
+
+            string[] subDirs = new string[] { "Stages" };
+
+            foreach(string subDir in subDirs)
+            {
+                string dirName = Path.Combine(Path.GetDirectoryName(OutputPath()), subDir);
+
+                if(!Directory.Exists(dirName))
+                {
+                    Directory.CreateDirectory(dirName);
+                }
+            }
+        }
+
         public static DataApplication Load(string path)
         {
             Type[] appTypes = ApplicationTypes;
 
             foreach(Type appType in appTypes)
             {
-                DataApplication app = Activator.CreateInstance<DataApplication>();
+                DataApplication app = (DataApplication)Activator.CreateInstance(appType);
 
                 if(path.EndsWith(app.OutputExtension))
                 {
-                    return (DataApplication)JsonConvert.DeserializeObject(File.ReadAllText(path), appType);
+                    DataApplication output = (DataApplication)JsonConvert.DeserializeObject(File.ReadAllText(path), appType);
+                    output.Name = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(path));
+                    return output;
                 }
             }
 

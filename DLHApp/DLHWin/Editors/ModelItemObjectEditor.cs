@@ -17,6 +17,7 @@ namespace DLHWin.Editors
             ModelItem = (IModelItem)modelItemType.GetMethod("Load").Invoke(null, new[] { modelItemPath });
             PropertyEditor.SelectedObject = ModelItem;
             PropertyEditor.PropertyValueChanged += SetObjectTextEditor;
+            PropertyEditor.PropertyValueChanged += PropertyUpdated;
             Text = ModelItem.Name;
             ObjectTextEditorPanel.Controls.Add(ObjectTextEditor);
             ObjectTextEditorPanel.Controls.Add(Menu());
@@ -64,6 +65,11 @@ namespace DLHWin.Editors
         void SetObjectTextEditor(object sender, EventArgs e)
         {
             ObjectTextEditor.Text = JsonConvert.SerializeObject(ModelItem, Formatting.Indented);
+        }
+
+        void PropertyUpdated(object sender, PropertyValueChangedEventArgs e)
+        {
+            ModelItem.Save();
         }
     }
 }
