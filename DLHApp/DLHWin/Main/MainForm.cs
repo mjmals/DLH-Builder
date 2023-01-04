@@ -25,6 +25,11 @@ namespace DLHWin.Main
             Controls.Add(StatusBar = new StatusBar());
 
             WindowState = FormWindowState.Maximized;
+
+            if(File.Exists(Path.Combine(Environment.CurrentDirectory, "project.json")))
+            {
+                LoadProject(Path.Combine(Environment.CurrentDirectory, "project.json"));
+            }
         }
 
 
@@ -67,13 +72,18 @@ namespace DLHWin.Main
             {
                 if(dialog.ShowDialog() == DialogResult.OK)
                 {
-                    Project = ProjectController.Load(dialog.FileName);
-                    Environment.CurrentDirectory = Path.GetDirectoryName(dialog.FileName);
-                    ExplorerPanel.Project = Project;
-                    ExplorerPanel.TreeSelectionChanged += OnTreeSelectionChanged;
-                    DisplayPanel.TerminalPanel.ResetTerminalCommand();
+                    LoadProject(dialog.FileName);
                 }
             }
+        }
+
+        void LoadProject(string fileName)
+        {
+            Project = ProjectController.Load(fileName);
+            Environment.CurrentDirectory = Path.GetDirectoryName(fileName);
+            ExplorerPanel.Project = Project;
+            ExplorerPanel.TreeSelectionChanged += OnTreeSelectionChanged;
+            DisplayPanel.TerminalPanel.ResetTerminalCommand();
         }
 
         void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)
