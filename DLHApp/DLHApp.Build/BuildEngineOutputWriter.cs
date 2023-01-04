@@ -35,7 +35,10 @@ namespace DLHApp.Build
 
                 foreach(string templateFile in templateFiles)
                 {
-                    OutputTemplate(templateFile, stage);
+                    if (TemplateRefs.Exists(x => templateFile.StartsWith(x)))
+                    {
+                        OutputTemplate(templateFile, stage);
+                    }
                 }
             }
         }

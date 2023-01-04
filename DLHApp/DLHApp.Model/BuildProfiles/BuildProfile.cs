@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace DLHApp.Model.BuildProfiles
 {
@@ -14,6 +15,7 @@ namespace DLHApp.Model.BuildProfiles
         public override string BasePath => "Build Profiles";
 
         [JsonIgnore]
+        [TypeConverter(typeof(ExpandableObjectConverter))]
         public BuildProfileUserConfig UserConfig { get; set; }
 
         public override void Save()

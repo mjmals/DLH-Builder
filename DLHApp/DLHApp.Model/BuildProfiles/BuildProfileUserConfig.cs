@@ -9,5 +9,10 @@ namespace DLHApp.Model.BuildProfiles
     public class BuildProfileUserConfig
     {
         public string TargetFolder { get; set; }
+
+        public override string ToString()
+        {
+            return "Build Profile User Config";
+        }
     }
 }

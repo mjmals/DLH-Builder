@@ -20,6 +20,7 @@ namespace DLHWin.Editors
             Text = ModelItem.Name;
             ObjectTextEditorPanel.Controls.Add(ObjectTextEditor);
             ObjectTextEditorPanel.Controls.Add(Menu());
+            PropertyEditor.ExpandAllGridItems();
             SetObjectTextEditor(null, null);
         }
 

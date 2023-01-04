@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
 using Newtonsoft.Json;
+using System.ComponentModel;
 
 namespace DLHApp.Model
 {
@@ -17,9 +18,11 @@ namespace DLHApp.Model
         public virtual string BasePath => string.Empty;
 
         [JsonIgnore]
+        [Browsable(false)]
         public virtual string? SourcePath { get; set; }
 
         [JsonIgnore]
+        [Browsable(false)]
         public virtual string? FolderPath { get; set; }
 
         protected virtual string GetBasePath(string basePath)
