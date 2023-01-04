@@ -21,6 +21,8 @@ namespace DLHApp.Model.DataStructs
             parser.Parse();
         }
 
+        public new string? Name { get => base.Name; set => base.Name = value; }
+
         public IDataType DataType { get; set; }
 
         public bool IsNullable { get; set; }

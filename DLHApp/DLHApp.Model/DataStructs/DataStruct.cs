@@ -57,7 +57,8 @@ namespace DLHApp.Model.DataStructs
 
         public static DataStruct Load(string name)
         {
-            string filePath = Path.Combine((new DataStruct()).BasePath, name + ".datastruct");
+            string basePath = (new DataStruct()).BasePath;
+            string filePath = Path.Combine(name.StartsWith(basePath) ? "" : basePath, name + ".datastruct");
             string fileContent = File.ReadAllText(filePath);
 
             return new DataStruct(fileContent);

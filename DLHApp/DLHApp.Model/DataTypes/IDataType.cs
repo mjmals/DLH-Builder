@@ -10,6 +10,8 @@ namespace DLHApp.Model.DataTypes
     {
         public string[] DisplayNames { get; }
 
+        public string Name { get; }
+
         public string FormattedValue();
     }
 }

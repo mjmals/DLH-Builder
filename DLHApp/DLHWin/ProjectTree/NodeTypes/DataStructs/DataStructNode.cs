@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
+using DLHWin.Editors;
+using DLHApp.Model.DataStructs;
 
 namespace DLHWin.ProjectTree.NodeTypes.DataStructs
 {
@@ -19,6 +21,11 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructs
         protected override bool AllowDelete => true;
 
         protected override string[]? Images => new string[] { "Data Struct" };
+
+        public override EditorCollection Editors()
+        {
+            return new EditorCollection(new ModelItemObjectEditor(this.Name, typeof(DataStruct)));
+        }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
         {

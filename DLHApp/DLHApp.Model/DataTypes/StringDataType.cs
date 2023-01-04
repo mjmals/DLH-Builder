@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DLHApp.Model.DataTypes
 {
-    public class StringDataType : IDataType
+    public class StringDataType : DataType, IDataType
     {
         public StringDataType()
         {
@@ -21,7 +22,7 @@ namespace DLHApp.Model.DataTypes
             IsAccentSensitive = Convert.ToBoolean(isAccentSensitive.ToLower());
         }
 
-        public string[] DisplayNames => new string[] { "String", "StringDataType", "StringType" };
+        public override string[] DisplayNames => new string[] { "String", "StringDataType", "StringType" };
 
         public int Length { get; set; }
 
@@ -31,7 +32,7 @@ namespace DLHApp.Model.DataTypes
 
         public bool IsAccentSensitive { get; set; }
 
-        public string FormattedValue()
+        public override string FormattedValue()
         {
             return string.Format("{0}({1})", DisplayNames[0], Length <= 0 ? string.Empty : Length);
         }
