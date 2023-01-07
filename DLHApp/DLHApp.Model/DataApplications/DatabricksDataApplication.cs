@@ -8,7 +8,7 @@ namespace DLHApp.Model.DataApplications
 {
     public class DatabricksDataApplication : DataApplication, IModelItem
     {
-        protected override string OutputExtension => "dbxapp.json";
+        public override string OutputExtension => "dbxapp.json";
 
         public override string? DisplayName => "Databricks";
 

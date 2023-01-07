@@ -24,7 +24,7 @@ namespace DLHApp.Model.DataStructs
 
         public DataStructFieldCollection Fields { get; set; }
 
-        protected override string OutputExtension => "datastruct";
+        public override string OutputExtension => "datastruct";
 
         protected override string OutputContent()
         {

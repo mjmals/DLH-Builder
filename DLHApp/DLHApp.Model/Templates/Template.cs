@@ -9,5 +9,10 @@ namespace DLHApp.Model.Templates
     public class Template : ModelItem, IModelItem
     {
         public override string BasePath => "Templates";
+
+        public static Template Load(string path)
+        {
+            return new Template();
+        }
     }
 }

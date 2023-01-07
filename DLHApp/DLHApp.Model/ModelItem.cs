@@ -11,6 +11,11 @@ namespace DLHApp.Model
 {
     public abstract class ModelItem : IModelItem
     {
+        public ModelItem()
+        {
+            Templates = new TemplateReferenceCollection();
+        }
+
         [JsonIgnore]
         public virtual string? Name { get; set; }
 
@@ -24,6 +29,16 @@ namespace DLHApp.Model
         [JsonIgnore]
         [Browsable(false)]
         public virtual string? FolderPath { get; set; }
+
+        public TemplateReferenceCollection Templates { get; set; }
+
+        public TemplateModelItem GetTemplateItems()
+        {
+            TemplateModelItem output = new TemplateModelItem();
+            output.Add("Main", this);
+
+            return output;
+        }
 
         protected virtual string GetBasePath(string basePath)
         {
@@ -50,7 +65,8 @@ namespace DLHApp.Model
             return outputPath;
         }
 
-        protected virtual string OutputExtension => "json";
+        [JsonIgnore]
+        public virtual string OutputExtension => "json";
 
         protected virtual string OutputContent()
         {

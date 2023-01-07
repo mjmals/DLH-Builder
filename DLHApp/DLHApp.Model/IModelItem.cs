@@ -14,10 +14,17 @@ namespace DLHApp.Model
 
         public string? SourcePath { get; set; }
 
+        public string OutputExtension { get; }
+
+        public TemplateReferenceCollection Templates { get; set; }
+
+        public TemplateModelItem GetTemplateItems();
+
         public void Save();
 
         public static IModelItem Load() { return null; }
 
         public static IModelItem New() { return null; }
+
     }
 }

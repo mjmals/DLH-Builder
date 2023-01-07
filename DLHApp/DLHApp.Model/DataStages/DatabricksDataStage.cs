@@ -12,7 +12,7 @@ namespace DLHApp.Model.DataStages
 
         public string HiveDatabaseName { get; set; }
 
-        protected override string OutputExtension => "dbxstg.json";
+        public override string OutputExtension => "dbxstg.json";
 
         public static DatabricksDataStage New(string parentPath, string name)
         {

@@ -11,12 +11,12 @@ namespace DLHApp.Build
 {
     internal class BuildEngineOutputWriter
     {
-        public BuildEngineOutputWriter(BuildProfile profile, TemplateReferenceCollection templateRefs, string[] templates, IModelItem modelItem)
+        public BuildEngineOutputWriter(BuildProfile profile, TemplateReferenceCollection templateRefs, string[] templates, TemplateModelItem templateItems)
         {
             Profile = profile;
             TemplateRefs = templateRefs;
             Templates = templates;
-            ModelItem = modelItem;
+            TemplateItems = templateItems;
         }
 
         BuildProfile Profile { get; set; }
@@ -25,7 +25,7 @@ namespace DLHApp.Build
 
         string[] Templates { get; set; }
 
-        IModelItem ModelItem { get; set; }
+        TemplateModelItem TemplateItems { get; set; }
 
         public void Run()
         {
@@ -60,7 +60,7 @@ namespace DLHApp.Build
         {
             TemplateRenderer renderer = TemplateRenderer.GetRenderer(templateFile);
             string outputFileName = string.Empty;
-            string compiledTemplate = renderer.Render(templateFile, ModelItem, out outputFileName);
+            string compiledTemplate = renderer.Render(templateFile, TemplateItems, out outputFileName);
             string outputPath = Path.Combine(Profile.UserConfig.TargetFolder, stage.OutputPath, outputFileName);
 
             WriteOutputFile(outputPath, compiledTemplate);

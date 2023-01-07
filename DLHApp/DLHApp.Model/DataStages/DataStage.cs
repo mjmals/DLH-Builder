@@ -13,7 +13,14 @@ namespace DLHApp.Model.DataStages
 
         protected override string GetBasePath(string basePath)
         {
-            return Path.Combine(FolderPath, Name);
+            string output = Path.Combine(string.IsNullOrEmpty(FolderPath) ? string.Empty : FolderPath, string.IsNullOrEmpty(Name) ? string.Empty : Name);
+
+            if(string.IsNullOrEmpty(output))
+            {
+                return "Data Applications";
+            }
+
+            return output;
         }
 
         public static Type[] StageTypes
@@ -42,6 +49,7 @@ namespace DLHApp.Model.DataStages
                 {
                     DataStage output = (DataStage)JsonConvert.DeserializeObject(File.ReadAllText(path), stgType);
                     output.Name = Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(path));
+                    output.SourcePath = Path.GetDirectoryName(path);
                     return output;
                 }
             }

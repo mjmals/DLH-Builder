@@ -25,45 +25,59 @@ namespace DLHApp.Build
             string[] templateFiles = GetTemplateFiles();
 
             Type[] templateCollectionTypes = typeof(TemplateReferenceCollection).Assembly.GetTypes()
-                .Where(x => x.GetFields().Where(y => y.FieldType == typeof(TemplateReferenceCollection)).Count() > 0 && x.IsAbstract == false && x.IsInterface == false)
+                .Where(x => x.IsAbstract == false && x.IsInterface == false)
+                .Where(x => x.GetProperties().Where(y => y.PropertyType == typeof(TemplateReferenceCollection)).Count() > 0)
+                .Where(x => x != typeof(BuildProfile))
                 .ToArray();
 
             foreach(Type modelType in templateCollectionTypes)
             {
                 IModelItem modelItem = (IModelItem)Activator.CreateInstance(modelType);
 
-                foreach(string file in GetFiles(modelItem.BasePath))
+                if(string.IsNullOrEmpty(modelItem.BasePath))
                 {
-                    IModelItem model = (IModelItem)modelType.GetMethod("Load").Invoke(null, new[] { file });
-                    TemplateReferenceCollection templates = (TemplateReferenceCollection)modelType.GetFields().FirstOrDefault(x => x.FieldType == typeof(TemplateReferenceCollection)).GetValue(model);
+                    continue;
+                }
 
-                    BuildEngineOutputWriter writer = new BuildEngineOutputWriter(Profile, templates, templateFiles, model);
-                    writer.Run();
+                foreach(string file in GetFiles(modelItem.BasePath, modelItem.OutputExtension))
+                {
+                    MethodInfo loadMethod = modelType.GetMethod("Load") == null ? modelType.BaseType.GetMethod("Load") : modelType.GetMethod("Load");
+                    IModelItem model = (IModelItem)loadMethod.Invoke(null, new[] { file });
+                    TemplateModelItem templateItems = model.GetTemplateItems();
+                    TemplateReferenceCollection templates = (TemplateReferenceCollection)modelType.GetProperties().FirstOrDefault(x => x.PropertyType == typeof(TemplateReferenceCollection)).GetValue(model);
+
+                    if (templates.Count() > 0)
+                    {
+                        BuildEngineOutputWriter writer = new BuildEngineOutputWriter(Profile, templates, templateFiles, templateItems);
+                        writer.Run();
+                    }
                 }
             }
 
             Console.WriteLine("Build Successful");
         }
 
-        string[] GetFiles(string path)
+        string[] GetFiles(string path, string searchPattern)
         {
             List<string> output = new List<string>();
 
-            SearchFiles(path, output);
+            searchPattern = "*" + searchPattern;
+
+            SearchFiles(path, searchPattern, output);
 
             return output.ToArray();
         }
 
-        void SearchFiles(string path, List<string> fileList)
+        void SearchFiles(string path, string searchPattern, List<string> fileList)
         {
-            foreach (string file in Directory.GetFiles(path))
+            foreach (string file in Directory.GetFiles(path, searchPattern))
             {
                 fileList.Add(file);
             }
 
             foreach(string subDir in Directory.GetDirectories(path))
             {
-                SearchFiles(subDir, fileList);
+                SearchFiles(subDir, searchPattern, fileList);
             }
         }
 
@@ -73,7 +87,7 @@ namespace DLHApp.Build
             List<string> templatesFull = new List<string>();
 
             string templatePath = Path.Combine(Environment.CurrentDirectory, "Templates");
-            SearchFiles(templatePath, templatesFull);
+            SearchFiles(templatePath, string.Empty, templatesFull);
 
             foreach(string template in templatesFull)
             {

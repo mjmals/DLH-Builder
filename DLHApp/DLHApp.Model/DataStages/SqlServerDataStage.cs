@@ -10,7 +10,7 @@ namespace DLHApp.Model.DataStages
     {
         public string? SchemaName { get; set; }
 
-        protected override string OutputExtension => "sqlstg.json";
+        public override string OutputExtension => "sqlstg.json";
 
         public static SqlServerDataStage New(string parentPath, string name)
         {

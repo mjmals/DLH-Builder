@@ -15,7 +15,7 @@ namespace DLHApp.Model.DataApplications
             return Path.Combine("Data Applications", Name, string.Format("{0}.{1}", Name, OutputExtension));
         }
 
-        protected override string OutputExtension => "json";
+        public override string OutputExtension => "json";
 
         [JsonIgnore]
         public virtual string? DisplayName { get; }

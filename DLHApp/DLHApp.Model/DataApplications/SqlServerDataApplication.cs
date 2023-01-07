@@ -8,7 +8,7 @@ namespace DLHApp.Model.DataApplications
 {
     public class SqlServerDataApplication : DataApplication, IModelItem
     {
-        protected override string OutputExtension => "sqlapp.json";
+        public override string OutputExtension => "sqlapp.json";
 
         public override string? DisplayName => "SQL Server";
 
