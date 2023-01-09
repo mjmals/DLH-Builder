@@ -18,12 +18,11 @@ namespace DLHApp.Commands.DataStructs
 
             if (Args[0].Length == 0)
             {
-                Console.Error.WriteLine("Please supply a path\name or name of a Data Structure");
+                WriteOutput("Please supply a path\name or name of a Data Structure");
                 return;
             }
 
             DataStruct ds = DataStruct.Load(Args[0]);
-            Console.WriteLine(JsonConvert.SerializeObject(ds, Formatting.Indented));
         }
     }
 }

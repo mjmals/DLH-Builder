@@ -16,7 +16,7 @@ namespace DLHApp.Commands.DataApplications
 
             if(Args.Length == 0)
             {
-                Console.WriteLine("Please specify a type of Data Application to create");
+                WriteOutput("Please specify a type of Data Application to create");
                 return;
             }
 

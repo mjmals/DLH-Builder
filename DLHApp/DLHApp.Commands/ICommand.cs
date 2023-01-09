@@ -9,5 +9,7 @@
         void Run(string[] args);
 
         void RunSubCommand(Type commandType);
+
+        public EventHandler<CommandOutputEventArgs> OutputWrite { get; set; }
     }
 }

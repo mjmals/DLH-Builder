@@ -22,20 +22,20 @@ namespace DLHApp.Commands.DataStages
 
             if (string.IsNullOrEmpty(appPath))
             {
-                Console.WriteLine("Please specify a valid Application Path");
+                WriteOutput("Please specify a valid Application Path");
                 return;
             }
 
             if (!Directory.Exists(Path.Combine(Environment.CurrentDirectory, "Data Applications", appPath)))
             {
-                Console.WriteLine("Could not find application {0}", Path.Combine(Environment.CurrentDirectory, "Data Applications", appPath));
+                WriteOutput(string.Format("Could not find application {0}", Path.Combine(Environment.CurrentDirectory, "Data Applications", appPath)));
                 return;
             }
 
 
             if (!File.Exists(Path.Combine(Environment.CurrentDirectory, "Data Applications", appPath, appPath + ".dbxapp.json")))
             {
-                Console.WriteLine("Databricks Data Stage is not valid for this Application Type");
+                WriteOutput("Databricks Data Stage is not valid for this Application Type");
                 return;
             }
 

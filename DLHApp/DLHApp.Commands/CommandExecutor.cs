@@ -33,9 +33,17 @@ namespace DLHApp.Commands
 
                 if (command.Prompt.Contains(Args[0].ToLower()))
                 {
+                    command.OutputWrite += OnCommandOutputWrite;
                     command.Run(Args);
                 }
             }
         }
+
+        void OnCommandOutputWrite(object sender, CommandOutputEventArgs e)
+        {
+            CommandOutputWrite?.Invoke(sender, e);
+        }
+
+        public EventHandler<CommandOutputEventArgs> CommandOutputWrite { get; set; }
     }
 }

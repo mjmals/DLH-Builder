@@ -17,7 +17,7 @@ namespace DLHApp.Commands.DataStructs
 
             if(Args.Length == 0)
             {
-                Console.WriteLine(@"Error: Please supply a name or {path}\name");
+                WriteOutput(@"Error: Please supply a name or {path}\name");
                 return;
             }
 
@@ -26,7 +26,7 @@ namespace DLHApp.Commands.DataStructs
 
             structPath = structPath.Length == 0 ? new string[0] : structPath.Take(structPath.Length - 1).ToArray();
 
-            Console.WriteLine("{0} (Path: {1})", structName, string.Join(@"\", structPath));
+            WriteOutput(string.Format("{0} (Path: {1})", structName, string.Join(@"\", structPath)));
 
             DataStruct ds =  DataStruct.New();
             ds.Name = structName;

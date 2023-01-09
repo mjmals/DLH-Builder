@@ -13,10 +13,16 @@ namespace DLHApp
             //Console.Write("Please enter work0ing directory: ");
             //Environment.CurrentDirectory = Console.ReadLine();
 
-            //args = new string[] { "build", "DataFactory" };
+            //args = new string[] { "keys", "add" };
 
             CommandExecutor cmdExec = new CommandExecutor(args);
+            cmdExec.CommandOutputWrite += WriteOutput;
             cmdExec.Run();
+        }
+
+        static void WriteOutput(object sender, CommandOutputEventArgs e)
+        {
+            Console.WriteLine(e.Output);
         }
     }
 }

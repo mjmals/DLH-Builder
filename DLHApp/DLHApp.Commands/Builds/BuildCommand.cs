@@ -18,7 +18,7 @@ namespace DLHApp.Commands.Builds
 
             if(Args.Count() == 0)
             {
-                Console.WriteLine("Please supply a Build Profile name");
+                WriteOutput("Please supply a Build Profile name");
                 return;
             }
 

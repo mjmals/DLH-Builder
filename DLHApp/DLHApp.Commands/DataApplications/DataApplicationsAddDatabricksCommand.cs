@@ -17,7 +17,7 @@ namespace DLHApp.Commands.DataApplications
 
             if (Args.Length == 0)
             {
-                Console.WriteLine("Please specify a name for the SQL Server Application");
+                WriteOutput("Please specify a name for the SQL Server Application");
                 return;
             }
 

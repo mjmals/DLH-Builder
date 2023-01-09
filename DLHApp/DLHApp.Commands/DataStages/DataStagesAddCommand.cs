@@ -16,7 +16,7 @@ namespace DLHApp.Commands.DataStages
 
             if (Args.Length == 0)
             {
-                Console.WriteLine("Please specify a Data Stage type");
+                WriteOutput("Please specify a Data Stage type");
                 return;
             }
 

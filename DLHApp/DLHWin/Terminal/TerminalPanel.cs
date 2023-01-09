@@ -61,6 +61,7 @@ namespace DLHWin.Terminal
             }
 
             CommandExecutor executor = new CommandExecutor(args);
+            executor.CommandOutputWrite += OnCommandOutput;
             executor.Run();
 
             CommandExecuted?.Invoke(null, null);
@@ -73,6 +74,11 @@ namespace DLHWin.Terminal
             TerminalBox.AppendText("\n" + CurrentLocation() + ">");
             ProtectEntries();
             CommandEntryStartPos = TerminalBox.TextLength + 1;
+        }
+
+        public void OnCommandOutput(object? sender, CommandOutputEventArgs? e)
+        {
+            TerminalBox.AppendText(e.Output + "\n");
         }
 
         public EventHandler CommandExecuted { get; set; }

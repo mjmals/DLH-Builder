@@ -38,6 +38,8 @@ namespace DLHApp.Commands
         public virtual void RunSubCommand(Type commandType)
         {
             CommandExecutor cmdExec = new CommandExecutor(Args);
+            CommandExecutor existingExec = (CommandExecutor)OutputWrite.Target;
+            cmdExec.CommandOutputWrite += existingExec.CommandOutputWrite;
             cmdExec.Run(commandType);
         }
 
@@ -92,5 +94,12 @@ namespace DLHApp.Commands
         {
             return Enum.Parse(enumType, value);
         }
+
+        protected void WriteOutput(string output)
+        {
+            OutputWrite?.Invoke(this, new CommandOutputEventArgs(output));
+        }
+
+        public EventHandler<CommandOutputEventArgs> OutputWrite { get; set; }
     }
 }

@@ -40,7 +40,7 @@ namespace DLHApp.Commands.Connections
 
             while(TestEnumValue(enumType, authValue) == false)
             {
-                Console.Error.WriteLine("Error: Incorrect Authentication Type selected");
+                WriteOutput("Error: Incorrect Authentication Type selected");
                 authValue = GetAuthValue();
             }
 

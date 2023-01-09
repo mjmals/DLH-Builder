@@ -17,7 +17,7 @@ namespace DLHApp.Commands.Keys
 
             if(Args.Length == 0)
             {
-                Console.WriteLine("Please specify a Key name/path");
+                WriteOutput("Please specify a Key name/path");
                 return;
             }
 

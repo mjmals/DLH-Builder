@@ -16,7 +16,7 @@ namespace DLHApp.Commands.Templates
 
             if(Args.Length == 0)
             {
-                Console.WriteLine("Please specify a Template name/path");
+                WriteOutput("Please specify a Template name/path");
                 return;
             }
 
