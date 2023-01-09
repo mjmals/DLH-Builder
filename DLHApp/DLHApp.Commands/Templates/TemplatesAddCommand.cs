@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DLHApp.Model.Templates;
 
 namespace DLHApp.Commands.Templates
 {
@@ -24,7 +25,7 @@ namespace DLHApp.Commands.Templates
             string path = string.Join(@" ", Args);
             string templateFileName = Path.Combine(Environment.CurrentDirectory.Contains("Templates") ? "" : "Templates", Path.Combine(path));
 
-            CreateFile(Path.GetFileName(templateFileName), string.Empty, Path.GetDirectoryName(templateFileName));
+            CreateFile(Path.GetFileName(templateFileName), Template.DefaultFileContent(), Path.GetDirectoryName(templateFileName));
         }
     }
 }

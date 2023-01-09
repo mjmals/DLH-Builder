@@ -14,5 +14,19 @@ namespace DLHApp.Model.Templates
         {
             return new Template();
         }
+
+        public static string DefaultFileContent()
+        {
+            string output = string.Empty;
+
+            output += "@{";
+            output += "\n\tTemplateItems = (TemplateModelItem)Model;";
+            output += "\n\tModel = (ModelItem)Model[\"Main\"];";
+            output += "\n}";
+            output += "\n\nTemplateHeaderFileName: @string.Format(\"{0}.json\", Model.Name)";
+            output += "\n\n";
+
+            return output;
+        }
     }
 }
