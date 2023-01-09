@@ -13,7 +13,7 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
     {
         public SqlServerConnectionNode(ProjectDirectoryItem directoryItem) : base(directoryItem)
         {
-
+            Nodes.Add(new ScriptsNode(directoryItem, typeof(SqlServerConnection)));
         }
 
         protected override string[]? Images => new string[] { "Connection" };

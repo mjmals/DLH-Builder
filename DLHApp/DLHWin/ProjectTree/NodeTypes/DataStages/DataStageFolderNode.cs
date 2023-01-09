@@ -30,11 +30,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStages
             dsr.FolderPath = this.Name;
             dsr.Save();
 
-            ProjectDirectoryItem dirItem = new ProjectDirectoryItem();
-            dirItem.Name = dsr.Name;
-            dirItem.Parent = dsr.FolderPath;
-
-            Tree.AddNode(dirItem);
+            Tree.RefreshTree();
         }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
