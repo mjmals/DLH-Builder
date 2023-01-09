@@ -12,5 +12,12 @@ namespace DLHWin.ProjectTree
         {
             Items.Add(title, null, task);
         }
+
+        public void InsertButton(string title, EventHandler task, int index)
+        {
+            ToolStripMenuItem item = new ToolStripMenuItem(title);
+            item.Click += task;
+            Items.Insert(index, item);
+        }
     }
 }
