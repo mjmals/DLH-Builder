@@ -57,6 +57,13 @@ namespace DLHWin
                     Type = ProjectDirectoryItemType.File
                 };
 
+                if(dirItem.Name.Contains("."))
+                {
+                    string[] nameSplit = dirItem.Name.Split(".");
+                    dirItem.Name = nameSplit[0];
+                    dirItem.Extension = "." + string.Join(".", nameSplit.TakeLast(nameSplit.Count() - 1)) + dirItem.Extension;
+                }
+
                 this.Add(dirItem);
             }
         }

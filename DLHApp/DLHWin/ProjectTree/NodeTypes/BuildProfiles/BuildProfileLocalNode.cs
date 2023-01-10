@@ -17,7 +17,7 @@ namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
         {
-            if (directoryItem.Type == ProjectDirectoryItemType.File && directoryItem.FullPath.StartsWith("Build Profiles") && directoryItem.FullPath.EndsWith(".local"))
+            if (directoryItem.Type == ProjectDirectoryItemType.File && directoryItem.FullPath.StartsWith("Build Profiles") && directoryItem.Extension.Contains(".local."))
             {
                 return true;
             }

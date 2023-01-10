@@ -24,7 +24,7 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
         {
-            if (directoryItem.Type == ProjectDirectoryItemType.File && directoryItem.Parent.StartsWith(@"Connections\SQLServer"))
+            if (directoryItem.Type == ProjectDirectoryItemType.File && directoryItem.Extension == ".sqlcon.json")
             {
                 return true;
             }
@@ -34,7 +34,7 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
 
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new ModelItemObjectEditor(this.Name + ".json", typeof(SqlServerConnection)));
+            return new EditorCollection(new ModelItemObjectEditor(this.Name + this.DirectoryItem.Extension, typeof(SqlServerConnection)));
         }
     }
 }

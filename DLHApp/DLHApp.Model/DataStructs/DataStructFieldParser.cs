@@ -122,7 +122,14 @@ namespace DLHApp.Model.DataStructs
             {
                 Field.Metadata = (Dictionary<string, string>)JsonConvert.DeserializeObject(metadata, typeof(Dictionary<string, string>));
             }
-            finally { };
+            catch
+            {
+
+            }
+            finally 
+            { 
+
+            }
         }
     }
 }

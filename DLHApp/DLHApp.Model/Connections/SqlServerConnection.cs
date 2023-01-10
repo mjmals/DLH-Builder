@@ -12,7 +12,7 @@ namespace DLHApp.Model.Connections
     {
         public override string? Name => string.Format("{0}_{1}", (string.IsNullOrEmpty(Server) ? string.Empty : Server), (string.IsNullOrEmpty(Database) ? string.Empty : Database));
 
-        public override string BasePath => Path.Combine(base.BasePath, "SQLServer");
+        public override string OutputExtension => "sqlcon.json";
 
         public string? Server { get; set; }
 

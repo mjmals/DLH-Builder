@@ -34,7 +34,7 @@ namespace DLHApp.Model.DataTypes
 
         public override string FormattedValue()
         {
-            return string.Format("{0}({1})", DisplayNames[0], Length <= 0 ? string.Empty : Length);
+            return string.Format("{0}({1},{2},{3},{4})", DisplayNames[0], Length, IsUnicode, IsCaseSensitive, IsAccentSensitive);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace DLHApp.Model.DataTypes
 
         public virtual string FormattedValue()
         {
-            return string.Empty;
+            return string.Format("{0}()", DisplayNames[0]);
         }
     }
 }
