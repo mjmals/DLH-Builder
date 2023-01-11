@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using DLHApp.Model.DataTypes;
 
 namespace DLHApp.Model.DataStructs
@@ -23,6 +24,8 @@ namespace DLHApp.Model.DataStructs
         public override string BasePath => GetBasePath("Data Structures");
 
         public DataStructFieldCollection Fields { get; set; }
+
+        public string SourceConnection { get; set; }
 
         public override string OutputExtension => "datastruct";
 

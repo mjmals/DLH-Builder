@@ -19,7 +19,7 @@
 					col.CHARACTER_MAXIMUM_LENGTH, 
 					CASE LEFT(col.DATA_TYPE, 1) WHEN 'n' THEN 'True' ELSE 'False' END, 
 					CASE WHEN col.COLLATION_NAME LIKE '%_CS%' THEN 'True' ELSE 'False' END,
-					CASE WHEN col.COLLATION_NAME LIKE '%_AS%' THEN 'True' ELSE 'False' END
+					CASE WHEN col.COLLATION_NAME LIKE '%_AS%' THEN 'False' ELSE 'False' END
 				)
 			WHEN col.DATA_TYPE = 'decimal'
 				THEN FORMATMESSAGE('DecimalDataType(%i,%i)', col.NUMERIC_PRECISION, col.NUMERIC_SCALE)

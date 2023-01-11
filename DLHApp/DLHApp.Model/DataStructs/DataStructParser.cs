@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace DLHApp.Model.DataStructs
 {
@@ -35,14 +36,18 @@ namespace DLHApp.Model.DataStructs
                 .Select(x => x.Index)
                 .ToArray();
 
-            StructConfigPointers = new int[0];
+            StructConfigPointers = StructTextArray.Select((value, index) => new { Value = value, Index = index })
+                .Where(x => x.Value.StartsWith("\tStructConfig"))
+                .Select(x => x.Index)
+                .ToArray();
 
             ParseFields();
+            ParseConfig();
         }
 
         void ParseFields()
         {
-            int fieldsEndPointer = StructConfigPointers.Length > 0 ? StructFieldPointers.First() : StructTextArray.ToList().FindLastIndex(x => x.StartsWith("]);"));
+            int fieldsEndPointer = StructConfigPointers.Length > 0 ? StructConfigPointers.First() : StructTextArray.ToList().FindLastIndex(x => x.StartsWith("]);"));
 
             foreach(int fieldPointer in StructFieldPointers)
             {
@@ -62,6 +67,32 @@ namespace DLHApp.Model.DataStructs
 
                 DataStructField field = new DataStructField(fieldText);
                 OutputStruct.Fields.Add(field);
+            }
+        }
+
+        void ParseConfig()
+        {
+            int configEndPointer = StructTextArray.ToList().FindLastIndex(x => x.StartsWith("]);"));
+
+            foreach(int configPointer in StructConfigPointers)
+            {
+                string configText = StructTextArray[configPointer];
+                configText = configText.Substring(configText.IndexOf("(") + 1);
+                configText = configText.Substring(0, configText.LastIndexOf(")"));
+
+                string[] configData = configText.Split(",");
+                
+                for (int i = 0; i < configData.Length; i++)
+                {
+                    configData[i] = configData[i].TrimStart().TrimEnd().Replace("\"", "");
+                }
+
+                switch(configData[0].ToLower())
+                {
+                    case "connectionname":
+                        OutputStruct.SourceConnection = configData[1];
+                        break;
+                }
             }
         }
     }

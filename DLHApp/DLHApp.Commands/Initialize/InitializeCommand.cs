@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
+using DLHApp.Model.Projects;
 
 namespace DLHApp.Commands.Initialize
 {
@@ -32,19 +33,7 @@ namespace DLHApp.Commands.Initialize
                 ProjectName = new DirectoryInfo(WorkingDirectory).Name;
             }
 
-            CreateFile("project.json", string.Empty, string.Empty);
-
-            Type[] modelTypes = AppDomain.CurrentDomain.GetAssemblies().SelectMany(x => x.GetTypes()).Where(x => x.IsAssignableTo(typeof(IModelItem)) && x.IsInterface == false && x.IsAbstract == false).ToArray();
-
-            foreach(Type modelType in modelTypes)
-            {
-                IModelItem model = (IModelItem)Activator.CreateInstance(modelType);
-
-                if(!Directory.Exists(model.BasePath) && !string.IsNullOrEmpty(model.BasePath))
-                {
-                    Directory.CreateDirectory(model.BasePath);
-                }
-            }
+            Project.Initialize();
         }
     }
 }

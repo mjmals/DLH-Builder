@@ -10,7 +10,7 @@ namespace DLHApp.Model.Connections
 {
     public class SqlServerConnection : Connection, IModelItem
     {
-        public override string? Name => string.Format("{0}_{1}", (string.IsNullOrEmpty(Server) ? string.Empty : Server), (string.IsNullOrEmpty(Database) ? string.Empty : Database));
+        public override string? Name => string.IsNullOrEmpty(base.Name) ? string.Format("{0}_{1}", (string.IsNullOrEmpty(Server) ? string.Empty : Server), (string.IsNullOrEmpty(Database) ? string.Empty : Database)) : base.Name;
 
         public override string OutputExtension => "sqlcon.json";
 
@@ -29,6 +29,7 @@ namespace DLHApp.Model.Connections
         public static SqlServerConnection Load(string filePath)
         {
             SqlServerConnection output = JsonConvert.DeserializeObject<SqlServerConnection>(File.ReadAllText(filePath));
+            output.Name = Path.GetFileName(filePath).Replace(".sqlcon.json", "");
             return output;
         }
     }
