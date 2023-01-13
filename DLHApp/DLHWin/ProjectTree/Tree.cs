@@ -70,11 +70,6 @@ namespace DLHWin.ProjectTree
 
         public void AddNode(ProjectDirectoryItem directoryItem)
         {
-            if (Project.Directory.Exists(x => directoryItem.Parent.StartsWith(x.FullPath) && x.AllowChild == false))
-            {
-                return;
-            }
-
             ProjectTreeNode node = NewNode(directoryItem);
 
             if(node.Ignore)
@@ -89,7 +84,11 @@ namespace DLHWin.ProjectTree
             else
             {
                 ProjectTreeNode parentNode = (ProjectTreeNode)this.Nodes.Find(directoryItem.Parent, true).FirstOrDefault();
-                parentNode.Nodes.Add(node);
+
+                if (parentNode.DirectoryItem.AllowChild)
+                {
+                    parentNode.Nodes.Add(node);
+                }
             }
         }
 
