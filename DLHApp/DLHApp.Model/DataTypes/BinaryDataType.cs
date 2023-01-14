@@ -6,19 +6,19 @@ using System.Threading.Tasks;
 
 namespace DLHApp.Model.DataTypes
 {
-    public class ByteArrayDataType : DataType, IDataType
+    public class BinaryDataType : DataType, IDataType
     {
-        public ByteArrayDataType()
+        public BinaryDataType()
         {
 
         }
 
-        public ByteArrayDataType(string length)
+        public BinaryDataType(string length)
         {
             Length = Convert.ToInt32(length);
         }
 
-        public override string[] DisplayNames => new string[] { "ByteArray", "ByteArrayDataType", "ByteArrayType" };
+        public override string[] DisplayNames => new string[] { "Binary", "BinaryDataType", "BinaryType" };
 
         public int Length { get; set; }
 

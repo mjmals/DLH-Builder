@@ -34,9 +34,9 @@
 			WHEN col.DATA_TYPE = 'money'
 				THEN 'DecimalDataType(10,2)'
 			WHEN col.DATA_TYPE = 'float'
-				THEN 'FloatDataType()'
+				THEN FORMATMESSAGE('FloatDataType(%i)', col.NUMERIC_PRECISION)
 			WHEN col.DATA_TYPE LIKE '%binary'
-				THEN FORMATMESSAGE('ByteArrayDataType(%i)', col.CHARACTER_MAXIMUM_LENGTH)
+				THEN FORMATMESSAGE('BinaryDataType(%i)', col.CHARACTER_MAXIMUM_LENGTH)
 			WHEN col.DATA_TYPE IN ('rowversion', 'timestamp')
 				THEN FORMATMESSAGE('ByteArrayDataType(%i)', 8)
 		END,

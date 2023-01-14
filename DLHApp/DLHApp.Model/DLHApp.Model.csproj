@@ -34,4 +34,8 @@
     </EmbeddedResource>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataTypes\Converters\Spark\" />
+  </ItemGroup>
+
 </Project>
