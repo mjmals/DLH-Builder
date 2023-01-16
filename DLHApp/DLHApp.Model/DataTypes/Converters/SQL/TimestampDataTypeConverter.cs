@@ -8,7 +8,7 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 {
     public class TimestampDataTypeConverter : SqlDataTypeConverter, IDataTypeConverter
     {
-        public override string[] SourceTypeNames => new string[] { "datetime", "date", "time" };
+        public override string[] SourceTypeNames => new string[] { "datetime", "date", "time", "smalldatetime" };
 
         public override Type[] DataTypes => this.GetType().Assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(ITimestampDataType))).ToArray();
 
@@ -22,6 +22,8 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
                     return new DateDataType();
                 case "time":
                     return new TimeDataType();
+                case "smalldatetime":
+                    return new SmallDatetimeDataType();
                 default:
                     return new TimestampDataType();
             }
@@ -42,6 +44,11 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
             if(dataType is TimeDataType)
             {
                 return "time";
+            }
+
+            if(dataType is SmallDatetimeDataType)
+            {
+                return "smalldatetime";
             }
 
             return "datetime";

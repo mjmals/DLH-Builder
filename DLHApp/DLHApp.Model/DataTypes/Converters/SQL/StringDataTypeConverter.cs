@@ -16,11 +16,16 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
         {
             dataType = dataType.ToLower();
 
-            int parmStart = dataType.IndexOf("(");
-            int parmEnd = dataType.IndexOf(")");
-            string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+            int length = 0;
 
-            int length = Convert.ToInt32(param == "MAX" ? -1 : param);
+            if (dataType.Contains("(") && dataType.Contains(")"))
+            {
+                int parmStart = dataType.IndexOf("(");
+                int parmEnd = dataType.IndexOf(")");
+                string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+
+                length = Convert.ToInt32(param.ToUpper() == "MAX" ? -1 : param);
+            }
 
             if(dataType.StartsWith("n"))
             {

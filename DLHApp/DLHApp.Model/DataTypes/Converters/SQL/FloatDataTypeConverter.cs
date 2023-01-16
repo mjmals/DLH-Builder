@@ -18,11 +18,14 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
             dataType = dataType.ToLower();
 
-            int parmStart = dataType.IndexOf("(");
-            int parmEnd = dataType.IndexOf(")");
-            string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+            if (dataType.Contains("(") && dataType.Contains(")"))
+            {
+                int parmStart = dataType.IndexOf("(");
+                int parmEnd = dataType.IndexOf(")");
+                string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
 
-            output.Precision = Convert.ToInt32(param);
+                output.Precision = Convert.ToInt32(param);
+            }
 
             return output;
         }

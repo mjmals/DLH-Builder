@@ -13,15 +13,27 @@ namespace DLHApp.Model.DataStructs
         {
             string metadata = "{}";
 
-            if(field.Metadata != null && field.Metadata.Count > 0)
+            if(field.Metadata != null || field.KeyTypes != null)
             {
                 int metadataIndex = 0;
                 string metadataVal = string.Empty;
 
+                if(field.KeyTypes.Count() > 0)
+                {
+                    string keytypeValues = string.Empty;
+
+                    foreach(DataStructFieldKeyType keyType in field.KeyTypes)
+                    {
+                        keytypeValues += (keytypeValues.Length > 0 ? "," : "") + keyType.ToString();
+                    }
+
+                    metadataVal = string.Format("keytypes:[{0}]", keytypeValues);
+                }
+
                 foreach(KeyValuePair<string, string> keyValue in field.Metadata)
                 {
+                    metadataVal += metadataVal.Length > 0 ? "," : "";
                     metadataVal += string.Format("{0}:{1}", keyValue.Key, keyValue.Value);
-                    metadataVal += metadataIndex == (field.Metadata.Count - 1) ? string.Empty : ", ";
                     metadataIndex++;
                 }
 

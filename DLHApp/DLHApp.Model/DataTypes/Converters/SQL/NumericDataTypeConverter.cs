@@ -18,13 +18,19 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
             dataType = dataType.ToLower();
 
-            int parmStart = dataType.IndexOf("(");
-            int parmEnd = dataType.IndexOf(")");
-            string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+            output.Precision = 18;
+            output.Scale = 2;
 
-            string[] typeParams = param.Trim().Replace(" ", "").Split(",");
-            output.Precision = Convert.ToInt32(typeParams[0]);
-            output.Scale = typeParams.Length > 0 ? Convert.ToInt32(typeParams[1]) : 0;
+            if (dataType.Contains("(") && dataType.Contains(")"))
+            {
+                int parmStart = dataType.IndexOf("(");
+                int parmEnd = dataType.IndexOf(")");
+                string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+
+                string[] typeParams = param.Trim().Replace(" ", "").Split(",");
+                output.Precision = Convert.ToInt32(typeParams[0]);
+                output.Scale = typeParams.Length > 0 ? Convert.ToInt32(typeParams[1]) : 0;
+            }
 
             return output;
         }
