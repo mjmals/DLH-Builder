@@ -10,44 +10,41 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
     {
         public override string[] SourceTypeNames => new string[] { "datetime", "date", "time" };
 
-        public override Type[] DataTypes => new Type[] { typeof(TimestampDataType) };
+        public override Type[] DataTypes => this.GetType().Assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(ITimestampDataType))).ToArray();
 
         public override IDataType Import(string dataType)
         {
             dataType = dataType.ToLower();
 
-            TimestampDataType output = new TimestampDataType() { Precision = TimestampDataTypePrecision.DateTime };
-
-            if (dataType == "date")
+            switch(dataType)
             {
-                output.Precision = TimestampDataTypePrecision.Date;
+                case "date":
+                    return new DateDataType();
+                case "time":
+                    return new TimeDataType();
+                default:
+                    return new TimestampDataType();
             }
-
-            if (dataType == "time")
-            {
-                output.Precision = TimestampDataTypePrecision.Time;
-            }
-
-            return output;
         }
 
         public override string Export(IDataType dataType)
         {
-            string output = "datetime";
-
-            TimestampDataType timestampType = (TimestampDataType)dataType;
-
-            if (timestampType.Precision == TimestampDataTypePrecision.Date)
+            if (!DataTypes.Contains(dataType.GetType()))
             {
-                output = "date";
+                throw new Exception("Specified data type is not a timestamp data type");
             }
 
-            if (timestampType.Precision == TimestampDataTypePrecision.Time)
+            if (dataType is DateDataType)
             {
-                output = "time";
+                return "date";
             }
 
-            return output;
+            if(dataType is TimeDataType)
+            {
+                return "time";
+            }
+
+            return "datetime";
         }
     }
 }

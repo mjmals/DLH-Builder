@@ -3,7 +3,7 @@
 	col.TABLE_SCHEMA AS SchemaName,
 	col.TABLE_NAME AS [TableName],
 	col.COLUMN_NAME AS [ColumnName],
-	FORMATMESSAGE('StructField("%s", %s, %s, {%s})',
+	REPLACE(FORMATMESSAGE('StructField("%s", %s, %s, {%s})',
 		col.COLUMN_NAME,
 		CASE
 			WHEN RIGHT(col.DATA_TYPE, 3) IN ('int')
@@ -15,11 +15,9 @@
 				END
 			WHEN RIGHT(col.DATA_TYPE, 4) IN ('char', 'text')
 				THEN FORMATMESSAGE(
-					'StringDataType(%i, %s, %s, %s)', 
-					col.CHARACTER_MAXIMUM_LENGTH, 
-					CASE LEFT(col.DATA_TYPE, 1) WHEN 'n' THEN 'True' ELSE 'False' END, 
-					CASE WHEN col.COLLATION_NAME LIKE '%_CS%' THEN 'True' ELSE 'False' END,
-					CASE WHEN col.COLLATION_NAME LIKE '%_AS%' THEN 'False' ELSE 'False' END
+					'%sStringDataType(%i)', 
+					CASE LEFT(col.DATA_TYPE, 1) WHEN 'n' THEN 'Unicode' ELSE '' END, 
+					col.CHARACTER_MAXIMUM_LENGTH
 				)
 			WHEN col.DATA_TYPE = 'decimal'
 				THEN FORMATMESSAGE('DecimalDataType(%i,%i)', col.NUMERIC_PRECISION, col.NUMERIC_SCALE)
@@ -27,8 +25,10 @@
 				THEN FORMATMESSAGE('NumericDataType(%i,%i)', col.NUMERIC_PRECISION, col.NUMERIC_SCALE)
 			WHEN col.DATA_TYPE IN ('datetime', 'smalldatetime')
 				THEN 'TimestampDataType()'
-			WHEN col.DATA_TYPE IN ('date', 'time')
-				THEN FORMATMESSAGE('TimestampDataType("%s")', col.DATA_TYPE)
+			WHEN col.DATA_TYPE = 'date'
+				THEN 'DateDataType()'
+			WHEN col.DATA_TYPE = 'time'
+				THEN 'TimeDataType()'
 			WHEN col.DATA_TYPE = 'bit'
 				THEN 'BooleanDataType()'
 			WHEN col.DATA_TYPE = 'money'
@@ -48,6 +48,9 @@
 			WHEN col.DATA_TYPE IN ('rowversion', 'timestamp') THEN 'keytype:Version'
 			ELSE ''
 		END
+		+ CASE WHEN col.COLLATION_NAME LIKE '%_CS%' THEN ',casesensitive:true' ELSE '' END
+	)
+	, '{,', '{'
 	) AS StructField
 FROM
 	INFORMATION_SCHEMA.COLUMNS AS col
