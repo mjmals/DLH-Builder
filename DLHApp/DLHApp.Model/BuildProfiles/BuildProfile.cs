@@ -54,7 +54,15 @@ namespace DLHApp.Model.BuildProfiles
             BuildProfile output = JsonConvert.DeserializeObject<BuildProfile>(File.ReadAllText(profilePath + ".json"));
             output.Name = Path.GetFileNameWithoutExtension(profilePath);
             output.SourcePath = profilePath + ".json";
-            output.UserConfig = JsonConvert.DeserializeObject<BuildProfileUserConfig>(File.ReadAllText(profilePath + ".local.json"));
+
+            string userConfigPath = profilePath + ".local.json";
+
+            if(!File.Exists(userConfigPath))
+            {
+                File.WriteAllText(userConfigPath, JsonConvert.SerializeObject(new BuildProfileUserConfig(), Formatting.Indented));
+            }
+
+            output.UserConfig = JsonConvert.DeserializeObject<BuildProfileUserConfig>(File.ReadAllText(userConfigPath));
 
             return output;
         }
