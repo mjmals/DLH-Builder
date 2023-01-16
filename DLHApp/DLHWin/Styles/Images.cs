@@ -26,6 +26,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Environment", Properties.Resources.EnvironmentDefinition_16x);
                 output.Images.Add("Folder Closed", Properties.Resources.FolderClosed_16x);
                 output.Images.Add("Folder Open", Properties.Resources.FolderOpened_16x);
+                output.Images.Add("Hide", Properties.Resources.HideMember_16x);
                 output.Images.Add("Key", Properties.Resources.KeyDown_16x);
                 output.Images.Add("Key Container", Properties.Resources.GroupByAccess_16x);
                 output.Images.Add("Open", Properties.Resources.OpenFile_16x);
