@@ -13,7 +13,8 @@ namespace DLHApp.Model.DataStructs
     {
         public DataStructField()
         {
-            Metadata = new Dictionary<string, string>();
+            KeyTypes = new DataStructFieldKeyTypeCollection();
+            Metadata = new DataStructFieldMetadataCollection();
         }
 
         public DataStructField(string structFieldText)
@@ -26,9 +27,13 @@ namespace DLHApp.Model.DataStructs
 
         public IDataType DataType { get; set; }
 
+        public DataStructFieldKeyTypeCollection KeyTypes { get; set; }
+
         public bool IsNullable { get; set; }
 
-        public Dictionary<string, string> Metadata { get; set; }
+        public bool IsCaseSensitive { get; set; }
+
+        public DataStructFieldMetadataCollection Metadata { get; set; }
 
         public new string OutputContent()
         {

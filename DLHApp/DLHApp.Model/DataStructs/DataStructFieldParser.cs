@@ -120,7 +120,23 @@ namespace DLHApp.Model.DataStructs
 
             try
             {
-                Field.Metadata = (Dictionary<string, string>)JsonConvert.DeserializeObject(metadata, typeof(Dictionary<string, string>));
+                string[] metadataItems = metadata.Split(",");
+
+                for (int i = 0; i < metadataItems.Length; i++)
+                {
+                    string item = metadataItems[i];
+
+                    if(item.Contains("["))
+                    {
+                        while(!item.Contains("]"))
+                        {
+                            i++;
+                            item += "," + metadataItems[i];
+                        }
+                    }
+
+                    ExtractFromMetadata(item);
+                }
             }
             catch
             {
@@ -128,6 +144,47 @@ namespace DLHApp.Model.DataStructs
             }
             finally 
             { 
+
+            }
+        }
+
+        void ExtractFromMetadata(string metadata)
+        {
+            if(!metadata.Contains(":"))
+            {
+                return;
+            }
+
+            Field.KeyTypes = new DataStructFieldKeyTypeCollection();
+            Field.Metadata = new DataStructFieldMetadataCollection();
+
+            metadata = metadata.Replace("{", "").Replace("}", "").Replace("\"", "");
+            string[] metadataEntry = metadata.Split(":");
+            string metadataKey = metadataEntry[0];
+            string metadataValue = metadataEntry[1];
+
+            try
+            {
+                switch (metadataKey.ToLower())
+                {
+                    case "keytype":
+                        Field.KeyTypes?.Add((DataStructFieldKeyType)Enum.Parse(typeof(DataStructFieldKeyType), metadataValue, true));
+                        break;
+                    case "keytypes":
+                        metadataValue = metadataValue.Replace("[", "").Replace("]", "");
+                        string[] keytypes = metadataValue.Trim().Split(",");
+                        keytypes.ToList().ForEach((x) => Field.KeyTypes?.Add((DataStructFieldKeyType)Enum.Parse(typeof(DataStructFieldKeyType), x, true)));
+                        break;
+                    case "casesensitive":
+                        Field.IsCaseSensitive = bool.Parse(metadataValue);
+                        break;
+                    default:
+                        Field.Metadata.Add(metadataKey, metadataValue);
+                        break;
+                }
+            }
+            catch(Exception e)
+            {
 
             }
         }

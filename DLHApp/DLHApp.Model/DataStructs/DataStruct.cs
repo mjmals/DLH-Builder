@@ -43,7 +43,7 @@ namespace DLHApp.Model.DataStructs
             idField.Name = "ID";
             idField.DataType = new IntegerDataType();
             idField.IsNullable = false;
-            idField.Metadata = new Dictionary<string, string>();
+            idField.Metadata = new DataStructFieldMetadataCollection();
             idField.Metadata.Add("keytype", "PrimaryKey");
             output.Fields.Add(idField);
 
@@ -51,7 +51,7 @@ namespace DLHApp.Model.DataStructs
             updateField.Name = "LastUpdated";
             updateField.DataType = new StringDataType();
             updateField.IsNullable = false;
-            updateField.Metadata = new Dictionary<string, string>();
+            updateField.Metadata = new DataStructFieldMetadataCollection();
             updateField.Metadata.Add("keytype", "Version");
             output.Fields.Add(updateField);
 
