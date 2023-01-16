@@ -32,13 +32,13 @@
 			WHEN col.DATA_TYPE = 'bit'
 				THEN 'BooleanDataType()'
 			WHEN col.DATA_TYPE = 'money'
-				THEN 'DecimalDataType(10,2)'
+				THEN 'MoneyDataType'
 			WHEN col.DATA_TYPE = 'float'
 				THEN FORMATMESSAGE('FloatDataType(%i)', col.NUMERIC_PRECISION)
 			WHEN col.DATA_TYPE LIKE '%binary'
 				THEN FORMATMESSAGE('BinaryDataType(%i)', col.CHARACTER_MAXIMUM_LENGTH)
 			WHEN col.DATA_TYPE IN ('rowversion', 'timestamp')
-				THEN FORMATMESSAGE('ByteArrayDataType(%i)', 8)
+				THEN FORMATMESSAGE('BinaryDataType(%i)', 8)
 		END,
 		CASE col.IS_NULLABLE WHEN 'YES' THEN 'True' ELSE 'False' END,
 		CASE
