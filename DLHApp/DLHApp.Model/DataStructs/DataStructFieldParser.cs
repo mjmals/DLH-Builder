@@ -36,6 +36,7 @@ namespace DLHApp.Model.DataStructs
 
             ParseName();
             ParseDataType();
+            ParseNullability();
             ParseMetadata();
         }
 
@@ -76,6 +77,24 @@ namespace DLHApp.Model.DataStructs
             }
 
             Field.DataType = new DataTypeParser(datatypeText).Parse();
+        }
+
+        void ParseNullability()
+        {
+            int checkpos = 2;
+            bool isBool = false;
+
+            while(!isBool && checkpos < StructFieldConfig.Length)
+            {
+                bool.TryParse(StructFieldConfig[checkpos], out isBool);
+
+                if(isBool)
+                {
+                    Field.IsNullable = bool.Parse(StructFieldConfig[checkpos]);
+                }
+
+                checkpos++;
+            }
         }
 
         void ParseMetadata()
