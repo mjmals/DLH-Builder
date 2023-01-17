@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using DLHApp.Model.DataStructs;
 
 namespace DLHApp.Model.DataStructReferences
 {
@@ -58,6 +59,27 @@ namespace DLHApp.Model.DataStructReferences
         public static DataStructReference Load(string path)
         {
             DataStructReference output = JsonConvert.DeserializeObject<DataStructReference>(File.ReadAllText(path));
+            output.Name = Path.GetFileNameWithoutExtension(path).Replace(".ref", "");
+            output.FolderPath = Path.GetDirectoryName(path).Replace(Environment.CurrentDirectory + @"\", "");
+
+            return output;
+        }
+
+        public override TemplateModelItem GetTemplateItems()
+        {
+            TemplateModelItem output = base.GetTemplateItems();
+
+            DataStruct ds = DataStruct.Load(SourceDataStruct);
+            output.Add("DataStruct", ds);
+
+            Dictionary<string, string> definitions = new Dictionary<string, string>();
+
+            foreach(string defFile in Directory.GetFiles(Path.Combine(FolderPath, "Definitions"), "*.def.*"))
+            {
+                definitions.Add(Path.GetFileNameWithoutExtension(defFile), File.ReadAllText(defFile));
+            }
+
+            output.Add("Definitions", definitions);
 
             return output;
         }

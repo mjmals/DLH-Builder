@@ -12,7 +12,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
     {
         public DataStructReferenceNode(ProjectDirectoryItem directoryItem) : base(directoryItem)
         {
-
+            Nodes.Add(new ScriptsNode(directoryItem, typeof(DataStructReference)));
         }
 
         protected override string[]? Images => new string[] { "Data Struct" };

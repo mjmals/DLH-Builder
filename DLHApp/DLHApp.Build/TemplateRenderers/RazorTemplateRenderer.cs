@@ -20,6 +20,8 @@ namespace DLHApp.Build.TemplateRenderers
             IRazorEngine engine = new RazorEngine();
             IRazorEngineCompiledTemplate template = engine.Compile(templateContent, builder => {
                 builder.AddAssemblyReference(typeof(Project).Assembly);
+                builder.AddAssemblyReference(typeof(List<string>));
+                builder.AddAssemblyReferenceByName("System.Collections");
             });
 
             fileName = "Error.txt";

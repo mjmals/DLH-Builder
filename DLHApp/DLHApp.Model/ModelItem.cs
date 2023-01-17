@@ -32,7 +32,7 @@ namespace DLHApp.Model
 
         public TemplateReferenceCollection Templates { get; set; }
 
-        public TemplateModelItem GetTemplateItems()
+        public virtual TemplateModelItem GetTemplateItems()
         {
             TemplateModelItem output = new TemplateModelItem();
             output.Add("Main", this);
