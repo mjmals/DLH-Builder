@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHApp.Build.TemplateRenderers;
 using DLHWin.Styles;
+using DLHWin.Editors.Dialogs;
 
 namespace DLHWin.Editors
 {
@@ -18,10 +19,7 @@ namespace DLHWin.Editors
 
             ModelItem = (IModelItem)modelItemType.GetMethod("Load").Invoke(null, new[] { modelItemPath });
 
-            foreach(string template in ModelItem.Templates.OrderBy(x => x))
-            {
-                ScriptSelector.Items.Add(template);
-            }
+            LoadScriptSelector();
 
             ScriptSelector.SelectedIndexChanged += ChangeScript;
             ScriptEditor.TextChanged += TemplateEdited;
@@ -55,6 +53,12 @@ namespace DLHWin.Editors
             copyButton.Click += CopyScript;
             toolbar.Items.Add(copyButton);
 
+            ToolStripButton manageButton = new ToolStripButton();
+            manageButton.ImageKey = "Script Mapping";
+            manageButton.ToolTipText = "Manage Template Mappings";
+            manageButton.Click += ManageScripts;
+            toolbar.Items.Add(manageButton);
+
             ToolStripButton showhideButton = new ToolStripButton();
             showhideButton.ImageKey = "Hide";
             showhideButton.ToolTipText = @"Show\Hide template editor";
@@ -85,6 +89,16 @@ namespace DLHWin.Editors
         string GetTemplateFile()
         {
             return ScriptSelector.Text + ".cshtml";
+        }
+
+        void LoadScriptSelector()
+        {
+            ScriptSelector.Items.Clear();
+
+            foreach (string template in ModelItem.Templates.OrderBy(x => x))
+            {
+                ScriptSelector.Items.Add(template);
+            }
         }
 
         void LoadViewer()
@@ -151,6 +165,16 @@ namespace DLHWin.Editors
                 ScriptViewer.Parent.Dock = DockStyle.None;
                 return;
             }
+        }
+
+        void ManageScripts(object sender, EventArgs e)
+        {
+            TemplateMappingDialog dialog = new TemplateMappingDialog(ModelItem.Templates);
+            dialog.ShowDialog();
+
+
+            ModelItem.Save();
+            LoadScriptSelector();
         }
     }
 }

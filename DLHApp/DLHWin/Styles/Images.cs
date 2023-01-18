@@ -36,6 +36,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Save", Properties.Resources.Save_16x);
                 output.Images.Add("Schema Item", Properties.Resources.PropertySnippet_16x);
                 output.Images.Add("Script", Properties.Resources.SQLScript_16x);
+                output.Images.Add("Script Mapping", Properties.Resources.ScriptGroup_16x);
                 output.Images.Add("SQL", Properties.Resources.SQL_16x);
                 output.Images.Add("Table", Properties.Resources.Table_16x);
                 output.Images.Add("Template", Properties.Resources.Template_16x);
