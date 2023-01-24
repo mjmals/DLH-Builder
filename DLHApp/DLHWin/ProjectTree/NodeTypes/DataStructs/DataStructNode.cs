@@ -24,7 +24,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructs
 
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new ModelItemObjectEditor(this.Name, typeof(DataStruct)));
+            return new EditorCollection(new DataStructEditor(this.Name));
         }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
