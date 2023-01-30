@@ -92,6 +92,9 @@ namespace DLHApp.Model.DataStructs
                     case "connectionname":
                         OutputStruct.SourceConnection = configData[1];
                         break;
+                    case "sourceitemname":
+                        OutputStruct.SourceItemName = configData[1];
+                        break;
                 }
             }
         }

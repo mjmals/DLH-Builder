@@ -28,6 +28,16 @@ namespace DLHApp.Model.DataStructs
                 output += string.Format("\n\tStructConfig(\"{0}\", \"{1}\")", "ConnectionName", dataStruct.SourceConnection);
             }
 
+            if (!string.IsNullOrEmpty(dataStruct.SourceItemName))
+            {
+                if (output.Split("\n").Length > 1)
+                {
+                    output += ",";
+                }
+
+                output += string.Format("\n\tStructConfig(\"{0}\", \"{1}\")", "SourceItemName", dataStruct.SourceItemName);
+            }
+
             output += "\n]);";
 
             return output;

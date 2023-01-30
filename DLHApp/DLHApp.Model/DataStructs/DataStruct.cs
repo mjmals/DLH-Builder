@@ -27,6 +27,8 @@ namespace DLHApp.Model.DataStructs
 
         public string SourceConnection { get; set; }
 
+        public string SourceItemName { get; set; }
+
         public override string OutputExtension => "datastruct";
 
         protected override string OutputContent()
