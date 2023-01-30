@@ -10,10 +10,13 @@ namespace DLHApp
     {
         static void Main(string[] args)
         {
-            //Console.Write("Please enter work0ing directory: ");
+            //Console.Write("Please enter working directory: ");
             //Environment.CurrentDirectory = Console.ReadLine();
 
             //args = new string[] { "keys", "add" };
+
+            //Console.Write("$ ");
+            //args = Console.ReadLine().Split(" ");
 
             CommandExecutor cmdExec = new CommandExecutor(args);
             cmdExec.CommandOutputWrite += WriteOutput;
