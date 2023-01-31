@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using DLHApp.Model.DataStructs;
+using DLHApp.Model.DataStages;
 
 namespace DLHApp.Model.DataStructReferences
 {
@@ -28,7 +29,7 @@ namespace DLHApp.Model.DataStructReferences
 
         public string SourceDataStruct { get; set; }
 
-        public List<string> Fields { get; set; }
+        public DataStructFieldReferenceCollection Fields { get; set; }
 
         public override void Save()
         {
@@ -51,7 +52,7 @@ namespace DLHApp.Model.DataStructReferences
         {
             DataStructReference output = new DataStructReference();
             output.SourceDataStruct = string.Empty;
-            output.Fields = new List<string>();
+            output.Fields = new DataStructFieldReferenceCollection();
 
             return output;
         }
@@ -72,6 +73,11 @@ namespace DLHApp.Model.DataStructReferences
             DataStruct ds = DataStruct.Load(SourceDataStruct);
             output.Add("DataStruct", ds);
 
+            DataStage stg = ParentStage();
+            output.Add("Stage", stg);
+
+            output.Add("RefPath", Path.GetDirectoryName(Path.GetDirectoryName(this.BasePath)).Replace(stg.SourcePath + @"\", ""));
+
             Dictionary<string, string> definitions = new Dictionary<string, string>();
 
             foreach(string defFile in Directory.GetFiles(Path.Combine(FolderPath, "Definitions"), "*.def.*"))
@@ -82,6 +88,22 @@ namespace DLHApp.Model.DataStructReferences
             output.Add("Definitions", definitions);
 
             return output;
+        }
+
+        public DataStage ParentStage()
+        {
+            List<string> parentPathItems = BasePath.Split(@"\").ToList();
+            int stagePos = parentPathItems.IndexOf("Stages");
+            string stageDir = string.Join(@"\", parentPathItems.Take(stagePos + 2));
+
+            string stageFile = Directory.GetFiles(stageDir).FirstOrDefault(x => x.EndsWith("stg.json"));
+
+            if(!string.IsNullOrEmpty(stageFile))
+            {
+                return DataStage.Load(stageFile);
+            }
+
+            return null;
         }
     }
 }
