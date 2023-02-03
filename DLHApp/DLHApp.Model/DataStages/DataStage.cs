@@ -56,5 +56,21 @@ namespace DLHApp.Model.DataStages
 
             return null;
         }
+
+        public override TemplateModelItem GetTemplateItems()
+        {
+            TemplateModelItem output = base.GetTemplateItems();
+
+            List<string> refFiles = new List<string>();
+
+            foreach(string file in Directory.GetFiles(SourcePath, "*.ref.json", SearchOption.AllDirectories))
+            {
+                refFiles.Add(Path.GetDirectoryName(file).Replace(SourcePath + @"\", ""));
+            }
+
+            output.Add("ReferenceNames", refFiles.ToArray());
+
+            return output;
+        }
     }
 }
