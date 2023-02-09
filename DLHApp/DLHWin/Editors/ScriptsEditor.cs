@@ -47,6 +47,12 @@ namespace DLHWin.Editors
             toolbar.Items.Add(scriptLabel);
             toolbar.Items.Add(ScriptSelector);
 
+            ToolStripButton refreshButton = new ToolStripButton();
+            refreshButton.ImageKey = "Refresh";
+            refreshButton.ToolTipText = "Refresh Template from File";
+            refreshButton.Click += ChangeScript;
+            toolbar.Items.Add(refreshButton);
+
             ToolStripButton copyButton = new ToolStripButton();
             copyButton.ImageKey = "Copy";
             copyButton.ToolTipText = "Copy script to clipboard";
@@ -120,8 +126,10 @@ namespace DLHWin.Editors
 
         void LoadEditor()
         {
+            ScriptEditor.TextChanged -= TemplateEdited;
             ScriptEditor.Clear();
             ScriptEditor.Text = File.ReadAllText(Path.Combine("Templates", GetTemplateFile()));
+            ScriptEditor.TextChanged += TemplateEdited;
         }
 
         void ChangeScript(object sender, EventArgs e)
