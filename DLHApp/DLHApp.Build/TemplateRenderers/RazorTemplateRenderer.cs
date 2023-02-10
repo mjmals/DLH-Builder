@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHApp.Model.Projects;
 using RazorEngineCore;
+using System.Reflection;
 
 namespace DLHApp.Build.TemplateRenderers
 {
@@ -46,6 +47,19 @@ namespace DLHApp.Build.TemplateRenderers
             }
             catch(Exception e)
             {
+                if (baseObject is TemplateModelItem)
+                {
+                    TemplateModelItem templateModel = (TemplateModelItem)baseObject;
+
+                    if (templateModel["Main"] is IModelItem)
+                    {
+                        string objectName = ((IModelItem)templateModel["Main"]).Name;
+                        fileName = string.Format("Error - {0}.txt", objectName);
+                        Console.WriteLine("Failed to compile template {0} using {1}", templateFile, objectName);
+                    }
+
+                }
+
                 return e.Message;
             }
         }
