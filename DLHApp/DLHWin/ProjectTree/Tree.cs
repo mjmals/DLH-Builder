@@ -11,12 +11,13 @@ namespace DLHWin.ProjectTree
 {
     internal class Tree : TreeView
     {
-        public Tree(ProjectController project)
+        public Tree(ProjectController project, string filter = null)
         {
             Dock = DockStyle.Fill;
             AfterExpand += SetNodeImage;
             AfterCollapse += SetNodeImage;
             ImageList = Images.List;
+            Filter = filter;
             Project = project;
         }
 
@@ -33,6 +34,8 @@ namespace DLHWin.ProjectTree
                 }
             }
         }
+
+        string Filter { get; set; }
 
         private ProjectController _project { get; set; }
 
@@ -60,12 +63,48 @@ namespace DLHWin.ProjectTree
             ProjectNode projectNode = new ProjectNode(new ProjectDirectoryItem() { Name = Project.Name }, Project);
             Nodes.Add(projectNode);
 
-            foreach (ProjectDirectoryItem directoryItem in Project.Directory)
+            List<ProjectDirectoryItem> directory = Project.Directory.ToList();
+
+            if(!string.IsNullOrEmpty(Filter))
+            {
+                ProjectDirectoryItem[] filterItems = directory.Where(x => x.Name.ToLower().Contains(Filter.ToLower())).ToArray();
+
+                foreach(ProjectDirectoryItem dirItem in Project.Directory.ToList())
+                {
+                    if(filterItems.FirstOrDefault(x => x.FullPath.StartsWith(dirItem.FullPath)) == null)
+                    {
+                        directory.Remove(dirItem);
+                    }
+                }
+            }
+
+            foreach (ProjectDirectoryItem directoryItem in directory)
             {
                 AddNode(directoryItem);
             }
 
             projectNode.Expand();
+
+            if(!string.IsNullOrEmpty(Filter))
+            {
+                ProjectDirectoryItem[] filterItems = directory.Where(x => x.Name.ToLower().Contains(Filter.ToLower())).ToArray();
+
+                foreach(ProjectDirectoryItem dirItem in filterItems)
+                {
+                    TreeNode node = Nodes.Find(dirItem.FullPath, true).FirstOrDefault();
+                    
+                    if(node != null && node.Parent != null)
+                    {
+                        node = node.Parent;
+                    }
+
+                    while(node != null)
+                    {
+                        node.Expand();
+                        node = node.Parent;
+                    }
+                }
+            }
         }
 
         public void AddNode(ProjectDirectoryItem directoryItem)

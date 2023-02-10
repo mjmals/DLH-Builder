@@ -32,10 +32,10 @@ namespace DLHWin.Main
 
         public ExplorerTreePanel Tree { get; set; }
 
-        internal void SetTreePanel()
+        internal void SetTreePanel(string filter = null)
         {
             Controls.Clear();
-            Controls.Add(Tree = new ExplorerTreePanel(Project));
+            Controls.Add(Tree = new ExplorerTreePanel(Project, filter));
             Tree.TreeSelectionChanged += OnTreeSelectionChanged;
             Controls.Add(Splitter);
         }
@@ -45,6 +45,11 @@ namespace DLHWin.Main
         void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)
         {
             TreeSelectionChanged?.Invoke(Tree, new TreeViewEventArgs(e.Node));
+        }
+
+        public void ApplyFilter(string filter)
+        {
+            SetTreePanel(filter);
         }
     }
 }

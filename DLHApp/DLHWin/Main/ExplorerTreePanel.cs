@@ -9,10 +9,10 @@ namespace DLHWin.Main
 {
     internal class ExplorerTreePanel : Panel
     {
-        public ExplorerTreePanel(ProjectController project)
+        public ExplorerTreePanel(ProjectController project, string filter = null)
         {
             Dock = DockStyle.Fill;
-            Controls.Add(Tree = new Tree(project));
+            Controls.Add(Tree = new Tree(project, filter));
             Tree.AfterSelect += OnTreeSelectionChanged;
         }
 

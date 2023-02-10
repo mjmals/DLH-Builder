@@ -60,6 +60,7 @@ namespace DLHWin.Main
 
             ToolBar.SetToolbarItemClick("OpenProject", OpenProject);
             ToolBar.SetToolbarItemClick("Refresh", RefreshProject);
+            ToolBar.SetToolbarItemClick("ApplyFilter", FilterProject);
         }
 
         void NewProject(object? sender, EventArgs e)
@@ -112,6 +113,12 @@ namespace DLHWin.Main
         void RefreshProject(object sender, EventArgs e)
         {
             ExplorerPanel.Tree.RefreshTree();
+        }
+
+        void FilterProject(object sender, EventArgs e)
+        {
+            string filter = ToolBar.GetTextboxValue("FilterText");
+            ExplorerPanel.ApplyFilter(filter);
         }
     }
 
