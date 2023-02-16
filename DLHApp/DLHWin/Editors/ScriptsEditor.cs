@@ -78,6 +78,14 @@ namespace DLHWin.Editors
         {
             Panel output = new Panel();
             output.Controls.Add(ScriptEditor);
+
+            ObjectPanel.Controls.Clear();
+            ObjectPanel.Controls.Add(ObjectGrid);
+            ObjectPanel.Controls.Add(ObjectList);
+            output.Controls.Add(ObjectPanel);
+
+            ObjectList.SelectedValueChanged += ListItemChanged;
+
             return output;
         }
 
@@ -86,6 +94,12 @@ namespace DLHWin.Editors
         RichTextBox ScriptViewer = new RichTextBox() { Dock = DockStyle.Fill, ReadOnly = true };
 
         RichTextBox ScriptEditor = new RichTextBox() { Dock = DockStyle.Fill, AcceptsTab = true };
+
+        Panel ObjectPanel = new Panel() { Dock = DockStyle.Right, AutoSize = false, Width = 300 };
+
+        ListBox ObjectList = new ListBox() { Dock = DockStyle.Top, Height = 200 };
+
+        PropertyGrid ObjectGrid = new PropertyGrid() { Dock = DockStyle.Fill, HelpVisible = false };
 
         protected override Control[] EditorControls()
         {
@@ -116,7 +130,17 @@ namespace DLHWin.Editors
             {
                 TemplateRenderer renderer = TemplateRenderer.GetRenderer(templateFile);
                 string outputName = string.Empty;
-                ScriptViewer.Text = renderer.Render(templateFile, ModelItem.GetTemplateItems(), out outputName);
+
+                TemplateModelItem templateItems = ModelItem.GetTemplateItems();
+
+                ObjectList.Tag = templateItems;
+
+                foreach(KeyValuePair<string, object> item in templateItems)
+                {
+                    ObjectList.Items.Add(item.Key);
+                }
+
+                ScriptViewer.Text = renderer.Render(templateFile, templateItems, out outputName);
             }
             catch (Exception e)
             {
@@ -183,6 +207,13 @@ namespace DLHWin.Editors
 
             ModelItem.Save();
             LoadScriptSelector();
+        }
+
+        void ListItemChanged(object sender, EventArgs e)
+        {
+            TemplateModelItem templateItems = (TemplateModelItem)ObjectList.Tag;
+            object selectedItem = templateItems[(string)ObjectList.Text];
+            ObjectGrid.SelectedObject = selectedItem;
         }
     }
 }
