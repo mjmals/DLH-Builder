@@ -177,7 +177,7 @@ namespace DLHApp.Model.DataStructs
             Field.KeyTypes = new DataStructFieldKeyTypeCollection();
             Field.Metadata = new DataStructFieldMetadataCollection();
 
-            metadata = metadata.Replace("{", "").Replace("}", "").Replace("\"", "");
+            metadata = metadata.Replace("{", "").Replace("})", "").Replace("}", "").Replace("\"", "");
             string[] metadataEntry = metadata.Split(":");
             string metadataKey = metadataEntry[0];
             string metadataValue = metadataEntry[1];
