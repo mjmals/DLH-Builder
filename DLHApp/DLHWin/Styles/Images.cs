@@ -29,6 +29,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Hide", Properties.Resources.HideMember_16x);
                 output.Images.Add("Key", Properties.Resources.KeyDown_16x);
                 output.Images.Add("Key Container", Properties.Resources.GroupByAccess_16x);
+                output.Images.Add("Load Step", Properties.Resources.Process_16x);
                 output.Images.Add("Open", Properties.Resources.OpenFile_16x);
                 output.Images.Add("Project", Properties.Resources.ProjectFilterFile_16x);
                 output.Images.Add("Refresh", Properties.Resources.Refresh_16x);

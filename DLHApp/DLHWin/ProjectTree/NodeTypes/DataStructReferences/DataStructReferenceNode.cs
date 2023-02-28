@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHWin.Editors;
 using DLHApp.Model.DataStructReferences;
+using DLHWin.ProjectTree.NodeTypes.LoadSteps;
 
 namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
 {
@@ -13,6 +14,11 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
         public DataStructReferenceNode(ProjectDirectoryItem directoryItem) : base(directoryItem)
         {
             Nodes.Add(new ScriptsNode(directoryItem, typeof(DataStructReference)));
+
+            if(!Directory.Exists(Path.Combine(Environment.CurrentDirectory, directoryItem.FullPath, "Load Steps")))
+            {
+                Nodes.Add(new LoadStepFolderNode(new ProjectDirectoryItem() { Name = "Load Steps", Parent = Path.Combine(directoryItem.FullPath) }));
+            }
         }
 
         protected override string[]? Images => new string[] { "Data Struct" };

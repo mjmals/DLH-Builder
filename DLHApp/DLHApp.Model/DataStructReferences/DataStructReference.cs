@@ -35,7 +35,7 @@ namespace DLHApp.Model.DataStructReferences
         {
             base.Save();
 
-            string[] subDirs = new string[] { "Definitions" };
+            string[] subDirs = new string[] { "Definitions", "Load Steps" };
 
             foreach (string subDir in subDirs)
             {
