@@ -100,18 +100,21 @@ namespace DLHApp.Model.DataStructReferences
             Dictionary<string, Dictionary<string, string>> loadSteps = new Dictionary<string, Dictionary<string, string>>();
             string loadStepDir = Path.Combine(FolderPath, "Load Steps");
 
-            foreach (string stepFile in Directory.GetFiles(loadStepDir, "*.loadstep.*", SearchOption.AllDirectories).OrderBy(x => x))
+            if (Directory.Exists(loadStepDir))
             {
-                string stepGroup = Path.GetDirectoryName(stepFile).Replace(loadStepDir + @"\", "");
-
-                if (!loadSteps.ContainsKey(stepGroup))
+                foreach (string stepFile in Directory.GetFiles(loadStepDir, "*.loadstep.*", SearchOption.AllDirectories).OrderBy(x => x))
                 {
-                    loadSteps.Add(stepGroup, new Dictionary<string, string>());
-                }
+                    string stepGroup = Path.GetDirectoryName(stepFile).Replace(loadStepDir + @"\", "");
 
-                KeyValuePair<string, Dictionary<string, string>> stepKey = loadSteps.FirstOrDefault(x => x.Key == stepGroup);
-                Dictionary<string, string> stepGroupEntries = stepKey.Value;
-                stepGroupEntries.Add(Path.GetFileNameWithoutExtension(stepFile).Replace(".loadstep", ""), File.ReadAllText(stepFile));
+                    if (!loadSteps.ContainsKey(stepGroup))
+                    {
+                        loadSteps.Add(stepGroup, new Dictionary<string, string>());
+                    }
+
+                    KeyValuePair<string, Dictionary<string, string>> stepKey = loadSteps.FirstOrDefault(x => x.Key == stepGroup);
+                    Dictionary<string, string> stepGroupEntries = stepKey.Value;
+                    stepGroupEntries.Add(Path.GetFileNameWithoutExtension(stepFile).Replace(".loadstep", ""), File.ReadAllText(stepFile));
+                }
             }
 
             output.Add("LoadSteps", loadSteps);
