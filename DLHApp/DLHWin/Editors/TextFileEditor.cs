@@ -22,7 +22,7 @@ namespace DLHWin.Editors
                     break;
             }
 
-            Highlighter.Highlight(TextEditor);
+            HighlightText(null, null);
             TextEditor.TextChanged += WriteFile;
             TextEditor.TextChanged += HighlightText;
         }
@@ -40,7 +40,10 @@ namespace DLHWin.Editors
 
         void HighlightText(object sender, EventArgs e)
         {
-            Highlighter.Highlight(TextEditor);
+            if (Highlighter != null)
+            {
+                Highlighter.Highlight(TextEditor);
+            }
         }
 
         void WriteFile(object sender, EventArgs e)
