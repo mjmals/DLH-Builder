@@ -50,6 +50,8 @@ namespace DLHWin.ProjectTree.NodeTypes.LoadSteps
                 filePath = Path.Combine(DirectoryItem.FullPath, fileName + extension);
             }
 
+            Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+
             using (FileStream stream = new FileStream(filePath, FileMode.OpenOrCreate))
             {
                 stream.SetLength(0);

@@ -19,6 +19,8 @@ namespace DLHWin.ProjectTree
             ImageList = Images.List;
             Filter = filter;
             Project = project;
+            LabelEdit = true;
+            AfterLabelEdit += OnRename;
         }
 
         public ProjectController Project 
@@ -169,6 +171,18 @@ namespace DLHWin.ProjectTree
                     Nodes.RemoveByKey(existingItem.Name);
                 }
             }
+        }
+
+        public void OnRename(object sender, NodeLabelEditEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.Label))
+            {
+                e.CancelEdit = true;
+                return;
+            }
+
+            ProjectTreeNode node = (ProjectTreeNode)e.Node;
+            node.Rename(e);
         }
     }
 }

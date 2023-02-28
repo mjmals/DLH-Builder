@@ -34,6 +34,8 @@ namespace DLHWin.ProjectTree
 
         protected virtual bool AllowDelete => false;
 
+        protected virtual bool AllowRename => true;
+
         protected Tree Tree => (Tree)this.TreeView;
 
         internal string GetNodeExpandedImage()
@@ -138,6 +140,35 @@ namespace DLHWin.ProjectTree
                 File.Delete(DirectoryItem.FullPath + DirectoryItem.Extension);
                 this.TreeView.Nodes.Remove(this);
             }
+        }
+
+        public virtual void Rename(NodeLabelEditEventArgs e)
+        {
+            if(!AllowRename)
+            {
+                e.CancelEdit = true;
+                return;
+            }
+
+            string newName = e.Label;
+
+            switch(DirectoryItem.Type)
+            {
+                case ProjectDirectoryItemType.Folder:
+                    string dirPath = DirectoryItem.FullPath;
+                    DirectoryItem.Name = newName;
+                    string newPath = DirectoryItem.FullPath;
+                    Directory.Move(dirPath, newPath);
+                    break;
+                case ProjectDirectoryItemType.File:
+                    string filePath = DirectoryItem.FullPath + DirectoryItem.Extension;
+                    DirectoryItem.Name = newName;
+                    string newFilePath = DirectoryItem.FullPath + DirectoryItem.Extension;
+                    File.Move(filePath, newFilePath);
+                    break;
+            }
+
+            Text = newName;
         }
     }
 }

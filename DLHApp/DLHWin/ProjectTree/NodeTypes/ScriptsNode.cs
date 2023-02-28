@@ -23,6 +23,8 @@ namespace DLHWin.ProjectTree.NodeTypes
 
         Type ModelItemType { get; set; }
 
+        protected override bool AllowRename => false;
+
         protected override string[]? Images => new string[] { "Script" };
 
         public override EditorCollection Editors()

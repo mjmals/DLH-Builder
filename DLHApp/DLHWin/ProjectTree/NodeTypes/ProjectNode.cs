@@ -22,6 +22,8 @@ namespace DLHWin.ProjectTree.NodeTypes
 
         public ProjectController Project { get; set; }
 
+        protected override bool AllowRename => false;
+
         protected override string[]? Images => new string[] { "Project" };
     }
 }
