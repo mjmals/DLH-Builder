@@ -17,6 +17,16 @@ namespace DLHApp.Model.DataStructReferences
         {
             string output = Path.Combine(string.IsNullOrEmpty(FolderPath) ? string.Empty : FolderPath, string.IsNullOrEmpty(Name) ? string.Empty : Name);
 
+            if(!string.IsNullOrEmpty(output))
+            {
+                string[] outputPathItems = output.Split(@"\");
+
+                if(outputPathItems.Last() == outputPathItems[outputPathItems.Length - 2])
+                {
+                    output = string.Join('\\', outputPathItems.Take(outputPathItems.Length - 1));
+                }
+            }
+
             if (string.IsNullOrEmpty(output))
             {
                 return "Data Applications";
