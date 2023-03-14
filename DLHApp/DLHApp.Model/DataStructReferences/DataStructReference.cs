@@ -89,10 +89,14 @@ namespace DLHApp.Model.DataStructReferences
             output.Add("RefPath", Path.GetDirectoryName(Path.GetDirectoryName(this.BasePath)).Replace(stg.SourcePath + @"\", ""));
 
             Dictionary<string, string> definitions = new Dictionary<string, string>();
+            string defPath = Path.Combine(FolderPath, "Definitions");
 
-            foreach(string defFile in Directory.GetFiles(Path.Combine(FolderPath, "Definitions"), "*.def.*"))
+            if (Directory.Exists(defPath))
             {
-                definitions.Add(Path.GetFileNameWithoutExtension(defFile), File.ReadAllText(defFile));
+                foreach (string defFile in Directory.GetFiles(defPath, "*.def.*"))
+                {
+                    definitions.Add(Path.GetFileNameWithoutExtension(defFile), File.ReadAllText(defFile));
+                }
             }
 
             output.Add("Definitions", definitions);
