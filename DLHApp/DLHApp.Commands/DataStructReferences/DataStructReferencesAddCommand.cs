@@ -94,7 +94,7 @@ namespace DLHApp.Commands.DataStructReferences
 
             foreach(DataStructField field in ds.Fields)
             {
-                dsr.Fields.Add(new DataStructFieldReference() { SourceField = ds.Name, OutputName = ds.Name });
+                dsr.Fields.Add(new DataStructFieldReference() { SourceField = field.Name, OutputName = field.Name });
             }
 
             dsr.Save();
