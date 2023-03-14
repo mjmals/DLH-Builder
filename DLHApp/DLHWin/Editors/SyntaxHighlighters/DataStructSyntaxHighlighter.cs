@@ -16,6 +16,8 @@ namespace DLHWin.Editors.SyntaxHighlighters
 
             output.Add("StructType", Color.Purple);
             output.Add("StructField", Color.Purple);
+            output.Add("StructConfig", Color.Purple);
+            output.Add("StructRelationship", Color.Purple);
             output.Add("True", Color.Purple);
             output.Add("False", Color.Purple);
 
