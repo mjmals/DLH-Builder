@@ -10,6 +10,8 @@ namespace DLHApp.Model.DataStructs
     {
         public string SourceDataStruct { get; set; }
 
+        public string OutputField { get; set; }
+
         public DataStructRelationshipJoinCollection Joins { get; set; }
     }
 }

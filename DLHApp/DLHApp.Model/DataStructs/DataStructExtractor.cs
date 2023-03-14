@@ -18,7 +18,21 @@ namespace DLHApp.Model.DataStructs
                 output += i == (dataStruct.Fields.Count - 1) ? string.Empty : ",";
             }
 
-            if(!string.IsNullOrEmpty(dataStruct.SourceConnection))
+            if (dataStruct.Relationships != null)
+            {
+                foreach (DataStructRelationship relationship in dataStruct.Relationships)
+                {
+                    if (output.Split("\n").Length > 1)
+                    {
+                        output += ",";
+                    }
+
+                    string joins = string.Join(@"\", relationship.Joins.Select(x => string.Format("{0}={1}{2}", x.SourceField, (x.IsCaseSenstive ? "=" : ""), x.TargetField)));
+                    string relText = string.Format("StructRelationship(Source={0}, Joins=[{1}], Output={2})", relationship.SourceDataStruct, joins, relationship.OutputField);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(dataStruct.SourceConnection))
             {
                 if(output.Split("\n").Length > 1)
                 {
