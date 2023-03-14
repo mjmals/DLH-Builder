@@ -29,6 +29,8 @@ namespace DLHApp.Model.DataStructs
 
         public string SourceItemName { get; set; }
 
+        public DataStructRelationshipCollection Relationships { get; set; }
+
         public override string OutputExtension => "datastruct";
 
         protected override string OutputContent()
@@ -40,6 +42,7 @@ namespace DLHApp.Model.DataStructs
         {
             DataStruct output = new DataStruct();
             output.Fields = new DataStructFieldCollection();
+            output.Relationships = new DataStructRelationshipCollection();
 
             DataStructField idField = new DataStructField();
             idField.Name = "ID";
