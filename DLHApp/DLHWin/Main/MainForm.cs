@@ -92,7 +92,7 @@ namespace DLHWin.Main
         {
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
             DisplayPanel.EditorPanel.SetControls(node.Editors());
-            DisplayPanel.TerminalPanel.ResetTerminalCommand(node.Name);
+            //DisplayPanel.TerminalPanel.ResetTerminalCommand(node.Name);
         }
 
         void TerminalCommandExecuted(object sender, EventArgs e)
