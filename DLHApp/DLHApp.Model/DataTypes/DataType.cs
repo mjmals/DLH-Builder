@@ -18,5 +18,10 @@ namespace DLHApp.Model.DataTypes
         {
             return string.Format("{0}()", DisplayNames[0]);
         }
+
+        public override string ToString()
+        {
+            return FormattedValue();
+        }
     }
 }

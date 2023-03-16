@@ -12,8 +12,16 @@ namespace DLHWin.Grids
         public DataStructEditorGrid(DataStruct dataStruct)
         {
             DataStruct = dataStruct;
+            RowValues = dataStruct.Fields;
         }
 
         public DataStruct DataStruct { get; set; }
+
+        protected override EditorGridColumnCollection GridColumns => new EditorGridColumnCollection()
+        {
+            new EditorGridColumn("Name", "Name", typeof(EditorGridTextCell)),
+            new EditorGridColumn("Data Type", "DataType", typeof(EditorGridTextCell)),
+            new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell))
+        };
     }
 }
