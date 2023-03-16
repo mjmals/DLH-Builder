@@ -13,5 +13,15 @@ namespace DLHApp.Model.DataStructs
         public string TargetField { get; set; }
 
         public bool IsCaseSenstive { get; set; }
+
+        public override string ToString()
+        {
+            if(string.IsNullOrEmpty(SourceField) && string.IsNullOrEmpty(TargetField))
+            {
+                return base.ToString();
+            }
+
+            return string.Format("{0} -> {1}", SourceField, TargetField);
+        }
     }
 }
