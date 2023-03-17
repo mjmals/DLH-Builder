@@ -23,16 +23,24 @@ namespace DLHApp.Model.DataStructs
 
         int[] StructConfigPointers { get; set; }
 
+        int[] StructRelationshipPointers { get; set; }
+
         DataStruct OutputStruct = new DataStruct();
 
         public void Parse()
         {
             OutputStruct.Fields = new DataStructFieldCollection();
+            OutputStruct.Relationships = new DataStructRelationshipCollection();
 
             StructTextArray = StructText.Split('\n');
 
             StructFieldPointers = StructTextArray.Select((value, index) => new { Value = value, Index = index })
                 .Where(x => x.Value.StartsWith("\tStructField"))
+                .Select(x => x.Index)
+                .ToArray();
+
+            StructRelationshipPointers = StructTextArray.Select((value, index) => new { Value = value, Index = index })
+                .Where(x => x.Value.StartsWith("\tStructRelationship"))
                 .Select(x => x.Index)
                 .ToArray();
 
@@ -42,6 +50,7 @@ namespace DLHApp.Model.DataStructs
                 .ToArray();
 
             ParseFields();
+            ParseRelationships();
             ParseConfig();
         }
 
@@ -49,7 +58,12 @@ namespace DLHApp.Model.DataStructs
         {
             int fieldsEndPointer = StructConfigPointers.Length > 0 ? StructConfigPointers.First() : StructTextArray.ToList().FindLastIndex(x => x.StartsWith("]);"));
 
-            foreach(int fieldPointer in StructFieldPointers)
+            if (StructRelationshipPointers.Length > 0)
+            {
+                fieldsEndPointer = StructRelationshipPointers.First();
+            }
+
+            foreach (int fieldPointer in StructFieldPointers)
             {
                 string fieldText = string.Empty;
 
@@ -67,6 +81,31 @@ namespace DLHApp.Model.DataStructs
 
                 DataStructField field = new DataStructField(fieldText);
                 OutputStruct.Fields.Add(field);
+            }
+        }
+
+        void ParseRelationships()
+        {
+            int relsEndPointer = StructConfigPointers.Length > 0 ? StructConfigPointers.First() : StructTextArray.ToList().FindLastIndex(x => x.StartsWith("]);"));
+
+            foreach (int relPointer in StructRelationshipPointers)
+            {
+                string relText = string.Empty;
+
+                int relStart = relPointer;
+                int relEnd = StructFieldPointers.ToList().Where(x => x > relPointer).FirstOrDefault();
+                relEnd = relEnd == 0 ? relsEndPointer : relEnd;
+
+                for (int i = relStart; i < relEnd; i++)
+                {
+                    relText += StructTextArray[i];
+                }
+
+                relText = relText.EndsWith("),") ? relText.Substring(0, relText.LastIndexOf(",")) : relText;
+                relText = relText.Replace("\tStructRelationship", "StructRelationship");
+
+                DataStructRelationship relationship = new DataStructRelationship(relText);
+                OutputStruct.Relationships.Add(relationship);
             }
         }
 
