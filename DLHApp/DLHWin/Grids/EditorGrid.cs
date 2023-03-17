@@ -52,9 +52,10 @@ namespace DLHWin.Grids
                     PropertyInfo propInfo = value.GetType().GetProperty(column.BaseProperty);
                     EditorGridCell cell = (EditorGridCell)Activator.CreateInstance(column.CellType);
                     cell.BaseProperty = column.BaseProperty;
+                    cell.SetValue(propInfo.GetValue(value));
 
                     DataGridViewCell gridCell = (DataGridViewCell)Activator.CreateInstance(cell.CellType);
-                    gridCell.Value = propInfo.GetValue(value);
+                    gridCell.Value = cell.Value;
                     gridCell.Tag = cell;
                     
                     row.Cells.Add(gridCell);

@@ -13,5 +13,10 @@ namespace DLHWin.Grids
         public abstract Type CellType { get; }
 
         public string BaseProperty { get; set; }
+
+        public virtual void SetValue(object value)
+        {
+            Value = value;
+        }
     }
 }

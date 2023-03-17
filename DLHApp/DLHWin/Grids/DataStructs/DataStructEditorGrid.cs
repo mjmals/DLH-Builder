@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model.DataStructs;
 
-namespace DLHWin.Grids
+namespace DLHWin.Grids.DataStructs
 {
     internal class DataStructEditorGrid : EditorGrid
     {
@@ -21,7 +21,8 @@ namespace DLHWin.Grids
         {
             new EditorGridColumn("Name", "Name", typeof(EditorGridTextCell)),
             new EditorGridColumn("Data Type", "DataType", typeof(EditorGridTextCell)),
-            new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell))
+            new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell)),
+            new EditorGridColumn("Key Types", "KeyTypes", typeof(DataStructEditorGridKeyTypeCell))
         };
     }
 }
