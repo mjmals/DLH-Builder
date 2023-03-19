@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "DLHApp": {
+      "commandName": "Project",
+      "commandLineArgs": "ds import sql localhost_AdventureWorks2017\\HumanResources.Employee",
+      "workingDirectory": "C:\\Users\\jshou\\source\\repos\\hsjv\\lakehouse\\LH-SampleProject\\10-MetaData\\SampleProject"
+    }
+  }
+}

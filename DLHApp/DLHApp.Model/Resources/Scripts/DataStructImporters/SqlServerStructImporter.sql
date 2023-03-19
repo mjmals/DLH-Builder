@@ -25,6 +25,8 @@
 				THEN FORMATMESSAGE('NumericDataType(%i,%i)', col.NUMERIC_PRECISION, col.NUMERIC_SCALE)
 			WHEN col.DATA_TYPE IN ('datetime', 'smalldatetime')
 				THEN 'TimestampDataType()'
+			WHEN col.DATA_TYPE = 'DateTime2' 
+				THEN 'TimestampDataType()'
 			WHEN col.DATA_TYPE = 'date'
 				THEN 'DateDataType()'
 			WHEN col.DATA_TYPE = 'time'
@@ -32,13 +34,24 @@
 			WHEN col.DATA_TYPE = 'bit'
 				THEN 'BooleanDataType()'
 			WHEN col.DATA_TYPE = 'money'
-				THEN 'MoneyDataType'
+				THEN 'MoneyDataType()'
+			WHEN col.DATA_TYPE = 'smallmoney'
+				THEN 'SmallMoneyDataType()'
 			WHEN col.DATA_TYPE = 'float'
 				THEN FORMATMESSAGE('FloatDataType(%i)', col.NUMERIC_PRECISION)
 			WHEN col.DATA_TYPE LIKE '%binary'
 				THEN FORMATMESSAGE('BinaryDataType(%i)', col.CHARACTER_MAXIMUM_LENGTH)
 			WHEN col.DATA_TYPE IN ('rowversion', 'timestamp')
 				THEN FORMATMESSAGE('BinaryDataType(%i)', 8)
+			WHEN col.DATA_TYPE IN ('uniqueidentifier')
+				THEN 'UniqueIdentifier()'
+			WHEN col.DATA_TYPE IN ('geography')
+				THEN 'StringDataType()'
+			WHEN col.DATA_TYPE IN ('hierarchyid')
+				THEN 'HierarchyType()'
+			WHEN col.DATA_TYPE IN ('xml')
+				THEN 'XMLType()'
+
 		END,
 		CASE col.IS_NULLABLE WHEN 'YES' THEN 'True' ELSE 'False' END,
 		CASE
