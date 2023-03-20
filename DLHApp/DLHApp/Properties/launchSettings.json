@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "DLHApp": {
-      "commandName": "Project",
-      "workingDirectory": "C:\\Users\\jshou\\source\\repos\\hsjv\\lakehouse\\LH-SampleProject\\10-MetaData\\SampleProject"
-    }
-  }
-}
