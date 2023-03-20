@@ -17,6 +17,8 @@ namespace DLHApp.Commands
 
         public virtual string WorkingDirectory => Environment.CurrentDirectory;
 
+        public virtual string Description => string.Empty;
+
         protected virtual string[] Args { get; set; }
 
         public virtual string GetInput(string requestText)

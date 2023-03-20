@@ -10,6 +10,8 @@ namespace DLHApp.Commands.Connections
     {
         public override string[] Prompt => new string[] { "connections", "conn" };
 
+        public override string Description => "Actions for creating connections to various source types";
+
         public override void Run(string[] args)
         {
             base.Run(args);

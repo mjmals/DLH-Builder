@@ -10,6 +10,8 @@ namespace DLHApp.Commands.DataApplications
     {
         public override string[] Prompt => new string[] { "applications", "apps", "da" };
 
+        public override string Description => "Enables creation and editing of Data Applications";
+
         public override void Run(string[] args)
         {
             base.Run(args);

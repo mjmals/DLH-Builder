@@ -10,6 +10,8 @@ namespace DLHApp.Commands.DataStructs
     {
         public override string[] Prompt => new string[] { "datastruct", "ds" };
 
+        public override string Description => "Commands for creating or importing Data Structures from a source connection";
+
         public override void Run(string[] args)
         {
             base.Run(args);

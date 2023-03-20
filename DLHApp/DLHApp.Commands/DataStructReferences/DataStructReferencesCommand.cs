@@ -10,6 +10,8 @@ namespace DLHApp.Commands.DataStructReferences
     {
         public override string[] Prompt => new string[] { "dsr", "refs" };
 
+        public override string Description => "Commands for creating or editing references to a Data Struct in a Data Stage";
+
         public override void Run(string[] args)
         {
             base.Run(args);

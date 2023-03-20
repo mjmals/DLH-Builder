@@ -12,6 +12,8 @@ namespace DLHApp.Commands.Builds
     {
         public override string[] Prompt => new string[] { "build" };
 
+        public override string Description => "Performs build against a specified buildprofile to compile templates to a specified output location";
+
         public override void Run(string[] args)
         {
             base.Run(args);

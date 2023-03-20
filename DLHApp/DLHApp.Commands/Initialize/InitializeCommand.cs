@@ -12,6 +12,8 @@ namespace DLHApp.Commands.Initialize
     {
         public override string[] Prompt => new string[] { "init" };
 
+        public override string Description => "Creates a new project and folder structures in the current working directory";
+
         public string ProjectName { get; set; }
 
         bool IncludeProjectName = false;

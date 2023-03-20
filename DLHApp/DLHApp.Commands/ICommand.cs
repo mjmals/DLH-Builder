@@ -6,6 +6,8 @@
 
         public string WorkingDirectory { get; }
 
+        public string Description { get; }
+
         void Run(string[] args);
 
         void RunSubCommand(Type commandType);

@@ -10,6 +10,8 @@ namespace DLHApp.Commands.BuildProfiles
     {
         public override string[] Prompt => new string[] { "buildprofile" };
 
+        public override string Description => "Actions for creating and editing a BuildProfile";
+
         public override void Run(string[] args)
         {
             base.Run(args);

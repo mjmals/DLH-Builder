@@ -10,6 +10,8 @@ namespace DLHApp.Commands.Templates
     {
         public override string[] Prompt => new string[] { "templates" };
 
+        public override string Description => "Commands for creating new templates";
+
         public override void Run(string[] args)
         {
             base.Run(args);
