@@ -10,6 +10,8 @@ namespace DLHApp.Commands.DataStructs
     {
         public override string[] Prompt => new string[] { "import" };
 
+        public override Type[] SubCommandTypes => new Type[] { typeof(IDataStructsImportCommand) };
+
         public override void Run(string[] args)
         {
             base.Run(args);

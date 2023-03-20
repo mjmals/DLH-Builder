@@ -8,6 +8,8 @@
 
         public string Description { get; }
 
+        public Type[] SubCommandTypes { get; }
+
         void Run(string[] args);
 
         void RunSubCommand(Type commandType);

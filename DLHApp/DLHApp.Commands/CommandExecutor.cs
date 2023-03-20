@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using DLHApp.Commands.Help;
 
 namespace DLHApp.Commands
 {
@@ -20,6 +21,15 @@ namespace DLHApp.Commands
         {
             if(Args.Length == 0)
             {
+                return;
+            }
+
+            HelpCommand helpCmd = new HelpCommand();
+
+            if(Args.Length > 1 && helpCmd.Prompt.Contains(Args.Last().ToLower()))
+            {
+                helpCmd.OutputWrite += OnCommandOutputWrite;
+                helpCmd.RunCommandHelp(Args.Take(Args.Length - 1).ToArray());
                 return;
             }
 

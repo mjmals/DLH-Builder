@@ -17,7 +17,9 @@ namespace DLHApp.Commands
 
         public virtual string WorkingDirectory => Environment.CurrentDirectory;
 
-        public virtual string Description => string.Empty;
+        public virtual string Description => "No Description";
+
+        public virtual Type[] SubCommandTypes => new Type[0];
 
         protected virtual string[] Args { get; set; }
 
