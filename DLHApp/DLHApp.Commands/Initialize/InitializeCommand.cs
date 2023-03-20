@@ -12,7 +12,7 @@ namespace DLHApp.Commands.Initialize
     {
         public override string[] Prompt => new string[] { "init" };
 
-        public override string Description => "Creates a new project and folder structures in the current working directory";
+        public override string Description => "Creates a new project and folder structures in the current working directory, or in a new folder if a project name is supplied";
 
         public string ProjectName { get; set; }
 
