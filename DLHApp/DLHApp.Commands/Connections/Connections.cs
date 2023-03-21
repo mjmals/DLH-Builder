@@ -12,6 +12,8 @@ namespace DLHApp.Commands.Connections
 
         public override string Description => "Actions for creating connections to various source types";
 
+        public override Type[] SubCommandTypes => new Type[] { typeof(IConnectionsCommand) };
+
         public override void Run(string[] args)
         {
             base.Run(args);

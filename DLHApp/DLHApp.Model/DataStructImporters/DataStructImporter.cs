@@ -14,6 +14,8 @@ namespace DLHApp.Model.DataStructImporters
             return null;
         }
 
+        protected string SourceConnectionName = string.Empty;
+
         public Dictionary<string, Dictionary<string, string>> SourceStructures 
         { 
             get
@@ -30,7 +32,35 @@ namespace DLHApp.Model.DataStructImporters
 
         protected Dictionary<string, Dictionary<string, string>> _sourceStructures { get; set; }
 
-        public virtual DataStruct GetDataStruct(string name)
+        public virtual DataStruct[] GetDataStructs(string name)
+        {
+            List<DataStruct> output = new List<DataStruct>();
+
+            if(name.EndsWith("*"))
+            {
+                name = name.Substring(0, name.Length - 1);
+
+                foreach(var ds in SourceStructures)
+                {
+                    if(ds.Key.ToLower().StartsWith(name.ToLower()))
+                    {
+                        try
+                        {
+                            output.Add(GetDataStruct(ds.Key));
+                        }
+                        catch { }
+                    }
+                }
+            }
+            else
+            {
+                output.Add(GetDataStruct(name));
+            }
+
+            return output.ToArray();
+        }
+
+        protected virtual DataStruct GetDataStruct(string name)
         {
             DataStruct output = new DataStruct();
             Dictionary<string, string> fields = SourceStructures[name];
@@ -38,12 +68,16 @@ namespace DLHApp.Model.DataStructImporters
             string structDef = "StructType([";
             string fieldsDef = string.Empty;
 
-            foreach(KeyValuePair<string, string> field in fields)
+            foreach (KeyValuePair<string, string> field in fields)
             {
                 fieldsDef += "\n\t" + field.Value + ",";
             }
 
-            structDef += fieldsDef.Substring(0, fieldsDef.Length - 1);
+            structDef += fieldsDef;
+
+            structDef += "\n\tStructConfig(\"ConnectionName\", \"" + SourceConnectionName + "\"),";
+            structDef += "\n\tStructConfig(\"SourceItemName\", \"" + name + "\")";
+
             structDef += "\n]);";
 
             DataStructParser parser = new DataStructParser(structDef, output);

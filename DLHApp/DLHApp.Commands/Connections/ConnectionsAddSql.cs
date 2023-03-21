@@ -12,6 +12,8 @@ namespace DLHApp.Commands.Connections
     {
         public override string[] Prompt => new string[] { "sql" };
 
+        public override string Description => "Creates a new sql connection file";
+
         public override void Run(string[] args)
         {
             base.Run(args);

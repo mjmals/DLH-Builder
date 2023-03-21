@@ -10,6 +10,10 @@ namespace DLHApp.Commands.Connections
     {
         public override string[] Prompt => new string[] { "add" };
 
+        public override string Description => "Command for adding connections (include {type} parameter to specify type of connection)";
+
+        public override Type[] SubCommandTypes => new Type[] { typeof(IConnectionsAddCommand) };
+
         public override void Run(string[] args)
         {
             base.Run(args);

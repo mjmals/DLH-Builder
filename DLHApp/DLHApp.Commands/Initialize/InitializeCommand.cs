@@ -29,6 +29,7 @@ namespace DLHApp.Commands.Initialize
                 ProjectName = Args[0];
                 IncludeProjectName = true;
                 Directory.CreateDirectory(WorkingDirectory);
+                Environment.CurrentDirectory = WorkingDirectory;
             }
             else
             {

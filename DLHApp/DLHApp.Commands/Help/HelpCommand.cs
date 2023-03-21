@@ -91,7 +91,7 @@ namespace DLHApp.Commands.Help
             {
                 Type[] subCmdTypes = Assembly.GetExecutingAssembly().GetTypes().Where(x => x.IsAssignableTo(cmdType) && x.IsInterface == false && x.IsAbstract == false).ToArray();
                 
-                foreach(Type subType in subCmdTypes)
+                foreach(Type subType in subCmdTypes.OrderBy(x => x.Name))
                 {
                     ICommand cmd = (ICommand)Activator.CreateInstance(subType);
                     commandList.Add(new string(' ', level * 2) + string.Join(",", cmd.Prompt), cmd.Description);

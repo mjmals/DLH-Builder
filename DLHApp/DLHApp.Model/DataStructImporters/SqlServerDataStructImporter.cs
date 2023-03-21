@@ -13,6 +13,7 @@ namespace DLHApp.Model.DataStructImporters
         public SqlServerDataStructImporter(string sqlConnection)
         {
             Connection = SqlServerConnection.Load(sqlConnection);
+            SourceConnectionName = Path.GetFileNameWithoutExtension(sqlConnection).Replace(".sqlcon", "");
         }
 
         SqlServerConnection Connection { get; set; }

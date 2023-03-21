@@ -35,15 +35,25 @@ namespace DLHApp.Commands.DataStructs
             }
 
             string savePath = "Imports";
-            if (Args.Length==2)
-            { savePath = Args[1];
+
+            if (Args.Length == 2)
+            { 
+                savePath = Args[1];
             }
 
             SqlServerDataStructImporter importer = new SqlServerDataStructImporter(connFilePath);
-            DataStruct ds = importer.GetDataStruct(connItem);
-            ds.Name = connItem.Split(".").Last();
-            ds.FolderPath = Path.Combine(Environment.CurrentDirectory, "Data Structures", savePath);
-            ds.Save();
+            DataStruct[] structs = importer.GetDataStructs(connItem);
+
+            foreach (DataStruct ds in structs)
+            {
+                try
+                {
+                    ds.Name = ds.SourceItemName.Split(".").Last();
+                    ds.FolderPath = Path.Combine(Environment.CurrentDirectory, "Data Structures", savePath);
+                    ds.Save();
+                }
+                catch { }
+            }
         }
     }
 }
