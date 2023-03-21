@@ -31,9 +31,6 @@ namespace DLHApp.Model.DataStructImporters
                     Console.Write("Enter Username: ");
                     string? user = Console.ReadLine();
                     output.UserID = user;
-                    //Console.Write("Enter Password: ");
-                    //string? password = Console.ReadLine();
-                    //output.Password = password;
                     Console.Write("Enter password: ");
                     var password = new System.Security.SecureString();
                     while (true)
