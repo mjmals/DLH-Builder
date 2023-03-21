@@ -9,6 +9,7 @@ namespace DLHApp.Model.Connections
     public enum SqlServerAuthenticationType
     {
         Windows,
-        SqlUser
+        SqlUser,
+        Azure
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model.DataStructs;
 using DLHApp.Model.DataStructImporters;
+using System.Reflection.Metadata;
 
 namespace DLHApp.Commands.DataStructs
 {
@@ -22,7 +23,7 @@ namespace DLHApp.Commands.DataStructs
                 return;
             }
 
-            string[] connPath = string.Join(" ", Args).Split(@"\");
+            string[] connPath = string.Join(" ", Args[0]).Split(@"\");
             string connItem = connPath.LastOrDefault();
             string connFile = string.Join(@"\", connPath.Take(connPath.Length - 1));
             string connFilePath = Path.Combine(Environment.CurrentDirectory, "Connections", connFile + ".sqlcon.json");
@@ -33,10 +34,15 @@ namespace DLHApp.Commands.DataStructs
                 return;
             }
 
+            string savePath = "Imports";
+            if (Args.Length==2)
+            { savePath = Args[1];
+            }
+
             SqlServerDataStructImporter importer = new SqlServerDataStructImporter(connFilePath);
             DataStruct ds = importer.GetDataStruct(connItem);
             ds.Name = connItem.Split(".").Last();
-            ds.FolderPath = Path.Combine(Environment.CurrentDirectory, "Data Structures", "Imports");
+            ds.FolderPath = Path.Combine(Environment.CurrentDirectory, "Data Structures", savePath);
             ds.Save();
         }
     }

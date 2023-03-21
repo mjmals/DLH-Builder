@@ -26,6 +26,24 @@ namespace DLHApp.Model.DataStructImporters
                 case SqlServerAuthenticationType.Windows:
                     output.IntegratedSecurity = true;
                     break;
+                case SqlServerAuthenticationType.Azure:
+                    output.Authentication = SqlAuthenticationMethod.ActiveDirectoryPassword;
+                    Console.Write("Enter Username: ");
+                    string? user = Console.ReadLine();
+                    output.UserID = user;
+                    Console.Write("Enter password: ");
+                    var password = new System.Security.SecureString();
+                    while (true)
+                    {
+                        var key = Console.ReadKey(true);
+                        if (key.Key == ConsoleKey.Enter)
+                            break;
+                        password.AppendChar(key.KeyChar);
+                        Console.Write("*");
+                    }
+                    output.Password = new System.Net.NetworkCredential(string.Empty, password).Password;
+
+                    break;
                 default:
                     output.IntegratedSecurity = true;
                     break;
