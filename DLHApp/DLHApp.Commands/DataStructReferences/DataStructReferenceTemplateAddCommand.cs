@@ -11,6 +11,8 @@ namespace DLHApp.Commands.DataStructReferences
     {
         public override string[] Prompt => new string[] { "add" };
 
+        public override string Description => "Adds a specified template path to specified struct reference / struct reference path";
+
         public override void Run(string[] args)
         {
             base.Run(args);

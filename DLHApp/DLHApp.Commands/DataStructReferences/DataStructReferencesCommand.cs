@@ -12,6 +12,8 @@ namespace DLHApp.Commands.DataStructReferences
 
         public override string Description => "Commands for creating or editing references to a Data Struct in a Data Stage";
 
+        public override Type[] SubCommandTypes => new Type[] { typeof(IDataStructReferencesCommand) };
+
         public override void Run(string[] args)
         {
             base.Run(args);

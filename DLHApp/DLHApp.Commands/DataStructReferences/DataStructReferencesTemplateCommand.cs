@@ -10,6 +10,10 @@ namespace DLHApp.Commands.DataStructReferences
     {
         public override string[] Prompt => new string[] { "template", "tmp", "temp" };
 
+        public override string Description => "Commands for controlling template collections in a struct reference";
+
+        public override Type[] SubCommandTypes => new Type[] { typeof(IDataStructReferencesTemplateCommand) };
+
         public override void Run(string[] args)
         {
             base.Run(args);

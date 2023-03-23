@@ -12,6 +12,8 @@ namespace DLHApp.Commands.DataStructReferences
     {
         public override string[] Prompt => new string[] { "add" };
 
+        public override string Description => "Adds a new struct ref to specified path.  Can be imported from a data struct using the {linkds} parameter.";
+
         public override void Run(string[] args)
         {
             base.Run(args);
