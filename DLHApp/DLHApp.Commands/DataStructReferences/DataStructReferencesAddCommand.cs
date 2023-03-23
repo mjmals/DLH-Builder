@@ -60,6 +60,13 @@ namespace DLHApp.Commands.DataStructReferences
             if(linkArgs.Count > 0)
             {
                 string dsName = string.Join(" ", linkArgs);
+
+                if(dsName.EndsWith("*"))
+                {
+                    CreatedLinkedRefs(dsName, refPath, refName);
+                    return;
+                }
+
                 CreateLinkedRef(dsName, refName, refPath);
                 return;
             }
@@ -98,6 +105,20 @@ namespace DLHApp.Commands.DataStructReferences
             }
 
             dsr.Save();
+        }
+
+        void CreatedLinkedRefs(string dsPath, string refPath, string refName)
+        {
+            string dsRootPath = Path.Combine(Environment.CurrentDirectory, "Data Structures");
+
+            foreach(string dsFile in Directory.GetFiles(Path.Combine(dsRootPath, dsPath.Replace("*", "")), "*.datastruct"))
+            {
+                string dsName = dsFile.Replace(dsRootPath + @"\", "").Replace(".datastruct", "");
+                string dsrPath = Path.Combine(refPath, refName);
+                string dsrName = Path.GetFileNameWithoutExtension(dsFile);
+
+                CreateLinkedRef(dsName, dsrName, dsrPath);
+            }
         }
     }
 }
