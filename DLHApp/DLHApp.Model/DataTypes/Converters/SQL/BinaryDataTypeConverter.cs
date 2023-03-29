@@ -8,7 +8,7 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 {
     internal class BinaryDataTypeConverter : SqlDataTypeConverter, IDataTypeConverter
     {
-        public override string[] SourceTypeNames => new string[] { "binary", "varbinary" };
+        public override string[] SourceTypeNames => new string[] { "binary", "varbinary", "timestamp", "rowversion" };
 
         public override Type[] DataTypes => new Type[] { typeof(BinaryDataType) };
 
@@ -18,11 +18,21 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
             dataType = dataType.ToLower();
 
-            int parmStart = dataType.IndexOf("(");
-            int parmEnd = dataType.IndexOf(")");
-            string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
-
-            output.Length = Convert.ToInt32(param == "MAX" ? -1 : param);
+            switch(dataType)
+            {
+                case "timestamp":
+                    output.Length = 8;
+                    break;
+                case "rowversion":
+                    output.Length = 8;
+                    break;
+                default:
+                    int parmStart = dataType.IndexOf("(");
+                    int parmEnd = dataType.IndexOf(")");
+                    string param = dataType.Substring(parmStart + 1, parmEnd - parmStart - 1);
+                    output.Length = Convert.ToInt32(param == "MAX" ? -1 : param);
+                    break;
+            }
 
             return output;
         }
