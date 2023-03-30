@@ -24,6 +24,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Definition Set", Properties.Resources.ScriptGroup_16x);
                 output.Images.Add("Dependency", Properties.Resources.Link_16x);
                 output.Images.Add("Environment", Properties.Resources.EnvironmentDefinition_16x);
+                output.Images.Add("Export File", Properties.Resources.ExportFile_16x);
                 output.Images.Add("Folder Closed", Properties.Resources.FolderClosed_16x);
                 output.Images.Add("Folder Open", Properties.Resources.FolderOpened_16x);
                 output.Images.Add("Hide", Properties.Resources.HideMember_16x);

@@ -163,6 +163,16 @@ namespace DLHWin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap ExportFile_16x {
+            get {
+                object obj = ResourceManager.GetObject("ExportFile_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap FolderBrowserDialogControl_16x {
             get {
                 object obj = ResourceManager.GetObject("FolderBrowserDialogControl_16x", resourceCulture);

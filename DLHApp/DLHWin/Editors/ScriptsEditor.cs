@@ -33,6 +33,10 @@ namespace DLHWin.Editors
 
         IModelItem ModelItem { get; set; }
 
+        string ExportFileName { get; set; }
+
+        string ScriptText { get; set; }
+
         Panel GetViewerPanel()
         {
             Panel output = new Panel();
@@ -58,6 +62,12 @@ namespace DLHWin.Editors
             copyButton.ToolTipText = "Copy script to clipboard";
             copyButton.Click += CopyScript;
             toolbar.Items.Add(copyButton);
+
+            ToolStripButton exportButton = new ToolStripButton();
+            exportButton.ImageKey = "Export File";
+            exportButton.ToolTipText = "Export script to file";
+            exportButton.Click += ExportScript;
+            toolbar.Items.Add(exportButton);
 
             ToolStripButton manageButton = new ToolStripButton();
             manageButton.ImageKey = "Script Mapping";
@@ -140,11 +150,15 @@ namespace DLHWin.Editors
                     ObjectList.Items.Add(item.Key);
                 }
 
-                ScriptViewer.Text = renderer.Render(templateFile, templateItems, out outputName);
+                ScriptText = renderer.Render(templateFile, templateItems, out outputName);
+                ScriptViewer.Text = ScriptText;
+                ExportFileName = outputName;
             }
             catch (Exception e)
             {
-                ScriptViewer.Text = e.Message;
+                ScriptText = e.Message;
+                ScriptViewer.Text = ScriptText;
+                ExportFileName = string.Empty;
             }
         }
 
@@ -214,6 +228,39 @@ namespace DLHWin.Editors
             TemplateModelItem templateItems = (TemplateModelItem)ObjectList.Tag;
             object selectedItem = templateItems[(string)ObjectList.Text];
             ObjectGrid.SelectedObject = selectedItem;
+        }
+
+        void ExportScript(object sender, EventArgs e)
+        {
+            if(string.IsNullOrEmpty(ExportFileName))
+            {
+                return;
+            }
+
+            if(ExportFileName == "Error.txt")
+            {
+                return;
+            }
+
+            using (SaveFileDialog dialog = new SaveFileDialog())
+            {
+                dialog.FileName = ExportFileName;
+                dialog.DefaultExt = Path.GetExtension(ExportFileName);
+                dialog.Filter = string.Format("{0} Files | *.{1}", dialog.DefaultExt.ToUpper(), dialog.DefaultExt);
+
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    using (FileStream stream = new FileStream(dialog.FileName, FileMode.OpenOrCreate))
+                    {
+                        stream.SetLength(0);
+
+                        using (StreamWriter writer = new StreamWriter(stream))
+                        {
+                            writer.Write(ScriptText);
+                        }
+                    }
+                }
+            }
         }
     }
 }
