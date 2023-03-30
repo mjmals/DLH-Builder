@@ -132,7 +132,7 @@ namespace DLHWin.Editors
                 string outputName = string.Empty;
 
                 TemplateModelItem templateItems = ModelItem.GetTemplateItems();
-
+                ObjectList.Items.Clear();
                 ObjectList.Tag = templateItems;
 
                 foreach(KeyValuePair<string, object> item in templateItems)
