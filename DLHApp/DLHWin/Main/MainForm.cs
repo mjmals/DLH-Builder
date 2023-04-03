@@ -13,10 +13,15 @@ namespace DLHWin.Main
         public MainForm()
         {
             SetTitle();
-            Controls.Add(DisplayPanel = new DisplayPanel());
+
+            BodyPanel = new SplitContainer();
+            BodyPanel.Dock = DockStyle.Fill;
+            Controls.Add(BodyPanel);
+
+            BodyPanel.Panel2.Controls.Add(DisplayPanel = new DisplayPanel());
             DisplayPanel.TerminalPanel.CommandExecuted += TerminalCommandExecuted;
 
-            Controls.Add(ExplorerPanel = new ExplorerPanel());
+            BodyPanel.Panel1.Controls.Add(ExplorerPanel = new ExplorerPanel());
             
             Controls.Add(ToolBar = new ToolBar());
             Controls.Add(Menu = new MenuBar());
@@ -39,6 +44,8 @@ namespace DLHWin.Main
         }
 
         ProjectController Project { get; set; }
+
+        SplitContainer BodyPanel { get; set; }
 
         ExplorerPanel ExplorerPanel { get; set; }
 
