@@ -10,7 +10,6 @@ namespace DLHWin.Editors
     {
         public Editor()
         {
-            this.Resize += OnResize;
             SetControls();
         }
 
@@ -24,14 +23,22 @@ namespace DLHWin.Editors
             Controls.Clear();
             Control[] controls = EditorControls();
 
-            for(int i = 0; i < controls.Count(); i++)
+            if(controls.Count() == 1)
             {
-                Control control = controls[i];
-                control.Width = this.Width;
-                control.Height = Convert.ToInt32(this.Height / controls.Count());
-                control.Location = new Point(0, i == 0 ? 0 : Controls[i-1].Bottom);
-                Controls.Add(control);
+                Controls.Add(controls[0]);
+                Controls[0].Dock = DockStyle.Fill;
+                return;
             }
+
+            SplitContainer bodyPanel = new SplitContainer() { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
+            
+            bodyPanel.Panel1.Controls.Add(controls[0]);
+            bodyPanel.Panel1.Controls[0].Dock = DockStyle.Fill;
+
+            bodyPanel.Panel2.Controls.Add(controls[1]);
+            bodyPanel.Panel2.Controls[0].Dock = DockStyle.Fill;
+
+            Controls.Add(bodyPanel);
         }
 
         void OnResize(object sender, EventArgs e)

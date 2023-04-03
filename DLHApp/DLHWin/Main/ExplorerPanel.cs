@@ -11,8 +11,6 @@ namespace DLHWin.Main
         public ExplorerPanel()
         {
             Dock = DockStyle.Fill;
-            //Width = 400;
-            //Controls.Add(Splitter);
             SetTreePanel();
         }
 
@@ -37,7 +35,6 @@ namespace DLHWin.Main
             Controls.Clear();
             Controls.Add(Tree = new ExplorerTreePanel(Project, filter));
             Tree.TreeSelectionChanged += OnTreeSelectionChanged;
-            //Controls.Add(Splitter);
         }
 
         public EventHandler<TreeViewEventArgs> TreeSelectionChanged { get; set; }
