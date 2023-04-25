@@ -23,6 +23,14 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
 
         protected override string[]? Images => new string[] { "Data Struct" };
 
+        protected override ContextMenuStrip Menu()
+        {
+            ProjectTreeNodeMenu output = new ProjectTreeNodeMenu();
+            output.AddButton("Delete Reference", DeleteReference);
+
+            return output;
+        }
+
         public override EditorCollection Editors()
         {
             string file = Directory.GetFiles(DirectoryItem.FullPath).FirstOrDefault(x => Path.GetFileNameWithoutExtension(Path.GetFileNameWithoutExtension(x)) == DirectoryItem.Name);
@@ -46,6 +54,15 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
             }
 
             return false;
+        }
+
+        void DeleteReference(object sender, EventArgs e)
+        {
+            if(MessageBox.Show("This will delete the reference, continue?", "Delete Reference", MessageBoxButtons.OKCancel) == DialogResult.OK)
+            {
+                Tree.DeleteNode(DirectoryItem);
+                Directory.Delete(DirectoryItem.FullPath, true);
+            }
         }
     }
 }

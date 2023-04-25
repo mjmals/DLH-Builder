@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model.DataStructReferences;
+using DLHWin.Editors.Dialogs;
 
 namespace DLHWin.ProjectTree.NodeTypes.DataStages
 {
@@ -18,9 +19,23 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStages
         {
             ProjectTreeNodeMenu output = (ProjectTreeNodeMenu)base.Menu();
 
-            output.InsertButton("Create Data Struct Reference", CreateStructReference, 0);
+            output.InsertButton("Create Linked Data Struct Reference", LinkStructReference, 0);
+            output.InsertButton("Create Unlinked Data Struct Reference", CreateStructReference, 1);
 
             return output;
+        }
+
+        void LinkStructReference(object sender, EventArgs e)
+        {
+            using (DataStructReferenceLinkDialog dialog = new DataStructReferenceLinkDialog(DirectoryItem.FullPath))
+            {
+                dialog.ShowDialog();
+
+                if(dialog.DialogResult == DialogResult.OK)
+                {
+                    Tree.RefreshTree();
+                }
+            }
         }
 
         void CreateStructReference(object sender, EventArgs e)

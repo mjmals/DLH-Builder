@@ -184,5 +184,15 @@ namespace DLHWin.ProjectTree
             ProjectTreeNode node = (ProjectTreeNode)e.Node;
             node.Rename(e);
         }
+
+        public void DeleteNode(ProjectDirectoryItem dirItem)
+        {
+            TreeNode node = Nodes.Find(dirItem.FullPath, true).FirstOrDefault();
+
+            if(node != null)
+            {
+                Nodes.Remove(node);
+            }
+        }
     }
 }
