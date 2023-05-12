@@ -60,6 +60,18 @@ namespace DLHApp.Model.DataStructImporters
             return output.ToArray();
         }
 
+        public virtual DataStruct[] GetDataStructs()
+        {
+            List<DataStruct> output = new List<DataStruct>();
+
+            foreach(var ds in SourceStructures)
+            {
+                output.Add(GetDataStruct(ds.Key));
+            }
+
+            return output.ToArray();
+        }
+
         protected virtual DataStruct GetDataStruct(string name)
         {
             DataStruct output = new DataStruct();
