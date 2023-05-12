@@ -86,7 +86,7 @@ namespace DLHApp.Model.DataStructReferences
             DataStage stg = ParentStage();
             output.Add("Stage", stg);
 
-            output.Add("RefPath", Path.GetDirectoryName(Path.GetDirectoryName(this.BasePath)).Replace(stg.SourcePath + @"\", ""));
+            output.Add("RefPath", Path.GetDirectoryName(this.BasePath).Replace(stg.SourcePath + @"\", ""));
 
             Dictionary<string, string> definitions = new Dictionary<string, string>();
             string defPath = Path.Combine(FolderPath, "Definitions");
