@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHApp.Model.Projects;
+using DLHApp.Templates;
 
 namespace DLHApp.Commands.Initialize
 {
@@ -37,6 +38,7 @@ namespace DLHApp.Commands.Initialize
             }
 
             Project.Initialize();
+            TemplateImporter.Run();
         }
     }
 }

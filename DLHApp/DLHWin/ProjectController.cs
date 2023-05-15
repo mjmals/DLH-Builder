@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHApp.Model.Projects;
+using DLHApp.Templates;
 
 namespace DLHWin
 {
@@ -40,6 +41,13 @@ namespace DLHWin
             };
 
             return output;
+        }
+
+        public static void Create(string fileName)
+        {
+            Environment.CurrentDirectory = fileName;
+            Initialize();
+            TemplateImporter.Run();
         }
     }
 }

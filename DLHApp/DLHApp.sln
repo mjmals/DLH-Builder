@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHApp.Model", "DLHApp.Mode
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHWin", "DLHWin\DLHWin.csproj", "{20429A22-450F-4F69-B66C-533481CC2853}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHApp.Build", "DLHApp.Build\DLHApp.Build.csproj", "{89D1DA72-4E1A-41C2-9909-2429AF5A46D9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DLHApp.Build", "DLHApp.Build\DLHApp.Build.csproj", "{89D1DA72-4E1A-41C2-9909-2429AF5A46D9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DLHApp.Templates", "DLHApp.Templates\DLHApp.Templates.csproj", "{77D4CF8A-A4BB-46C9-AA92-3A70535ABB57}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{89D1DA72-4E1A-41C2-9909-2429AF5A46D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89D1DA72-4E1A-41C2-9909-2429AF5A46D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{89D1DA72-4E1A-41C2-9909-2429AF5A46D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77D4CF8A-A4BB-46C9-AA92-3A70535ABB57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77D4CF8A-A4BB-46C9-AA92-3A70535ABB57}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77D4CF8A-A4BB-46C9-AA92-3A70535ABB57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77D4CF8A-A4BB-46C9-AA92-3A70535ABB57}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

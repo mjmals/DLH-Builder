@@ -13,8 +13,13 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="WindowsAPICodePack" Version="7.0.4" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DLHApp.Commands\DLHApp.Commands.csproj" />
     <ProjectReference Include="..\DLHApp.Model\DLHApp.Model.csproj" />
+    <ProjectReference Include="..\DLHApp.Templates\DLHApp.Templates.csproj" />
   </ItemGroup>
 
   <ItemGroup>

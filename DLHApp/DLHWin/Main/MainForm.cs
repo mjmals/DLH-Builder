@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHWin.ProjectTree;
+using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DLHWin.Main
 {
@@ -65,6 +66,7 @@ namespace DLHWin.Main
             Menu.SetMenuItemClick(@"Terminal\Hide Terminal", HideTerminal);
             Menu.SetMenuItemClick(@"Terminal\Show Terminal", ShowTerminal);
 
+            ToolBar.SetToolbarItemClick("NewProject", NewProject);
             ToolBar.SetToolbarItemClick("OpenProject", OpenProject);
             ToolBar.SetToolbarItemClick("Refresh", RefreshProject);
             ToolBar.SetToolbarItemClick("ApplyFilter", FilterProject);
@@ -72,7 +74,16 @@ namespace DLHWin.Main
 
         void NewProject(object? sender, EventArgs e)
         {
-            MessageBox.Show("New Project Selected");
+            using (CommonOpenFileDialog dialog = new CommonOpenFileDialog())
+            {
+                dialog.IsFolderPicker = true;
+                
+                if(dialog.ShowDialog() == CommonFileDialogResult.Ok)
+                {
+                    ProjectController.Create(dialog.FileName);
+                    LoadProject(Path.Combine(dialog.FileName, "project.json"));
+                }
+            }
         }
 
         void OpenProject(object? sender, EventArgs e)

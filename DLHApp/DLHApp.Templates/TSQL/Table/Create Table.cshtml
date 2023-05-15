@@ -1,0 +1,47 @@
+﻿@* Extract model item namespaces relevant to this template *@
+@using DLHApp.Model.DataStructs
+@using DLHApp.Model.DataStages
+@using DLHApp.Model.DataStructReferences
+@using DLHApp.Model.DataTypes
+@using DLHApp.Model.DataTypes.Converters
+
+@* Extract model items from the object model passed to this template *@
+@{
+    DataStructReference dsr = (DataStructReference)Model["Main"];
+    DataStruct ds = (DataStruct)Model["DataStruct"];
+    SqlServerDataStage stage = (SqlServerDataStage)Model["Stage"];
+}
+
+@* Define functions for use in template output *@
+@{
+    // returns a concatenated string used to populate the column section of the CREATE TABLE statement
+    string GetColumns()
+    {
+        List<string> output = new List<string>();
+
+        foreach(DataStructFieldReference fldRef in dsr.Fields)
+        {
+            DataStructField field = ds.Fields.FirstOrDefault(x => x.Name == fldRef.SourceField);
+
+            if(field == null)
+            {
+                continue;
+            }
+
+            DataTypeConverter dtConverter = DataTypeConverter.GetConverter(field.DataType, DataTypeConverterType.Sql);
+
+            string dataTypeName = dtConverter.Export();
+            string nullability = field.IsNullable : "NULL" ? "NOT NULL";
+            output.Add(string.Format("[{0}] {1} {2}", fldRef.OutputName, dataTypeName, nullability));
+        }
+
+        return string.Join(",\n\t", output);
+    }
+}
+
+
+@* Main template output body *@
+CREATE TABLE [@stage.SchemaName].[@dsr.Name]
+(
+    @GetColumns()
+);

@@ -7,13 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.2" />
+    <None Remove="TSQL\Table\Create Table.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DLHApp.Build\DLHApp.Build.csproj" />
+    <EmbeddedResource Include="TSQL\Table\Create Table.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\DLHApp.Model\DLHApp.Model.csproj" />
-    <ProjectReference Include="..\DLHApp.Templates\DLHApp.Templates.csproj" />
   </ItemGroup>
 
 </Project>
