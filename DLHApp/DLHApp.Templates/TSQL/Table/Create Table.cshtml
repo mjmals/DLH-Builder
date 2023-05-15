@@ -40,6 +40,10 @@
 }
 
 
+@* Define file name for the output of the template if exported manually or via the build process *@
+TemplateHeaderFileName: @string.Format("{0}.json", dsName)
+
+
 @* Main template output body *@
 CREATE TABLE [@stage.SchemaName].[@dsr.Name]
 (
