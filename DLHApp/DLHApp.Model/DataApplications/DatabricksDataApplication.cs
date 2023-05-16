@@ -14,7 +14,10 @@ namespace DLHApp.Model.DataApplications
 
         public static DatabricksDataApplication New()
         {
-            return new DatabricksDataApplication();
+            return new DatabricksDataApplication()
+            {
+                Name = "New Databricks Data Application"
+            };
         }
     }
 }
