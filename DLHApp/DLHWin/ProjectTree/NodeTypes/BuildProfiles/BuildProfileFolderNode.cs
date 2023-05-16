@@ -18,7 +18,7 @@ namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
         {
             ProjectTreeNodeMenu output = (ProjectTreeNodeMenu)base.Menu();
 
-            output.AddButton("Add Build Profile", AddProfile);
+            output.InsertButton("Add Build Profile", AddProfile, 0);
 
             return output;
         }

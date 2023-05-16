@@ -13,7 +13,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructs
     {
         public DataStructNode(ProjectDirectoryItem directoryItem) : base(directoryItem)
         {
-            Nodes.Add(new DataStructFieldsFolderNode(directoryItem));
+            //Nodes.Add(new DataStructFieldsFolderNode(directoryItem));
         }
 
         protected override bool AllowChild => false;
