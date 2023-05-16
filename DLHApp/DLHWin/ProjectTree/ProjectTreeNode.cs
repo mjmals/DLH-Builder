@@ -20,6 +20,7 @@ namespace DLHWin.ProjectTree
             SelectedImageKey = Images[0];
 
             directoryItem.AllowChild = AllowChild;
+            DirectoryItem.ParentChanged += DirectoryParentChanged;
         }
 
         public ProjectDirectoryItem DirectoryItem { get; set; }
@@ -151,24 +152,47 @@ namespace DLHWin.ProjectTree
             }
 
             string newName = e.Label;
+            string oldPath = string.Empty;
 
             switch(DirectoryItem.Type)
             {
                 case ProjectDirectoryItemType.Folder:
                     string dirPath = DirectoryItem.FullPath;
+                    oldPath = DirectoryItem.FullPath;
+                    
+                    string folderFile = Directory.GetFiles(DirectoryItem.FullPath).FirstOrDefault(x => Path.GetFileNameWithoutExtension(x).StartsWith(DirectoryItem.Name));
+                    
+                    if(folderFile != null)
+                    {
+                        File.Move(folderFile, Path.Combine(DirectoryItem.FullPath, newName + folderFile.Substring(folderFile.IndexOf("."))));
+                    }
+                    
                     DirectoryItem.Name = newName;
+
+
                     string newPath = DirectoryItem.FullPath;
                     Directory.Move(dirPath, newPath);
                     break;
                 case ProjectDirectoryItemType.File:
                     string filePath = DirectoryItem.FullPath + DirectoryItem.Extension;
+                    oldPath = DirectoryItem.FullPath;
                     DirectoryItem.Name = newName;
                     string newFilePath = DirectoryItem.FullPath + DirectoryItem.Extension;
                     File.Move(filePath, newFilePath);
                     break;
             }
 
+            foreach(ProjectDirectoryItem childItem in Tree.Project.Directory.Where(x => x.Parent == oldPath))
+            {
+                childItem.Parent = DirectoryItem.FullPath;
+            }
+
             Text = newName;
+        }
+
+        void DirectoryParentChanged(object sender, ProjectDirectoryItemParentEventArgs e)
+        {
+            Name = DirectoryItem.FullPath;
         }
     }
 }

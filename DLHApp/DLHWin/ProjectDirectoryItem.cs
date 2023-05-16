@@ -12,7 +12,18 @@ namespace DLHWin
 
         public string? Extension { get; set; }
 
-        public string Parent { get; set; }
+        public string Parent 
+        { 
+            get => _parent; 
+            set
+            {
+                string oldPath = _parent;
+                _parent = value;
+                OnParentChanged(oldPath, value);
+            }
+        }
+
+        private string _parent { get; set; }
 
         public string FullPath => Path.Combine(string.IsNullOrEmpty(Parent) ? "" : Parent, Name);
 
@@ -24,5 +35,25 @@ namespace DLHWin
         {
             return FullPath;
         }
+
+        void OnParentChanged(string oldPath, string newPath)
+        {
+            ParentChanged?.Invoke(this, new ProjectDirectoryItemParentEventArgs(oldPath, newPath));
+        }
+
+        public EventHandler<ProjectDirectoryItemParentEventArgs> ParentChanged;
+    }
+
+    public class ProjectDirectoryItemParentEventArgs : EventArgs
+    {
+        public ProjectDirectoryItemParentEventArgs(string oldPath, string newPath)
+        {
+            OldPath = OldPath;
+            NewPath = NewPath;
+        }
+
+        public string OldPath { get; set; }
+
+        public string NewPath { get; set; }
     }
 }
