@@ -22,6 +22,39 @@ namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
             return new EditorCollection(new ModelItemObjectEditor(this.Name, typeof(BuildProfile)));
         }
 
+        protected override ContextMenuStrip Menu()
+        {
+            ProjectTreeNodeMenu output = new ProjectTreeNodeMenu();
+
+            output.AddButton("Run Build Profile", Build);
+            output.AddButton("Delete", DeleteProfile);
+
+            return output;
+        }
+
+        void Build(object sender, EventArgs e)
+        {
+
+        }
+
+        void DeleteProfile(object sender, EventArgs e)
+        {
+            File.Delete(DirectoryItem.FullPath + DirectoryItem.Extension);
+            File.Delete(DirectoryItem.FullPath + ".local" + DirectoryItem.Extension);
+
+            if(Tree.Project.Directory.Contains(DirectoryItem))
+            {
+                Tree.Project.Directory.Remove(DirectoryItem);
+            }
+
+            if(Tree.Project.Directory.Exists(x => x.FullPath == DirectoryItem.FullPath + ".local"))
+            {
+                Tree.Project.Directory.Remove(Tree.Project.Directory.First(x => x.FullPath == DirectoryItem.FullPath + ".local"));
+            }
+
+            Tree.DeleteNode(DirectoryItem);
+        }
+
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
         {
             if(directoryItem.Type == ProjectDirectoryItemType.File && directoryItem.FullPath.StartsWith("Build Profiles") && !directoryItem.FullPath.EndsWith(".local"))
@@ -30,6 +63,23 @@ namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
             }
 
             return false;
+        }
+
+        public override void Rename(NodeLabelEditEventArgs e)
+        {
+            string oldName = Text;
+            string oldFilePath = (DirectoryItem.FullPath + DirectoryItem.Extension).Replace(DirectoryItem.Extension, ".local" + DirectoryItem.Extension);
+
+            base.Rename(e);
+
+            if(!File.Exists(oldFilePath))
+            {
+                return;
+            }
+
+            string newFilePath = (DirectoryItem.FullPath + DirectoryItem.Extension).Replace(DirectoryItem.Extension, ".local" + DirectoryItem.Extension);
+
+            File.Move(oldFilePath, newFilePath);
         }
     }
 }

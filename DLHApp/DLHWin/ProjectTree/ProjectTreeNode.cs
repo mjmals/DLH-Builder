@@ -169,7 +169,6 @@ namespace DLHWin.ProjectTree
                     
                     DirectoryItem.Name = newName;
 
-
                     string newPath = DirectoryItem.FullPath;
                     Directory.Move(dirPath, newPath);
                     break;
@@ -188,6 +187,7 @@ namespace DLHWin.ProjectTree
             }
 
             Text = newName;
+            Name = DirectoryItem.FullPath;
         }
 
         void DirectoryParentChanged(object sender, ProjectDirectoryItemParentEventArgs e)
