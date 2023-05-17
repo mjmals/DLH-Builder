@@ -28,24 +28,24 @@
                 continue;
             }
 
-            DataTypeConverter dtConverter = DataTypeConverter.GetConverter(field.DataType, DataTypeConverterType.Sql);
+            DataTypeConverter dtConverter = (DataTypeConverter)DataTypeConverter.GetConverter(field.DataType, DataTypeConverterType.Sql);
 
-            string dataTypeName = dtConverter.Export();
-            string nullability = field.IsNullable : "NULL" ? "NOT NULL";
+            string dataTypeName = dtConverter.Export(field.DataType);
+            string nullability = field.IsNullable ? "NULL" : "NOT NULL";
             output.Add(string.Format("[{0}] {1} {2}", fldRef.OutputName, dataTypeName, nullability));
         }
 
-        return string.Join(",\n\t", output);
+        return "\t" + string.Join(",\n\t", output);
     }
 }
 
 
 @* Define file name for the output of the template if exported manually or via the build process *@
-TemplateHeaderFileName: @string.Format("{0}.json", dsName)
+TemplateHeaderFileName: @string.Format("{0}.json", dsr.Name)
 
 
 @* Main template output body *@
 CREATE TABLE [@stage.SchemaName].[@dsr.Name]
 (
-    @GetColumns()
+@GetColumns()
 );
