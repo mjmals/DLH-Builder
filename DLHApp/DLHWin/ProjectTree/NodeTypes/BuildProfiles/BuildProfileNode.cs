@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model.BuildProfiles;
+using DLHWin.Editors.Dialogs;
 
 namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
 {
@@ -34,7 +35,10 @@ namespace DLHWin.ProjectTree.NodeTypes.BuildProfiles
 
         void Build(object sender, EventArgs e)
         {
-
+            using (BuildProfileRunDialog dialog = new BuildProfileRunDialog(DirectoryItem.FullPath.Substring(DirectoryItem.FullPath.IndexOf("Build Profiles"))))
+            {
+                dialog.ShowDialog();
+            }
         }
 
         void DeleteProfile(object sender, EventArgs e)

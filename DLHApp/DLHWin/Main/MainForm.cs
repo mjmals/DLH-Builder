@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHWin.ProjectTree;
+using DLHWin.Editors.Dialogs;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DLHWin.Main
@@ -68,6 +69,7 @@ namespace DLHWin.Main
 
             ToolBar.SetToolbarItemClick("NewProject", NewProject);
             ToolBar.SetToolbarItemClick("OpenProject", OpenProject);
+            ToolBar.SetToolbarItemClick("Build", RunBuild);
             ToolBar.SetToolbarItemClick("Refresh", RefreshProject);
             ToolBar.SetToolbarItemClick("ApplyFilter", FilterProject);
         }
@@ -137,6 +139,14 @@ namespace DLHWin.Main
         {
             string filter = ToolBar.GetTextboxValue("FilterText");
             ExplorerPanel.ApplyFilter(filter);
+        }
+
+        void RunBuild(object sender, EventArgs e)
+        {
+            using (BuildProfileRunDialog dialog = new BuildProfileRunDialog())
+            {
+                dialog.ShowDialog();
+            }
         }
     }
 
