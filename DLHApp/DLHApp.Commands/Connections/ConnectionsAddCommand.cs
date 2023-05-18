@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DLHApp.Commands.Connections
 {
-    public class ConnectionsAdd : Command, IConnectionsCommand, ICommand
+    public class ConnectionsAddCommand : Command, IConnectionsCommand, ICommand
     {
         public override string[] Prompt => new string[] { "add" };
 

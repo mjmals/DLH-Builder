@@ -8,7 +8,7 @@ using DLHApp.Model.Connections;
 
 namespace DLHApp.Commands.Connections
 {
-    public class ConnectionsAddSql : Command, ICommand, IConnectionsAddCommand
+    public class ConnectionsAddSqlCommand : Command, ICommand, IConnectionsAddCommand
     {
         public override string[] Prompt => new string[] { "sql" };
 
