@@ -28,6 +28,10 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
             addSqlBtn.Click += AddSqlConnection;
             addBtn.DropDownItems.Add(addSqlBtn);
 
+            ToolStripMenuItem addWfsBtn = new ToolStripMenuItem() { Text = "Windows File Server" };
+            addWfsBtn.Click += AddWfsConnection;
+            addBtn.DropDownItems.Add(addWfsBtn);
+
             return output;
         }
 
@@ -38,6 +42,19 @@ namespace DLHWin.ProjectTree.NodeTypes.Connections
                 if(dialog.ShowDialog() == DialogResult.OK)
                 {
                     SqlServerConnection connection = dialog.Connection;
+                    connection.Save();
+                    Tree.RefreshTree();
+                }
+            }
+        }
+
+        void AddWfsConnection(object sender, EventArgs e)
+        {
+            using (WindowsFileServerConnectionDialog dialog = new WindowsFileServerConnectionDialog())
+            {
+                if(dialog.ShowDialog() == DialogResult.OK)
+                {
+                    WindowsFileServerConnection connection = dialog.Connection;
                     connection.Save();
                     Tree.RefreshTree();
                 }
