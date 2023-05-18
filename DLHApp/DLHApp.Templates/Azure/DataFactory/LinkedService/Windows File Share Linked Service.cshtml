@@ -1,0 +1,36 @@
+﻿@* Extract model item namespaces relevant to this template *@
+@using DLHApp.Model.Connections
+
+
+@* Extract model items from the object model passed to this template *@
+@{
+    WindowsFileServerConnection conn = (WindowsFileServerConnection)Model["Main"];
+}
+
+
+@* Define file name for the output of the template if exported manually or via the build process *@
+TemplateHeaderFileName: @string.Format("{0}.json", conn.Name)
+
+{
+    "name": "@conn.Name",
+    "properties": {
+        "annotations": [],
+        "type": "FileServer",
+        "typeProperties": {
+            "host": "@conn.FullServerPath",
+            "userId": "@conn.Username",
+            "password": {
+                "type": "AzureKeyVaultSecret",
+                "store": {
+                    "referenceName": "",
+                    "type": "LinkedServiceReference"
+                },
+                "secretName": "@(conn.Name)_Password"
+            }
+        },
+        "connectVia": {
+            "referenceName": "AutoResolveIntegrationRuntime",
+            "type": "IntegrationRuntimeReference"
+        }
+    }
+}

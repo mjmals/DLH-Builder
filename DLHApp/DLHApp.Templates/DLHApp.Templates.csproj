@@ -7,11 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="TSQL\Table\Create Table.cshtml" />
+    <None Remove="Azure\DataFactory\LinkedService\Windows File Share Linked Service.cshtml" />
+    <None Remove="SqlServer\Table\Create Table.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="TSQL\Table\Create Table.cshtml" />
+    <EmbeddedResource Include="Azure\DataFactory\LinkedService\Windows File Share Linked Service.cshtml" />
+    <EmbeddedResource Include="SqlServer\Table\Create Table.cshtml" />
   </ItemGroup>
 
   <ItemGroup>
