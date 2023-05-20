@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 
 namespace DLHWin.Editors.SyntaxHighlighters
 {
-    internal class CSharpSyntaxHighlighter : SyntaxHighlighter
+    internal class PythonSyntaxHighlighter : SyntaxHighlighter
     {
         protected override Dictionary<string, Color> Tokens()
         {
             Dictionary<string, Color> output = new Dictionary<string, Color>();
 
-            output.Add("using", Color.Blue);
-            output.Add("string", Color.Blue);
-            output.Add("var", Color.Blue);
-            output.Add("@", Color.DarkGoldenrod);
-            output.Add("\"", Color.OrangeRed);
+            output.Add("for ", Color.Purple);
+            output.Add(" in ", Color.Purple);
+            output.Add("while", Color.Purple);
+            output.Add("return", Color.Purple);
+            output.Add("from", Color.Purple);
+            output.Add("import", Color.Purple);
 
             return output;
         }
@@ -25,8 +26,9 @@ namespace DLHWin.Editors.SyntaxHighlighters
         {
             List<Block> output = new List<Block>();
 
+            //output.Add(new Block("'", "'", Color.OrangeRed));
             output.Add(new Block("\"", "\"", Color.OrangeRed));
-
+            output.Add(new Block("#", "\n", Color.Green));
 
             return output;
         }

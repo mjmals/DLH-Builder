@@ -7,6 +7,7 @@ using DLHApp.Model;
 using DLHApp.Build.TemplateRenderers;
 using DLHWin.Styles;
 using DLHWin.Editors.Dialogs;
+using DLHWin.Editors.SyntaxHighlighters;
 
 namespace DLHWin.Editors
 {
@@ -153,6 +154,7 @@ namespace DLHWin.Editors
                 ScriptText = renderer.Render(templateFile, templateItems, out outputName);
                 ScriptViewer.Text = ScriptText;
                 ExportFileName = outputName;
+                HighlightText(ScriptViewer);
             }
             catch (Exception e)
             {
@@ -261,6 +263,33 @@ namespace DLHWin.Editors
                     }
                 }
             }
+        }
+
+        void HighlightText(RichTextBox textBox)
+        {
+            SyntaxHighlighter highlighter = null;
+
+            switch (Path.GetExtension(ExportFileName))
+            {
+                case ".sql":
+                    highlighter = new SqlSyntaxHighlighter();
+                    break;
+                case ".py":
+                    highlighter = new PythonSyntaxHighlighter();
+                    break;
+                case ".json":
+                    highlighter = new JsonSyntaxHighlighter();
+                    break;
+                default:
+                    break;
+            }
+
+            if(highlighter == null)
+            {
+                return;
+            }
+
+            highlighter.Highlight(textBox);
         }
     }
 }
