@@ -34,7 +34,7 @@ namespace DLHWin.Editors.SyntaxHighlighters
             List<Block> output = new List<Block>();
 
             output.Add(new Block("'", "'", Color.OrangeRed));
-            output.Add(new Block("--", Environment.NewLine, Color.Green));
+            output.Add(new Block("--", "\n", Color.Green));
             output.Add(new Block("/*", "*/", Color.Green));
 
             return output;
