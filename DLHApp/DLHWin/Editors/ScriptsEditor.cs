@@ -168,7 +168,12 @@ namespace DLHWin.Editors
         {
             ScriptEditor.TextChanged -= TemplateEdited;
             ScriptEditor.Clear();
-            ScriptEditor.Text = File.ReadAllText(Path.Combine("Templates", GetTemplateFile()));
+            int cursorPos = ScriptEditor.SelectionStart;
+            ScriptEditor.Text = File.ReadAllText(Path.Combine("Templates", GetTemplateFile()), Encoding.ASCII);
+            ScriptEditor.SelectAll();
+            ScriptEditor.SelectionTabs = new int[] { 10, 20, 30, 40 };
+            ScriptEditor.SelectionStart = cursorPos;
+            ScriptEditor.SelectionLength = 0;
             ScriptEditor.TextChanged += TemplateEdited;
         }
 
