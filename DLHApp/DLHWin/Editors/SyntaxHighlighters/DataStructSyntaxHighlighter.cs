@@ -10,6 +10,15 @@ namespace DLHWin.Editors.SyntaxHighlighters
 {
     internal class DataStructSyntaxHighlighter : SyntaxHighlighter
     {
+        protected override List<Block> Blocks()
+        {
+            List<Block> output = new List<Block>();
+
+            output.Add(new Block("\"", "\"", Color.OrangeRed));
+
+            return output;
+        }
+
         protected override Dictionary<string, Color> Tokens()
         {
             Dictionary<string, Color> output = new Dictionary<string, Color>();

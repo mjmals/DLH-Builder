@@ -55,6 +55,25 @@ namespace DLHApp.Model.DataStructs
 
             output += "\n]);";
 
+
+            foreach(DataStructField field in dataStruct.Fields)
+            {
+                if(field.Metadata == null)
+                {
+                    continue;
+                }
+
+                foreach(var metadata in field.Metadata)
+                {
+                    if(output.TakeLast(3) == "]);")
+                    {
+                        output += "\n";
+                    }
+
+                    output += string.Format("\nstruct.Fields[\"{0}\"].Metadata.Add(\"{1}\", \"{2}\");", field.Name, metadata.Key, metadata.Value);
+                }
+            }
+
             return output;
         }
     }

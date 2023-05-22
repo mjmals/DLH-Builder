@@ -52,6 +52,7 @@ namespace DLHApp.Model.DataStructs
             ParseFields();
             ParseRelationships();
             ParseConfig();
+            ParseFieldMetadata();
         }
 
         void ParseFields()
@@ -135,6 +136,36 @@ namespace DLHApp.Model.DataStructs
                         OutputStruct.SourceItemName = configData[1];
                         break;
                 }
+            }
+        }
+
+        void ParseFieldMetadata()
+        {
+            string[] metadataLines = StructTextArray.Where(x => x.StartsWith("struct.Fields")).ToArray();
+
+            foreach (string line in metadataLines)
+            {
+                try
+                {
+                    int fieldNameStartPos = line.IndexOf("Fields[") + 8;
+                    int fieldNameEndPos = line.IndexOf("]", fieldNameStartPos + 1) - 1;
+                    string fieldName = line.Substring(fieldNameStartPos, fieldNameEndPos - fieldNameStartPos);
+
+                    int metadataStartPos = line.IndexOf("(") + 1;
+                    int metadataEndPos = line.IndexOf(")", metadataStartPos + 1);
+                    string[] metadata = line.Substring(metadataStartPos, metadataEndPos - metadataStartPos).Replace("\"", "").Split(",");
+
+                    DataStructField field = OutputStruct.Fields.FirstOrDefault(x => x.Name.ToLower() == fieldName.ToLower());
+
+                    if(field != null)
+                    {
+                        if (!field.Metadata.ContainsKey(metadata[0]))
+                        {
+                            field.Metadata.Add(metadata[0], metadata[1]);
+                        }
+                    }
+                }
+                catch {  }
             }
         }
     }

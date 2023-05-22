@@ -13,6 +13,8 @@ namespace DLHWin.Grids.DataStructs
         {
             DataStruct = dataStruct;
             RowValues = dataStruct.Fields;
+
+            AddMetadata();
         }
 
         public DataStruct DataStruct { get; set; }
@@ -24,5 +26,33 @@ namespace DLHWin.Grids.DataStructs
             new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell)),
             new EditorGridColumn("Key Types", "KeyTypes", typeof(DataStructEditorGridKeyTypeCell))
         };
+
+        void AddMetadata()
+        {
+            foreach (DataStructField field in DataStruct.Fields)
+            {
+                if (field.Metadata != null)
+                {
+                    foreach (var metadata in field.Metadata)
+                    {
+                        AddMetadataColumn(metadata.Key);
+                        int columnIndex = Columns[metadata.Key].Index;
+                        Rows[DataStruct.Fields.IndexOf(field)].Cells[columnIndex].Value = metadata.Value;
+                    }
+                }
+            }
+        }
+
+
+        void AddMetadataColumn(string name)
+        {
+            if (Columns.Contains(name))
+            {
+                return;
+            }
+
+            Columns.Add(name, name);
+        }
+
     }
 }
