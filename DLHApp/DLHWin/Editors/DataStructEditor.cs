@@ -25,8 +25,8 @@ namespace DLHWin.Editors
             ScriptPanel.Controls.Add(ScriptBox);
             ScriptPanel.Controls.Add(ScriptToolBar());
 
-            ScriptBox.Text = File.ReadAllText(DataStructPath + ".datastruct");
-            new DataStructSyntaxHighlighter().Highlight(ScriptBox);
+            LoadScriptBox();
+            StructGrid.CellEndEdit += GridCellUpdated;
         }
 
         string DataStructPath { get; set; }
@@ -103,6 +103,19 @@ namespace DLHWin.Editors
             }
 
             return output;
+        }
+
+        void LoadScriptBox()
+        {
+            ScriptBox.Text = File.ReadAllText(DataStructPath + ".datastruct");
+            new DataStructSyntaxHighlighter().Highlight(ScriptBox);
+        }
+
+
+        void GridCellUpdated(object sender, EventArgs e)
+        {
+            DataStruct.Save();
+            LoadScriptBox();
         }
     }
 }

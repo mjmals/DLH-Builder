@@ -69,7 +69,7 @@ namespace DLHApp.Model.DataStructs
             string filePath = Path.Combine(name.StartsWith(basePath) ? "" : basePath, name + (name.EndsWith(".datastruct") ? "" : ".datastruct"));
             string fileContent = File.ReadAllText(filePath);
 
-            return new DataStruct(fileContent) { Name = Path.GetFileNameWithoutExtension(filePath) };
+            return new DataStruct(fileContent) { Name = Path.GetFileNameWithoutExtension(filePath), FolderPath = filePath.Replace(basePath + @"\", "").Replace(@"\" + Path.GetFileName(filePath), "") };
         }
     }
 }

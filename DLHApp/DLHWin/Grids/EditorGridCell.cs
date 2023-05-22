@@ -18,5 +18,11 @@ namespace DLHWin.Grids
         {
             Value = value;
         }
+
+        public virtual void UpdateBaseProperty(object baseObject)
+        {
+            baseObject.GetType().GetProperty(BaseProperty).SetValue(baseObject, this.Value);
+        }
+
     }
 }

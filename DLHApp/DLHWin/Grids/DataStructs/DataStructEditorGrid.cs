@@ -17,7 +17,7 @@ namespace DLHWin.Grids.DataStructs
             AddMetadata();
         }
 
-        public DataStruct DataStruct { get; set; }
+        public DataStruct DataStruct { get => (DataStruct)Tag; set => Tag = value; }
 
         protected override EditorGridColumnCollection GridColumns => new EditorGridColumnCollection()
         {
@@ -38,6 +38,10 @@ namespace DLHWin.Grids.DataStructs
                         AddMetadataColumn(metadata.Key);
                         int columnIndex = Columns[metadata.Key].Index;
                         Rows[DataStruct.Fields.IndexOf(field)].Cells[columnIndex].Value = metadata.Value;
+                        DataStructEditorGridFieldMetadataCell cell = new DataStructEditorGridFieldMetadataCell();
+                        cell.BaseProperty = metadata.Key;
+                        cell.SetValue(metadata.Value);
+                        Rows[DataStruct.Fields.IndexOf(field)].Cells[columnIndex].Tag = cell;
                     }
                 }
             }
@@ -53,6 +57,5 @@ namespace DLHWin.Grids.DataStructs
 
             Columns.Add(name, name);
         }
-
     }
 }

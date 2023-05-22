@@ -20,6 +20,8 @@ namespace DLHWin.Grids
                 col.HeaderText = column.Name;
                 Columns.Add(col);
             }
+
+            CellEndEdit += CellUpdated;
         }
 
         protected virtual object RowValues
@@ -63,6 +65,13 @@ namespace DLHWin.Grids
 
                 Rows.Add(row);
             }
+        }
+
+        void CellUpdated(object sender, DataGridViewCellEventArgs e)
+        {
+            EditorGridCell cell = (EditorGridCell)Rows[e.RowIndex].Cells[e.ColumnIndex].Tag;
+            cell.SetValue(Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
+            cell.UpdateBaseProperty(Rows[e.RowIndex].Tag);
         }
     }
 }

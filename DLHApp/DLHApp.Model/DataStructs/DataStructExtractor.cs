@@ -65,7 +65,7 @@ namespace DLHApp.Model.DataStructs
 
                 foreach(var metadata in field.Metadata)
                 {
-                    if(output.TakeLast(3) == "]);")
+                    if(output.EndsWith("]);"))
                     {
                         output += "\n";
                     }
