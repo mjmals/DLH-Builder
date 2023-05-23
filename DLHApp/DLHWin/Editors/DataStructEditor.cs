@@ -71,6 +71,7 @@ namespace DLHWin.Editors
             ToolStripButton updateBtn = new ToolStripButton();
             updateBtn.ImageKey = "Run";
             updateBtn.Text = "Update from Script";
+            updateBtn.Click += UpdateFromScript;
             output.Items.Add(updateBtn);
 
             return output;
@@ -142,6 +143,19 @@ namespace DLHWin.Editors
                     StructGrid.AddMetadataColumn(dialog.ColumnName);
                 }
             }
+        }
+
+        void UpdateFromScript(object sender, EventArgs e)
+        {
+            string folderPath = DataStruct.FolderPath;
+            string structName = DataStruct.Name;
+            DataStruct = new DataStruct(ScriptBox.Text);
+            DataStruct.Name = structName;
+            DataStruct.FolderPath = folderPath;
+            DataStruct.Save();
+
+            StructGrid.DataStruct = DataStruct;
+            StructGrid.Reload();
         }
     }
 }

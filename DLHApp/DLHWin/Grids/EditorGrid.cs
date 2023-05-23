@@ -12,17 +12,28 @@ namespace DLHWin.Grids
         public EditorGrid()
         {
             Dock = DockStyle.Fill;
+            Load();
+            CellEndEdit += CellUpdated;
+        }
 
-            foreach(EditorGridColumn column in GridColumns)
+        protected virtual void Load()
+        {
+            Columns.Clear();
+
+            foreach (EditorGridColumn column in GridColumns)
             {
                 DataGridViewColumn col = column.GetBaseColumn();
                 col.Name = column.Name;
                 col.HeaderText = column.Name;
                 Columns.Add(col);
             }
-
-            CellEndEdit += CellUpdated;
         }
+
+        public virtual void Reload()
+        {
+            Load();
+        }
+
 
         protected virtual object RowValues
         {

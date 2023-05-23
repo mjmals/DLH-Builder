@@ -19,6 +19,13 @@ namespace DLHWin.Grids.DataStructs
 
         public DataStruct DataStruct { get => (DataStruct)Tag; set => Tag = value; }
 
+        public override void Reload()
+        {
+            base.Refresh();
+            RowValues = DataStruct.Fields;
+            AddMetadata();
+        }
+
         protected override EditorGridColumnCollection GridColumns => new EditorGridColumnCollection()
         {
             new EditorGridColumn("Name", "Name", typeof(EditorGridTextCell)),
