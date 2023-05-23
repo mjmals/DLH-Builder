@@ -130,8 +130,16 @@ namespace DLHWin.Editors
 
         void GridCellUpdated(object sender, EventArgs e)
         {
-            DataStruct.Save();
-            LoadScriptBox();
+            try
+            {
+                DataStruct.Save();
+                LoadScriptBox();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to save Data Struct");
+                return;
+            }
         }
 
         void AddMetadataColumn(object sender, EventArgs e)

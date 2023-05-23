@@ -29,7 +29,7 @@ namespace DLHWin.Grids.DataStructs
         protected override EditorGridColumnCollection GridColumns => new EditorGridColumnCollection()
         {
             new EditorGridColumn("Name", "Name", typeof(EditorGridTextCell)),
-            new EditorGridColumn("Data Type", "DataType", typeof(EditorGridTextCell)),
+            new EditorGridColumn("Data Type", "DataType", typeof(DataStructEditorGridDataTypeCell)),
             new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell)),
             new EditorGridColumn("Key Types", "KeyTypes", typeof(DataStructEditorGridKeyTypeCell))
         };
