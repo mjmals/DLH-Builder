@@ -63,13 +63,10 @@ namespace DLHApp.Model.DataStructs
                     continue;
                 }
 
+                output += "\n";
+
                 foreach(var metadata in field.Metadata)
                 {
-                    if(output.EndsWith("]);"))
-                    {
-                        output += "\n";
-                    }
-
                     output += string.Format("\nstruct.Fields[\"{0}\"].Metadata.Add(\"{1}\", \"{2}\");", field.Name, metadata.Key, metadata.Value);
                 }
             }

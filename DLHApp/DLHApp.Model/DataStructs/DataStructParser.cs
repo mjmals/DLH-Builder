@@ -159,9 +159,14 @@ namespace DLHApp.Model.DataStructs
 
                     if(field != null)
                     {
+                        if(field.Metadata == null)
+                        {
+                            continue;
+                        }
+
                         if (!field.Metadata.ContainsKey(metadata[0]))
                         {
-                            field.Metadata.Add(metadata[0], metadata[1]);
+                            field.Metadata.Add(metadata[0], metadata[1].Trim());
                         }
                     }
                 }

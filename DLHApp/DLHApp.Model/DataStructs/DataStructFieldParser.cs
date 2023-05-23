@@ -103,6 +103,9 @@ namespace DLHApp.Model.DataStructs
             int metadataEndPos = -1;
             string metadataVal = string.Empty;
 
+            Field.KeyTypes = new DataStructFieldKeyTypeCollection();
+            Field.Metadata = new DataStructFieldMetadataCollection();
+
             for (int i = 0; i < StructFieldConfig.Length; i++)
             {
                 if (StructFieldConfig[i].StartsWith("{"))
@@ -173,9 +176,6 @@ namespace DLHApp.Model.DataStructs
             {
                 return;
             }
-
-            Field.KeyTypes = new DataStructFieldKeyTypeCollection();
-            Field.Metadata = new DataStructFieldMetadataCollection();
 
             metadata = metadata.Replace("{", "").Replace("})", "").Replace("}", "").Replace("\"", "");
             string[] metadataEntry = metadata.Split(":");

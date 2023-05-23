@@ -18,7 +18,7 @@ namespace DLHApp.Model.DataStructs
                 int metadataIndex = 0;
                 string metadataVal = string.Empty;
 
-                if(field.KeyTypes.Count() > 0)
+                if(field.KeyTypes?.Count() > 0)
                 {
                     string keytypeValues = string.Empty;
 
@@ -30,12 +30,12 @@ namespace DLHApp.Model.DataStructs
                     metadataVal = string.Format("keytypes:[{0}]", keytypeValues);
                 }
 
-                foreach(KeyValuePair<string, string> keyValue in field.Metadata)
+                /*foreach(KeyValuePair<string, string> keyValue in field.Metadata)
                 {
                     metadataVal += metadataVal.Length > 0 ? "," : "";
                     metadataVal += string.Format("{0}:{1}", keyValue.Key, keyValue.Value);
                     metadataIndex++;
-                }
+                }*/
 
                 metadata = "{" + metadataVal + "}";
             }

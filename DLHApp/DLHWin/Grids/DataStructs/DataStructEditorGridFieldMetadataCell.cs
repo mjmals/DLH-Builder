@@ -17,6 +17,11 @@ namespace DLHWin.Grids.DataStructs
         {
             DataStructField field = (DataStructField)baseObject;
 
+            if(field.Metadata == null)
+            {
+                field.Metadata = new DataStructFieldMetadataCollection();
+            }
+
             if(field.Metadata.ContainsKey(BaseProperty))
             {
                 field.Metadata[BaseProperty] = Value.ToString();
