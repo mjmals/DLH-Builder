@@ -45,24 +45,10 @@ namespace DLHWin.Grids.DataStructs
                     }
                 }
             }
-
-            for(int i = GridColumns.Count - 1; i < Columns.Count; i++)
-            {
-                foreach(DataGridViewRow row in Rows)
-                {
-                    DataGridViewColumn column = Columns[i];
-                    DataGridViewCell gridCell = Rows[row.Index].Cells[column.Index];
-                    
-                    if(gridCell.Tag == null)
-                    {
-                        gridCell.Tag = new DataStructEditorGridFieldMetadataCell() { BaseProperty = column.Name };
-                    }
-                }
-            }
         }
 
 
-        void AddMetadataColumn(string name)
+        public void AddMetadataColumn(string name)
         {
             if (Columns.Contains(name))
             {
@@ -71,6 +57,17 @@ namespace DLHWin.Grids.DataStructs
 
             Columns.Add(name, name);
             Columns[Columns.Count - 1].AutoSizeMode = DataGridViewAutoSizeColumnMode.DisplayedCells;
+
+            foreach (DataGridViewRow row in Rows)
+            {
+                DataGridViewColumn column = Columns[Columns.Count - 1];
+                DataGridViewCell gridCell = Rows[row.Index].Cells[column.Index];
+
+                if (gridCell.Tag == null)
+                {
+                    gridCell.Tag = new DataStructEditorGridFieldMetadataCell() { BaseProperty = column.Name };
+                }
+            }
         }
     }
 }

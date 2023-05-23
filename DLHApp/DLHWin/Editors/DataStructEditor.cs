@@ -21,6 +21,7 @@ namespace DLHWin.Editors
 
             GridPanel.Controls.Add(StructGrid = new DataStructEditorGrid(DataStruct));
             GridPanel.Controls.Add(StructDetailPanel);
+            GridPanel.Controls.Add(GridToolBar());
             BuildStructDetailPanel();
             ScriptPanel.Controls.Add(ScriptBox);
             ScriptPanel.Controls.Add(ScriptToolBar());
@@ -46,6 +47,20 @@ namespace DLHWin.Editors
         protected override Control[] EditorControls()
         {
             return new Control[] { GridPanel, ScriptPanel };
+        }
+
+        ToolStrip GridToolBar()
+        {
+            ToolStrip output = new ToolStrip();
+            output.ImageList = Images.List;
+
+            ToolStripButton addColumnBtn = new ToolStripButton();
+            addColumnBtn.ImageKey = "Add";
+            addColumnBtn.Text = "Add new Metadata Column";
+            addColumnBtn.Click += AddMetadataColumn;
+            output.Items.Add(addColumnBtn);
+
+            return output;
         }
 
         ToolStrip ScriptToolBar()
@@ -116,6 +131,17 @@ namespace DLHWin.Editors
         {
             DataStruct.Save();
             LoadScriptBox();
+        }
+
+        void AddMetadataColumn(object sender, EventArgs e)
+        {
+            using (DataStructEditorGridMetadataColumnDialog dialog = new DataStructEditorGridMetadataColumnDialog())
+            {
+                if (dialog.ShowDialog() == DialogResult.OK)
+                {
+                    StructGrid.AddMetadataColumn(dialog.ColumnName);
+                }
+            }
         }
     }
 }
