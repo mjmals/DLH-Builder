@@ -19,7 +19,7 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
         public override string Export(IDataType dataType)
         {
-            if (DataTypes.Contains(dataType.GetType()))
+            if (!DataTypes.Contains(dataType.GetType()))
             {
                 throw new Exception("Specified data type is not a boolean data type");
             }
