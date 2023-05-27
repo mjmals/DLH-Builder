@@ -11,5 +11,7 @@ namespace DLHApp.Model.DataStructReferences
         public string SourceField { get; set; }
 
         public string OutputName { get; set; }
+
+        public DataStructFieldReferenceMetadataCollection Metadata { get; set; }
     }
 }

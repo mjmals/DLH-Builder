@@ -37,7 +37,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataStructReferences
 
             if (!string.IsNullOrEmpty(file))
             {
-                return new EditorCollection(new ModelItemObjectEditor(file, typeof(DataStructReference)));
+                return new EditorCollection(new DataStructReferenceEditor(file));
             }
 
             return base.Editors();
