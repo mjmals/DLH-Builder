@@ -22,7 +22,7 @@ namespace DLHWin.Grids
 
         public Type CellType { get; set; }
 
-        internal DataGridViewColumn GetBaseColumn()
+        internal virtual DataGridViewColumn GetBaseColumn()
         {
             EditorGridCell cell = (EditorGridCell)Activator.CreateInstance(CellType);
             DataGridViewColumn output = (DataGridViewColumn)Activator.CreateInstance(cell.ColumnType);

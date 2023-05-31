@@ -24,8 +24,12 @@ namespace DLHWin.Editors
             Toolbar.Items.Add(SourceStructLabel);
             Toolbar.Items.Add(SourceStructDisplay);
             Toolbar.Items.Add(new ToolStripSeparator());
+            Toolbar.Items.Add(AddReferenceBtn);
+            Toolbar.Items.Add(new ToolStripSeparator());
             Toolbar.Items.Add(AddMetadataColumnBtn);
             SetSourceStructDisplay();
+
+            AddReferenceBtn.Click += AddReferenceField;
         }
 
         public DataStructReference Reference { get; set; }
@@ -42,6 +46,8 @@ namespace DLHWin.Editors
 
         ToolStripLabel SourceStructDisplay = new ToolStripLabel();
 
+        ToolStripButton AddReferenceBtn = new ToolStripButton() { Text = "New Field Reference", ImageKey = "Field" };
+
         ToolStripButton AddMetadataColumnBtn = new ToolStripButton() { Text = "Add Metadata Column", Width = 150, ImageKey = "Add" };
 
         protected override Control[] EditorControls()
@@ -54,5 +60,15 @@ namespace DLHWin.Editors
             SourceStructDisplay.Text = Reference.SourceDataStruct;
         }
 
+        void AddReferenceField(object sender, EventArgs e)
+        {
+            DataStructFieldReference fieldRef = new DataStructFieldReference();
+            fieldRef.SourceField = SourceStruct.Fields.FirstOrDefault().Name;
+            fieldRef.OutputName = "<Please provide Output Name>";
+            Reference.Fields.Add(fieldRef);
+            Reference.Save();
+
+            RefGrid.AddRow(fieldRef);
+        }
     }
 }

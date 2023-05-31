@@ -12,11 +12,11 @@ namespace DLHWin.Grids
         public EditorGrid()
         {
             Dock = DockStyle.Fill;
-            Load();
             CellEndEdit += CellUpdated;
+            AllowUserToAddRows = false;
         }
 
-        protected virtual void Load()
+        protected virtual void SetColumns()
         {
             Columns.Clear();
 
@@ -31,7 +31,7 @@ namespace DLHWin.Grids
 
         public virtual void Reload()
         {
-            Load();
+            ProcessRows();
         }
 
 
@@ -52,6 +52,7 @@ namespace DLHWin.Grids
         void ProcessRows()
         {
             Rows.Clear();
+            SetColumns();
 
             object[] values = ((IEnumerable<object>)RowValues).Cast<object>().ToArray();
 
@@ -59,30 +60,50 @@ namespace DLHWin.Grids
             {
                 DataGridViewRow row = new DataGridViewRow();
                 row.Tag = value;
-
-                foreach(EditorGridColumn column in GridColumns)
-                {
-                    PropertyInfo propInfo = value.GetType().GetProperty(column.BaseProperty);
-                    EditorGridCell cell = (EditorGridCell)Activator.CreateInstance(column.CellType);
-                    cell.BaseProperty = column.BaseProperty;
-                    cell.SetValue(propInfo.GetValue(value));
-
-                    DataGridViewCell gridCell = (DataGridViewCell)Activator.CreateInstance(cell.CellType);
-                    gridCell.Value = cell.Value;
-                    gridCell.Tag = cell;
-                    
-                    row.Cells.Add(gridCell);
-                }
-
+                AddCells(row, value);
                 Rows.Add(row);
             }
         }
 
-        void CellUpdated(object sender, DataGridViewCellEventArgs e)
+        protected void AddCells(DataGridViewRow row, object value)
+        {
+            EditorGridColumnCollection gridColumns = GridColumns;
+
+            foreach (EditorGridColumn column in gridColumns)
+            {
+                PropertyInfo propInfo = value.GetType().GetProperty(column.BaseProperty);
+                EditorGridCell cell = (EditorGridCell)Activator.CreateInstance(column.CellType);
+                cell.BaseProperty = column.BaseProperty;
+                cell.SetValue(propInfo.GetValue(value));
+
+                DataGridViewCell gridCell = (DataGridViewCell)Activator.CreateInstance(cell.CellType);
+
+                if (column is EditorGridDropdownColumn && gridCell is DataGridViewComboBoxCell)
+                {
+                    ((DataGridViewComboBoxCell)gridCell).DataSource = ((EditorGridDropdownColumn)column).DropdownValues;
+
+                }
+
+                gridCell.Value = cell.Value;
+                gridCell.Tag = cell;
+
+                row.Cells.Add(gridCell);
+            }
+
+        }
+
+        protected virtual void CellUpdated(object sender, DataGridViewCellEventArgs e)
         {
             EditorGridCell cell = (EditorGridCell)Rows[e.RowIndex].Cells[e.ColumnIndex].Tag;
             cell.SetValue(Rows[e.RowIndex].Cells[e.ColumnIndex].Value);
             cell.UpdateBaseProperty(Rows[e.RowIndex].Tag);
+        }
+
+        public virtual void AddRow(object value)
+        {
+            DataGridViewRow row = new DataGridViewRow() { Tag = value };
+            AddCells(row, value);
+            Rows.Add(row);
         }
     }
 }

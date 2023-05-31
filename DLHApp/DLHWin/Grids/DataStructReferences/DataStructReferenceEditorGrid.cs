@@ -23,8 +23,14 @@ namespace DLHWin.Grids.DataStructReferences
 
         protected override EditorGridColumnCollection GridColumns => new EditorGridColumnCollection()
         {
-            new EditorGridColumn("Source Field", "SourceField", typeof(EditorGridTextCell)),
+            new EditorGridDropdownColumn("Source Field", "SourceField", typeof(EditorGridDropdownCell), (string[])SourceStruct.Fields.Select(x => x.Name).ToArray()),
             new EditorGridColumn("Output Name", "OutputName", typeof(EditorGridTextCell))
         };
+
+        protected override void CellUpdated(object sender, DataGridViewCellEventArgs e)
+        {
+            base.CellUpdated(sender, e);
+            Reference.Save();
+        }
     }
 }
