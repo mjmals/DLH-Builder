@@ -81,7 +81,7 @@ namespace DLHWin.Grids
                 if (column is EditorGridDropdownColumn && gridCell is DataGridViewComboBoxCell)
                 {
                     ((DataGridViewComboBoxCell)gridCell).DataSource = ((EditorGridDropdownColumn)column).DropdownValues;
-
+                    ((DataGridViewComboBoxCell)gridCell).DisplayStyle = DataGridViewComboBoxDisplayStyle.Nothing;
                 }
 
                 gridCell.Value = cell.Value;
