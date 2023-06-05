@@ -25,8 +25,37 @@ namespace DLHWin.Editors.SyntaxHighlighters
             output.Add("GROUP BY", Color.Blue);
             output.Add("ORDER BY", Color.Blue);
             output.Add("HAVING", Color.Blue);
+            output.Add("IDENTITY", Color.Blue);
+
+            foreach(string dataType in DataTypes())
+            {
+                output.Add(" " + dataType, Color.Blue);
+            }
 
             return output;
+        }
+
+        List<string> DataTypes()
+        {
+            return new List<string>()
+            {
+                "int",
+                "integer",
+                "varchar",
+                "nvarchar",
+                "char",
+                "nchar",
+                "text",
+                "ntext",
+                "datetime",
+                "date",
+                "time",
+                "money",
+                "numeric",
+                "decimal",
+                "uniqueidentifier",
+                "timestamp"
+            };
         }
 
         protected override List<Block> Blocks()
