@@ -21,6 +21,8 @@ namespace DLHApp.Model.DataStages
             stage.StorageFolderName = name;
             stage.HiveDatabaseName = name;
             stage.FolderPath = parentPath;
+            stage.Templates = new TemplateReferenceCollection();
+            stage.DefaultReferenceTemplates = new TemplateReferenceCollection();
 
             return stage;
         }

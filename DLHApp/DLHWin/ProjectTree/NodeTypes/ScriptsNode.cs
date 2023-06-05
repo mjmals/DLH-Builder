@@ -25,7 +25,7 @@ namespace DLHWin.ProjectTree.NodeTypes
 
         protected override bool AllowRename => false;
 
-        protected override bool AllowChild => false;
+        //protected override bool AllowChild => false;
 
         protected override string[]? Images => new string[] { "Script" };
 

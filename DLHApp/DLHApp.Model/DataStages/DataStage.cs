@@ -72,5 +72,7 @@ namespace DLHApp.Model.DataStages
 
             return output;
         }
+
+        public virtual TemplateReferenceCollection DefaultReferenceTemplates { get; set; }
     }
 }

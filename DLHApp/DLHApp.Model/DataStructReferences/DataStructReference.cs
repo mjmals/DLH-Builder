@@ -141,5 +141,37 @@ namespace DLHApp.Model.DataStructReferences
 
             return null;
         }
+
+        public new TemplateReferenceCollection Templates
+        {
+            get
+            {
+                TemplateReferenceCollection output = base.Templates;
+
+                if(base.Templates == null)
+                {
+                    base.Templates = new TemplateReferenceCollection();
+                }
+
+                DataStage stage = ParentStage();
+
+                if (stage != null && stage.DefaultReferenceTemplates != null)
+                {
+                    foreach(string template in stage.DefaultReferenceTemplates)
+                    {
+                        if(!output.Exists(x => x.ToLower() == template))
+                        {
+                            output.Add(template);
+                        }
+                    }
+                }
+
+                return output;
+            }
+            set
+            {
+                base.Templates = value;
+            }
+        }
     }
 }

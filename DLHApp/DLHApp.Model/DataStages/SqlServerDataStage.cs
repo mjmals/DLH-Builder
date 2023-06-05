@@ -18,6 +18,8 @@ namespace DLHApp.Model.DataStages
             stage.Name = name;
             stage.SchemaName = name;
             stage.FolderPath = parentPath;
+            stage.Templates = new TemplateReferenceCollection();
+            stage.DefaultReferenceTemplates = new TemplateReferenceCollection();
 
             return stage;
         }
