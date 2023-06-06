@@ -159,7 +159,7 @@ namespace DLHApp.Model.DataStructReferences
                 {
                     foreach(string template in stage.DefaultReferenceTemplates)
                     {
-                        if(!output.Exists(x => x.ToLower() == template))
+                        if(!output.Exists(x => x.ToLower() == template.ToLower()))
                         {
                             output.Add(template);
                         }
