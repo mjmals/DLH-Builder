@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHWin.Editors;
+using DLHWin.Editors.DefinitionEditors;
 
 namespace DLHWin.ProjectTree.NodeTypes.Definitions
 {
@@ -19,7 +20,7 @@ namespace DLHWin.ProjectTree.NodeTypes.Definitions
 
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new TextFileEditor(Path.Combine(Environment.CurrentDirectory, DirectoryItem.FullPath + DirectoryItem.Extension)));
+            return new EditorCollection(new DefinitionEditor(Path.Combine(Environment.CurrentDirectory, DirectoryItem.FullPath + DirectoryItem.Extension)));
         }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
