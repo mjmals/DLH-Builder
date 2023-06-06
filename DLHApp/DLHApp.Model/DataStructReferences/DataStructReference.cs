@@ -82,6 +82,7 @@ namespace DLHApp.Model.DataStructReferences
 
             DataStruct ds = DataStruct.Load(SourceDataStruct);
             output.Add("DataStruct", ds);
+            output.Add("SourceConnection", ds.SourceConnectionDetail());
 
             DataStage stg = ParentStage();
             output.Add("Stage", stg);

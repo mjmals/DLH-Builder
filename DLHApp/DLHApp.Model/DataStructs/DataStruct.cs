@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
 using DLHApp.Model.DataTypes;
+using DLHApp.Model.Connections;
 
 namespace DLHApp.Model.DataStructs
 {
@@ -26,6 +27,26 @@ namespace DLHApp.Model.DataStructs
         public DataStructFieldCollection Fields { get; set; }
 
         public string SourceConnection { get; set; }
+
+        public Connection SourceConnectionDetail()
+        {
+            if(string.IsNullOrEmpty(SourceConnection))
+            {
+                return null;
+            }
+
+            foreach(string connectionExtension in Connection.GetConnectionTypeExtensions())
+            {
+                string connectionFilename = Path.Combine("Connections", string.Format("{0}.{1}", SourceConnection, connectionExtension));
+
+                if (File.Exists(connectionFilename))
+                {
+                    return Connection.Load(connectionFilename);
+                }
+            }
+
+            return null;
+        }
 
         public string SourceItemName { get; set; }
 
