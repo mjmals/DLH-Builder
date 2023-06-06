@@ -11,7 +11,9 @@ namespace DLHWin.Editors.DefinitionEditors
     {
         public DefinitionEditor(string fileName)
         {
-            
+            FileName = fileName;
+            Text = Path.GetFileName(fileName);
+            BasePanel.Controls.Add(BasePanelContent());
         }
 
         string FileName { get; set; }
@@ -20,20 +22,25 @@ namespace DLHWin.Editors.DefinitionEditors
 
         protected override Control[] EditorControls()
         {
+            return new Control[] { BasePanel };
+        }
+
+        Panel BasePanelContent()
+        {
             Type[] panelTypes = this.GetType().Assembly.GetTypes().Where(x => x.IsAssignableTo(typeof(DefinitionEditorPanel)) && x.IsAbstract == false).ToArray();
 
             foreach (Type panelType in panelTypes)
             {
                 DefinitionEditorPanel panel = (DefinitionEditorPanel)Activator.CreateInstance(panelType, new object[] { FileName });
 
-                if(panel.Extensions.Contains(FileName))
+                if (panel.Extensions.Contains(Path.GetExtension(FileName)))
                 {
                     panel.Dock = DockStyle.Fill;
-                    return new Control[] { panel };
+                    return panel;
                 }
             }
 
-            return new Control[] { BasePanel };
+            return new BaseDefinitionEditorPanel(FileName);
         }
     }
 }

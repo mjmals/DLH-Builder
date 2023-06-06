@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DLHWin.Editors.SyntaxHighlighters;
 
 namespace DLHWin.Editors.DefinitionEditors
 {
@@ -11,17 +12,40 @@ namespace DLHWin.Editors.DefinitionEditors
         public DefinitionEditorPanel(string fileName)
         {
             FileName = fileName;
-            SplitPanel.Panel2.Controls.Add(DefinitionTextbox);
-
+            Dock = DockStyle.Fill;
             DefinitionTextbox.Text = File.ReadAllText(FileName);
+            SetControls();
+
+            if(Highlighter != null)
+            {
+                Highlighter.Highlight(DefinitionTextbox);
+            }
         }
 
         string FileName { get; set; }
 
         public abstract string[] Extensions { get; }
 
-        public SplitContainer SplitPanel = new SplitContainer() { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
-
         protected RichTextBox DefinitionTextbox = new RichTextBox() { Dock = DockStyle.Fill };
+
+        protected virtual Panel TopPanel => null;
+
+        protected virtual SyntaxHighlighter Highlighter => null;
+
+        void SetControls()
+        {
+            Controls.Clear();
+
+            if(TopPanel == null)
+            {
+                Controls.Add(DefinitionTextbox);
+                return;
+            }
+
+            SplitContainer splitPanel = new SplitContainer() { Dock = DockStyle.Fill, Orientation = Orientation.Horizontal };
+            splitPanel.Panel1.Controls.Add(TopPanel);
+            splitPanel.Panel2.Controls.Add(DefinitionTextbox);
+            Controls.Add(splitPanel);
+        }
     }
 }

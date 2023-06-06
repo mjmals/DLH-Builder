@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DLHWin.Editors.SyntaxHighlighters;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,5 +15,7 @@ namespace DLHWin.Editors.DefinitionEditors
         }
 
         public override string[] Extensions => new string[] { ".sql" };
+
+        protected override SyntaxHighlighter Highlighter => new SqlSyntaxHighlighter();
     }
 }
