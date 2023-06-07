@@ -8,7 +8,7 @@ namespace DLHWin.Editors.DefinitionEditors
 {
     internal class BaseDefinitionEditorPanel : DefinitionEditorPanel
     {
-        public BaseDefinitionEditorPanel(string fileName) : base(fileName)
+        public BaseDefinitionEditorPanel(string fileName, string[] identifiers = null, string identifierLabel = null) : base(fileName, identifiers, identifierLabel)
         {
 
         }

@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using DLHWin.Editors;
 using DLHWin.Editors.DefinitionEditors;
+using DLHApp.Model.DataStructReferences;
 
 namespace DLHWin.ProjectTree.NodeTypes.Definitions
 {
@@ -18,9 +19,42 @@ namespace DLHWin.ProjectTree.NodeTypes.Definitions
 
         protected override string[]? Images => new string[] { "Definition Set" };
 
+        string DefinitionFile => Path.Combine(Environment.CurrentDirectory, DirectoryItem.FullPath + DirectoryItem.Extension);
+
+        string ParentFolder => Path.GetDirectoryName(Path.GetDirectoryName(DirectoryItem.FullPath));
+
         public override EditorCollection Editors()
         {
-            return new EditorCollection(new DefinitionEditor(Path.Combine(Environment.CurrentDirectory, DirectoryItem.FullPath + DirectoryItem.Extension)));
+            if (IsParentDataStructReference())
+            {
+                return DataStructReferenceEditors();
+            }
+
+            return new EditorCollection(new DefinitionEditor(DefinitionFile));
+        }
+
+        bool IsParentDataStructReference()
+        {
+            if (Directory.GetFiles(ParentFolder).Where(x => x.EndsWith(".ref.json")).Count() > 0)
+            {
+                return true;
+            }
+
+            return false;
+        }
+
+        EditorCollection DataStructReferenceEditors()
+        {
+            string refFile = Directory.GetFiles(ParentFolder).FirstOrDefault(x => x.EndsWith(".ref.json"));
+
+            if (!string.IsNullOrEmpty(refFile))
+            {
+                DataStructReference dsr = DataStructReference.Load(refFile);
+
+                return new EditorCollection(new DefinitionEditor(DefinitionFile, dsr.Fields.Select(x => x.OutputName).ToArray(), "Output Name"));
+            }
+
+            return null;
         }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)

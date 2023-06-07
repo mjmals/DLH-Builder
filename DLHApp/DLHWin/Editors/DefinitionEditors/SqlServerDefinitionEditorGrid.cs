@@ -9,7 +9,7 @@ namespace DLHWin.Editors.DefinitionEditors
 {
     internal class SqlServerDefinitionEditorGrid : DefinitionEditorGrid
     {
-        public SqlServerDefinitionEditorGrid(string fileName) : base(fileName)
+        public SqlServerDefinitionEditorGrid(string fileName, string[] identifiers = null, string identifierLabel = null) : base(fileName, identifiers, identifierLabel)
         {
             Parser = new SqlServerCodeParser(fileName);
         }

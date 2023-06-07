@@ -10,9 +10,12 @@ namespace DLHWin.Editors.DefinitionEditors
 {
     internal abstract class DefinitionEditorPanel : Panel
     {
-        public DefinitionEditorPanel(string fileName)
+        public DefinitionEditorPanel(string fileName, string[] identifiers = null, string identifierLabel = null)
         {
             FileName = fileName;
+            Identifiers = identifiers;
+            IdentifierLabel = identifierLabel;
+
             Dock = DockStyle.Fill;
             DefinitionTextbox.Text = File.ReadAllText(FileName);
             SetControls();
@@ -24,6 +27,10 @@ namespace DLHWin.Editors.DefinitionEditors
         }
 
         string FileName { get; set; }
+
+        string[] Identifiers { get; set; }
+
+        string IdentifierLabel { get; set; }
 
         public abstract string[] Extensions { get; }
 

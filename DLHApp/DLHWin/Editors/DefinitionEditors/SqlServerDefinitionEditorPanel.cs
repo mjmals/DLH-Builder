@@ -9,9 +9,9 @@ namespace DLHWin.Editors.DefinitionEditors
 {
     internal class SqlServerDefinitionEditorPanel : DefinitionEditorPanel
     {
-        public SqlServerDefinitionEditorPanel(string fileName) : base(fileName)
+        public SqlServerDefinitionEditorPanel(string fileName, string[] identifiers = null, string identifierLabel = null) : base(fileName, identifiers, identifierLabel)
         {
-            GridPanel.Controls.Add(Grid = new SqlServerDefinitionEditorGrid(File.ReadAllText(fileName)));
+            GridPanel.Controls.Add(Grid = new SqlServerDefinitionEditorGrid(File.ReadAllText(fileName), identifiers, identifierLabel));
         }
 
         public override string[] Extensions => new string[] { ".sql" };

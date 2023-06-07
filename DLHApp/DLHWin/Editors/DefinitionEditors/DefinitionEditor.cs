@@ -9,14 +9,21 @@ namespace DLHWin.Editors.DefinitionEditors
 {
     internal class DefinitionEditor : Editor
     {
-        public DefinitionEditor(string fileName)
+        public DefinitionEditor(string fileName, string[] identifiers = null, string identifierLabel = null)
         {
             FileName = fileName;
+            Identifiers = identifiers;
+            IdentifierLabel = identifierLabel;
+
             Text = Path.GetFileName(fileName);
             BasePanel.Controls.Add(BasePanelContent());
         }
 
         string FileName { get; set; }
+
+        string[] Identifiers { get; set; }
+
+        string IdentifierLabel { get; set; }
 
         Panel BasePanel = new Panel() { Dock = DockStyle.Fill };
 
@@ -31,7 +38,7 @@ namespace DLHWin.Editors.DefinitionEditors
 
             foreach (Type panelType in panelTypes)
             {
-                DefinitionEditorPanel panel = (DefinitionEditorPanel)Activator.CreateInstance(panelType, new object[] { FileName });
+                DefinitionEditorPanel panel = (DefinitionEditorPanel)Activator.CreateInstance(panelType, new object[] { FileName, Identifiers, IdentifierLabel });
 
                 if (panel.Extensions.Contains(Path.GetExtension(FileName)))
                 {
@@ -40,7 +47,7 @@ namespace DLHWin.Editors.DefinitionEditors
                 }
             }
 
-            return new BaseDefinitionEditorPanel(FileName);
+            return new BaseDefinitionEditorPanel(FileName, Identifiers, IdentifierLabel);
         }
     }
 }
