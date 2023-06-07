@@ -14,6 +14,8 @@ namespace DLHApp.Model.CodeParsers
 
         }
 
+        public override string[] FileExtensions => new string[] { ".sql" };
+
         IList<TSqlBatch> GetSqlBatches()
         {
             TSql150Parser parser = new TSql150Parser(false);

@@ -30,7 +30,7 @@ namespace DLHWin.ProjectTree.NodeTypes.Definitions
                 return DataStructReferenceEditors();
             }
 
-            return new EditorCollection(new DefinitionEditor(DefinitionFile));
+            return new EditorCollection(new DefinitionEditor(DefinitionFile, null, null));
         }
 
         bool IsParentDataStructReference()
