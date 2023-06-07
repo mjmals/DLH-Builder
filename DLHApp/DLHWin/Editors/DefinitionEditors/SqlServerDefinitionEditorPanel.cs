@@ -11,11 +11,15 @@ namespace DLHWin.Editors.DefinitionEditors
     {
         public SqlServerDefinitionEditorPanel(string fileName) : base(fileName)
         {
-
+            GridPanel.Controls.Add(Grid = new SqlServerDefinitionEditorGrid(File.ReadAllText(fileName)));
         }
 
         public override string[] Extensions => new string[] { ".sql" };
 
         protected override SyntaxHighlighter Highlighter => new SqlSyntaxHighlighter();
+
+        protected override Panel TopPanel => GridPanel;
+
+        Panel GridPanel = new Panel() { Dock = DockStyle.Fill };
     }
 }
