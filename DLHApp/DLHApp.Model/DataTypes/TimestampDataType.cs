@@ -20,5 +20,7 @@ namespace DLHApp.Model.DataTypes
         {
             return string.Format("{0}()", DisplayNames[0]);
         }
+
+        public override object DefaultValue => new DateTime(1900, 1, 1).ToString();
     }
 }

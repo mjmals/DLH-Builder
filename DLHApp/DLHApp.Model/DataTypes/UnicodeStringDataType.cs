@@ -19,5 +19,7 @@ namespace DLHApp.Model.DataTypes
         }
 
         public override string[] DisplayNames => new string[] { "UnicodeString", "UnicodeStringDataType", "UnicodeStringType" };
+
+        public override object DefaultValue => string.Empty;
     }
 }

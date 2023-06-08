@@ -13,5 +13,7 @@ namespace DLHApp.Model.DataTypes
         public string Name { get; }
 
         public string FormattedValue();
+
+        public object DefaultValue { get; }
     }
 }

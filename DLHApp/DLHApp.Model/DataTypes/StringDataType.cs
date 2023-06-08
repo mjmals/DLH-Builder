@@ -32,5 +32,7 @@ namespace DLHApp.Model.DataTypes
 
             return string.Format("{0}()", DisplayNames[0]);
         }
+
+        public override object DefaultValue => string.Empty;
     }
 }

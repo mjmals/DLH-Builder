@@ -15,5 +15,7 @@ namespace DLHApp.Model.DataTypes
         {
             return base.FormattedValue();
         }
+
+        public override object DefaultValue => string.Empty;
     }
 }

@@ -9,5 +9,7 @@ namespace DLHApp.Model.DataTypes
     public class BooleanDataType : DataType, IDataType
     {
         public override string[] DisplayNames => new string[] { "Boolean", "BooleanDataType", "BooleanType" };
+
+        public override object DefaultValue => false;
     }
 }

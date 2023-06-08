@@ -26,5 +26,7 @@ namespace DLHApp.Model.DataTypes
         {
             return string.Format("{0}({1})", DisplayNames[0], Precision);
         }
+
+        public override object DefaultValue => new float();
     }
 }

@@ -19,6 +19,9 @@ namespace DLHApp.Model.DataTypes
             return string.Format("{0}()", DisplayNames[0]);
         }
 
+        [JsonIgnore]
+        public virtual object DefaultValue => string.Empty;
+
         public override string ToString()
         {
             return FormattedValue();

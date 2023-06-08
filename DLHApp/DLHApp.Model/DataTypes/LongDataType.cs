@@ -9,5 +9,7 @@ namespace DLHApp.Model.DataTypes
     public class LongDataType : DataType, IDataType
     {
         public override string[] DisplayNames => new string[] { "Long", "LongDataType", "LongType" };
+
+        public override object DefaultValue => -1;
     }
 }

@@ -9,5 +9,7 @@ namespace DLHApp.Model.DataTypes
     public class MoneyDataType : DataType, IDataType
     {
         public override string[] DisplayNames => new string[] { "Money", "MoneyDataType", "MoneyType" };
+
+        public override object DefaultValue => -1;
     }
 }
