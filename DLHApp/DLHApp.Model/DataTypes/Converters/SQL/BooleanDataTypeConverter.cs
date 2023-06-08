@@ -26,5 +26,10 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
             return "bit";
         }
+
+        public override string GetDefaultValue(IDataType dataType)
+        {
+            return "0";
+        }
     }
 }

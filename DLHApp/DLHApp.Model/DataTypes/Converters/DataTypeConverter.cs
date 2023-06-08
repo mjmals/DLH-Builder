@@ -19,6 +19,11 @@ namespace DLHApp.Model.DataTypes.Converters
 
         public abstract string Export(IDataType dataType);
 
+        public virtual string GetDefaultValue(IDataType dataType)
+        {
+            return ((DataType)Activator.CreateInstance(DataTypes[0])).DefaultValue.ToString();
+        }
+
         static Type[] ConverterTypes()
         {
             Type baseType = typeof(DataTypeConverter);
