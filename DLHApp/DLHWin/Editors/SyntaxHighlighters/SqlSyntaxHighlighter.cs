@@ -12,29 +12,60 @@ namespace DLHWin.Editors.SyntaxHighlighters
         {
             Dictionary<string, Color> output = new Dictionary<string, Color>();
 
-            output.Add("CREATE", Color.Blue);
-            output.Add("DROP", Color.Blue);
-            output.Add("IF", Color.Blue);
-            output.Add("EXISTS", Color.Blue);
-            output.Add("GO", Color.Blue);
-            output.Add("UPDATE ", Color.Blue);
-            output.Add("INSERT", Color.Blue);
-            output.Add("DELETE", Color.Blue);
-            output.Add(" TABLE ", Color.Blue);
-            output.Add("VIEW", Color.Blue);
-            output.Add("PROCEDURE", Color.Blue);
-            output.Add("EXEC ", Color.Blue);
-            output.Add("SELECT", Color.Blue);
-            output.Add("FROM", Color.Blue);
-            output.Add("WHERE", Color.Blue);
-            output.Add("GROUP BY", Color.Blue);
-            output.Add("ORDER BY", Color.Blue);
-            output.Add("HAVING", Color.Blue);
-            output.Add("IDENTITY", Color.Blue);
+            Color blueHighlight = Color.Blue;
+            output.Add("CREATE", blueHighlight);
+            output.Add("DROP", blueHighlight);
+            output.Add("IF", blueHighlight);
+            output.Add("GO", blueHighlight);
+            output.Add("UPDATE ", blueHighlight);
+            output.Add("INSERT", blueHighlight);
+            output.Add("INTO", blueHighlight);
+            output.Add("DELETE", blueHighlight);
+            output.Add(" TABLE ", blueHighlight);
+            output.Add("VIEW", blueHighlight);
+            output.Add("PROCEDURE", blueHighlight);
+            output.Add("EXEC ", blueHighlight);
+            output.Add("SELECT", blueHighlight);
+            output.Add("FROM", blueHighlight);
+            output.Add("WHERE", blueHighlight);
+            output.Add("GROUP BY", blueHighlight);
+            output.Add("ORDER BY", blueHighlight);
+            output.Add("HAVING", blueHighlight);
+            output.Add("IDENTITY", blueHighlight);
+            output.Add("DECLARE", blueHighlight);
+            output.Add("AS", blueHighlight);
+            output.Add("BEGIN", blueHighlight);
+            output.Add("SET", blueHighlight);
+            output.Add("END", blueHighlight);
+            output.Add("CASE", blueHighlight);
+            output.Add("WHEN", blueHighlight);
+            output.Add("THEN", blueHighlight);
+            output.Add("TRY", blueHighlight);
+            output.Add("CATCH", blueHighlight);
+            output.Add("NOCOUNT", blueHighlight);
+            output.Add("ON", blueHighlight);
+            output.Add("OFF", blueHighlight);
+
+            Color grayHighlight = Color.Gray;
+            output.Add("EXISTS", grayHighlight);
+            output.Add("NOT", grayHighlight);
+            output.Add("NULL", grayHighlight);
+
+            Color pinkHighlight = Color.DeepPink;
+            output.Add("@@ROWCOUNT", pinkHighlight);
+            output.Add("COALESCE", pinkHighlight);
+            output.Add("ISNULL", pinkHighlight);
+            output.Add("ROW_NUMBER", pinkHighlight);
+            output.Add("RANK", pinkHighlight);
+            output.Add("DENSE_RANK", pinkHighlight);
+            output.Add("CONVERT", pinkHighlight);
+            output.Add("OBJECT_ID", pinkHighlight);
+            output.Add("OBJECT_NAME", pinkHighlight);
+
 
             foreach (string dataType in DataTypes())
             {
-                output.Add(" " + dataType, Color.Blue);
+                output.Add(" " + dataType, blueHighlight);
             }
 
             return output;
@@ -73,7 +104,7 @@ namespace DLHWin.Editors.SyntaxHighlighters
             List<Block> output = new List<Block>();
 
             output.Add(new Block("'", "'", Color.OrangeRed));
-            output.Add(new Block("--", "\n", Color.Green));
+            output.Add(new Block(@"--", "\n", Color.Green));
             output.Add(new Block("/*", "*/", Color.Green));
 
             return output;

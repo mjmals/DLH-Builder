@@ -21,7 +21,7 @@ namespace DLHApp.Model.DataTypes.Converters
 
         public virtual string GetDefaultValue(IDataType dataType)
         {
-            return ((DataType)Activator.CreateInstance(DataTypes[0])).DefaultValue.ToString();
+            return ((DataType)Activator.CreateInstance(DataTypes.FirstOrDefault(x => x.IsInterface == false && x.IsAbstract == false))).DefaultValue.ToString();
         }
 
         static Type[] ConverterTypes()

@@ -53,5 +53,15 @@ namespace DLHApp.Model.DataTypes.Converters.SQL
 
             return "datetime";
         }
+
+        public override string GetDefaultValue(IDataType dataType)
+        {
+            if(dataType is TimeDataType)
+            {
+                return "00:00:00.000";
+            }
+
+            return "1900-01-01";
+        }
     }
 }
