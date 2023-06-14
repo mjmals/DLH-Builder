@@ -11,7 +11,7 @@ namespace DLHWin.Editors.DefinitionEditors
     {
         public SqlServerDefinitionEditorPanel(string fileName, string[] identifiers = null, string identifierLabel = null) : base(fileName, identifiers, identifierLabel)
         {
-            GridPanel.Controls.Add(Grid = new SqlServerDefinitionEditorGrid(File.ReadAllText(fileName), identifiers, identifierLabel));
+            GridPanel.Controls.Add(GridPanelControl(fileName, identifiers, identifierLabel));
         }
 
         public override string[] Extensions => new string[] { ".sql" };
@@ -21,5 +21,19 @@ namespace DLHWin.Editors.DefinitionEditors
         protected override Panel TopPanel => GridPanel;
 
         Panel GridPanel = new Panel() { Dock = DockStyle.Fill };
+
+        Control GridPanelControl(string fileName, string[] identifiers, string identifierLabel)
+        {
+            try
+            {
+                Grid = new SqlServerDefinitionEditorGrid(File.ReadAllText(fileName), identifiers, identifierLabel);
+                return Grid;
+            }
+            catch(Exception e)
+            {
+                RichTextBox errorBox = new RichTextBox() { Text = string.Format("Unable to parse SQL statement:\n{0}", e.Message), Dock = DockStyle.Fill, Enabled = false };
+                return errorBox;
+            }
+        }
     }
 }

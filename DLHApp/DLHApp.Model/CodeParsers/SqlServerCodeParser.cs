@@ -42,7 +42,7 @@ namespace DLHApp.Model.CodeParsers
 
                 foreach(SelectScalarExpression element in elements)
                 {
-                    string identifier = element.ColumnName.Value;
+                    string identifier = element.ColumnName == null ? string.Empty : element.ColumnName.Value;
                     string expression = string.Empty;
 
                     for(int i = element.FirstTokenIndex; i <= element.LastTokenIndex; i++)
