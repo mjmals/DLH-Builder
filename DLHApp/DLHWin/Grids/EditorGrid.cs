@@ -14,6 +14,20 @@ namespace DLHWin.Grids
             Dock = DockStyle.Fill;
             CellEndEdit += CellUpdated;
             AllowUserToAddRows = false;
+            ColumnHeaderMouseClick += ColumnSelected;
+        }
+
+        void ColumnSelected(object sender, DataGridViewCellMouseEventArgs e)
+        {
+            foreach (DataGridViewRow row in Rows)
+            {
+                foreach (DataGridViewCell cell in row.Cells)
+                {
+                    cell.Selected = false;
+                }
+
+                row.Cells[e.ColumnIndex].Selected = true;
+            }
         }
 
         protected virtual void SetColumns()

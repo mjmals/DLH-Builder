@@ -13,22 +13,8 @@ namespace DLHWin.Grids.DataStructs
         {
             DataStruct = dataStruct;
             RowValues = dataStruct.Fields;
-            ColumnHeaderMouseClick += ColumnSelected;
 
             AddMetadata();
-        }
-
-        void ColumnSelected(object sender, DataGridViewCellMouseEventArgs e)
-        {
-            foreach (DataGridViewRow row in Rows)
-            {
-                foreach (DataGridViewCell cell in row.Cells)
-                {
-                    cell.Selected = false;
-                }
-
-                row.Cells[e.ColumnIndex].Selected = true;
-            }
         }
 
         public DataStruct DataStruct { get => (DataStruct)Tag; set => Tag = value; }
