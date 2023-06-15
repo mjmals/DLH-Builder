@@ -15,6 +15,7 @@ namespace DLHWin.Grids
             CellEndEdit += CellUpdated;
             AllowUserToAddRows = false;
             ColumnHeaderMouseClick += ColumnSelected;
+            MouseClick += DisplayMenu;
         }
 
         void ColumnSelected(object sender, DataGridViewCellMouseEventArgs e)
@@ -119,6 +120,68 @@ namespace DLHWin.Grids
             DataGridViewRow row = new DataGridViewRow() { Tag = value };
             AddCells(row, value);
             Rows.Add(row);
+        }
+
+        void DisplayMenu(object sender, MouseEventArgs e)
+        {
+            if(e.Button != MouseButtons.Right)
+            {
+                return;
+            }
+
+            if(SelectedCells.Count == 0)
+            {
+                return;
+            }
+
+            GridMenu().Show(this, new Point(e.X, e.Y));
+        }
+
+        protected virtual ContextMenuStrip GridMenu()
+        {
+            ContextMenuStrip output = new ContextMenuStrip();
+
+            ToolStripButton copyBtn = new ToolStripButton() { Text = "Copy" };
+            copyBtn.Click += CopyValues;
+            output.Items.Add(copyBtn);
+
+            return output;
+        }
+
+        protected virtual void CopyValues(object sender, EventArgs e)
+        {
+            if(SelectedCells.Count == 1)
+            {
+                Clipboard.SetText(SelectedCells[0].Value.ToString());
+                return;
+            }
+
+            if(SelectedRows.Count == Rows.Count)
+            {
+                CopyGridFull();
+            }
+        }
+
+        protected virtual void CopyGridFull()
+        {
+            string output = string.Empty;
+
+            for(int i = 0; i < Columns.Count; i++)
+            {
+                output += (i == 0 ? "" : "\t") + Columns[i].Name;
+            }
+
+            foreach(DataGridViewRow row in Rows)
+            {
+                output += "\n";
+
+                for(int i = 0; i < row.Cells.Count; i++)
+                {
+                    output += (i == 0 ? "" : "\t") + row.Cells[i].Value.ToString();
+                }
+            }
+
+            Clipboard.SetText(output);
         }
     }
 }
