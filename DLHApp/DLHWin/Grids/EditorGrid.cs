@@ -25,6 +25,7 @@ namespace DLHWin.Grids
                 DataGridViewColumn col = column.GetBaseColumn();
                 col.Name = column.Name;
                 col.HeaderText = column.Name;
+                col.SortMode = DataGridViewColumnSortMode.NotSortable;
                 Columns.Add(col);
             }
         }
