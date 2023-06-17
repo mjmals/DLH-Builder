@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DLHApp.Model.DataStructs;
+using DLHApp.Model.DataTypes;
+using DLHApp.Model.DataTypes.Converters;
+using System.Data;
 
 namespace DLHWin.Grids.DataStructs
 {
@@ -75,6 +78,47 @@ namespace DLHWin.Grids.DataStructs
                     gridCell.Tag = new DataStructEditorGridFieldMetadataCell() { BaseProperty = column.Name };
                 }
             }
+        }
+
+        protected override void PasteGridFull()
+        {
+            DataTable pasteValues = ConvertPasteValuesTable();
+
+            DataStructFieldCollection fields = new DataStructFieldCollection();
+
+            foreach(DataRow pasteValue in pasteValues.Rows)
+            {
+                DataStructField field = new DataStructField() { Metadata = new DataStructFieldMetadataCollection() };
+
+                try
+                {
+                    if (!string.IsNullOrEmpty(pasteValue["Name"].ToString()))
+                    {
+                        field.Name = pasteValue["Name"].ToString();
+                    }
+
+                    if (!string.IsNullOrEmpty(pasteValue["Data Type"].ToString()))
+                    {
+                        field.DataType = new DataTypeParser(pasteValue["Data Type"].ToString()).Parse();
+                    }
+
+                    if (!string.IsNullOrEmpty(pasteValue["Is Nullable?"].ToString()))
+                    {
+                        field.IsNullable = Convert.ToBoolean(pasteValue["Is Nullable?"]);
+                    }
+
+                    fields.Add(field);
+                }
+                catch(Exception e)
+                {
+                    MessageBox.Show(e.Message, "Paste Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+            }
+
+            DataStruct.Fields = fields;
+            //DataStruct.Save();
+            Reload();
         }
     }
 }

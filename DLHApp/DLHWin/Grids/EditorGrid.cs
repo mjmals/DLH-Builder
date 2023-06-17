@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection;
+using System.Data;
 
 namespace DLHWin.Grids
 {
@@ -129,11 +130,6 @@ namespace DLHWin.Grids
                 return;
             }
 
-            if(SelectedCells.Count == 0)
-            {
-                return;
-            }
-
             GridMenu().Show(this, new Point(e.X, e.Y));
         }
 
@@ -143,7 +139,15 @@ namespace DLHWin.Grids
 
             ToolStripButton copyBtn = new ToolStripButton() { Text = "Copy" };
             copyBtn.Click += CopyValues;
-            output.Items.Add(copyBtn);
+
+            if (SelectedCells.Count > 0)
+            {
+                output.Items.Add(copyBtn);
+            }
+
+            ToolStripButton pasteBtn = new ToolStripButton() { Text = "Paste" };
+            pasteBtn.Click += PasteValues;
+            output.Items.Add(pasteBtn);
 
             return output;
         }
@@ -177,11 +181,64 @@ namespace DLHWin.Grids
 
                 for(int i = 0; i < row.Cells.Count; i++)
                 {
-                    output += (i == 0 ? "" : "\t") + row.Cells[i].Value.ToString();
+                    string copyValue = row.Cells[i].Value == null ? string.Empty : row.Cells[i].Value.ToString();
+                    output += (i == 0 ? "" : "\t") + copyValue;
                 }
             }
 
             Clipboard.SetText(output);
+        }
+
+        protected virtual void PasteValues(object sender, EventArgs e)
+        {
+            if(SelectedRows.Count == Rows.Count || Rows.Count == 0)
+            {
+                PasteGridFull();
+                return;
+            }
+
+            if(SelectedCells.Count == 0)
+            {
+
+            }
+        }
+
+        protected virtual DataTable ConvertPasteValuesTable()
+        {
+            DataTable output = new DataTable();
+
+            string[] inputLines = Clipboard.GetText().Split("\n");
+
+            foreach(string colValue in inputLines[0].Split("\t"))
+            {
+                output.Columns.Add(colValue);
+            }
+
+            for(int i = 1; i < inputLines.Length; i++)
+            {
+                if (inputLines[i].Length == 0)
+                {
+                    continue;
+                }
+
+                DataRow row = output.NewRow();
+                string[] colValues = inputLines[i].Split("\t");
+
+                for(int c = 0; c < colValues.Length; c++)
+                {
+                    row[c] = colValues[c];
+                }
+
+                output.Rows.Add(row);
+            }
+
+            return output;
+        }
+        
+
+        protected virtual void PasteGridFull()
+        {
+            MessageBox.Show("No paste behaviour enabled for this grid", "Paste", MessageBoxButtons.OK);
         }
     }
 }
