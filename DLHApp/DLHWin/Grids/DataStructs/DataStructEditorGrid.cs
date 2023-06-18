@@ -34,7 +34,8 @@ namespace DLHWin.Grids.DataStructs
             new EditorGridColumn("Name", "Name", typeof(EditorGridTextCell)),
             new EditorGridColumn("Data Type", "DataType", typeof(DataStructEditorGridDataTypeCell)),
             new EditorGridColumn("Is Nullable?", "IsNullable", typeof(EditorGridCheckCell)),
-            new EditorGridColumn("Key Types", "KeyTypes", typeof(DataStructEditorGridKeyTypeCell))
+            new EditorGridColumn("Key Types", "KeyTypes", typeof(DataStructEditorGridKeyTypeCell)),
+            new EditorGridColumn("Is Case Sensitive?", "IsCaseSensitive", typeof(EditorGridCheckCell))
         };
 
         void AddMetadata()
@@ -117,7 +118,12 @@ namespace DLHWin.Grids.DataStructs
                         }
                     }
 
-                    for(int i = 4; i < pasteValues.Columns.Count; i++)
+                    if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, "Is Case Sensitive?")))
+                    {
+                        field.IsCaseSensitive = Convert.ToBoolean(GetPasteValue(pasteValue, "Is Case Sensitive?"));
+                    }
+
+                    for (int i = 5; i < pasteValues.Columns.Count; i++)
                     {
                         string metadataItem = pasteValues.Columns[i].ColumnName;
 

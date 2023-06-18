@@ -13,7 +13,7 @@ namespace DLHApp.Model.DataStructs
         {
             string metadata = "{}";
 
-            if(field.Metadata != null || field.KeyTypes != null)
+            if(field.Metadata != null || field.KeyTypes != null || field.IsCaseSensitive)
             {
                 int metadataIndex = 0;
                 string metadataVal = string.Empty;
@@ -28,6 +28,11 @@ namespace DLHApp.Model.DataStructs
                     }
 
                     metadataVal = string.Format("keytypes:[{0}]", keytypeValues);
+                }
+
+                if(field.IsCaseSensitive)
+                {
+                    metadataVal += (string.IsNullOrEmpty(metadata) ? "" : ", ") + "casesensitive:true";
                 }
 
                 /*foreach(KeyValuePair<string, string> keyValue in field.Metadata)
