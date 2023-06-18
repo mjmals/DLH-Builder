@@ -211,7 +211,7 @@ namespace DLHWin.Grids
 
             foreach(string colValue in inputLines[0].Split("\t"))
             {
-                output.Columns.Add(colValue);
+                output.Columns.Add(colValue.Replace("\r", ""));
             }
 
             for(int i = 1; i < inputLines.Length; i++)
@@ -234,11 +234,28 @@ namespace DLHWin.Grids
 
             return output;
         }
-        
+
+        protected virtual string GetPasteValue(DataRow row, string columnName)
+        {
+            if (string.IsNullOrEmpty(row[columnName].ToString()))
+            {
+                return string.Empty;
+            }
+
+            if (row[columnName].ToString() == "\r")
+            {
+                return string.Empty;
+            }
+
+            return row[columnName].ToString().Replace("\r", "");
+        }
+
 
         protected virtual void PasteGridFull()
         {
             MessageBox.Show("No paste behaviour enabled for this grid", "Paste", MessageBoxButtons.OK);
         }
+
+        public EventHandler GridPasted { get; set; }
     }
 }

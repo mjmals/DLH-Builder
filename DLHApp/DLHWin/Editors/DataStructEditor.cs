@@ -28,6 +28,7 @@ namespace DLHWin.Editors
 
             LoadScriptBox();
             StructGrid.CellEndEdit += GridCellUpdated;
+            StructGrid.GridPasted += GridPasted;
         }
 
         string DataStructPath { get; set; }
@@ -164,6 +165,19 @@ namespace DLHWin.Editors
 
             StructGrid.DataStruct = DataStruct;
             StructGrid.Reload();
+        }
+
+        void GridPasted(object sender, EventArgs e)
+        {
+            try
+            {
+                LoadScriptBox();
+            }
+            catch
+            {
+                MessageBox.Show("Unable to save Data Struct");
+                return;
+            }
         }
     }
 }

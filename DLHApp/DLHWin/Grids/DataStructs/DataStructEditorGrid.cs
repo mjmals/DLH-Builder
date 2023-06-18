@@ -88,23 +88,43 @@ namespace DLHWin.Grids.DataStructs
 
             foreach(DataRow pasteValue in pasteValues.Rows)
             {
-                DataStructField field = new DataStructField() { Metadata = new DataStructFieldMetadataCollection() };
+                DataStructField field = new DataStructField() { KeyTypes = new DataStructFieldKeyTypeCollection(), Metadata = new DataStructFieldMetadataCollection() };
 
                 try
                 {
-                    if (!string.IsNullOrEmpty(pasteValue["Name"].ToString()))
+                    if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, "Name")))
                     {
-                        field.Name = pasteValue["Name"].ToString();
+                        field.Name = GetPasteValue(pasteValue, "Name");
                     }
 
-                    if (!string.IsNullOrEmpty(pasteValue["Data Type"].ToString()))
+                    if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, "Data Type")))
                     {
-                        field.DataType = new DataTypeParser(pasteValue["Data Type"].ToString()).Parse();
+                        field.DataType = new DataTypeParser(GetPasteValue(pasteValue, "Data Type")).Parse();
                     }
 
-                    if (!string.IsNullOrEmpty(pasteValue["Is Nullable?"].ToString()))
+                    if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, "Is Nullable?")))
                     {
-                        field.IsNullable = Convert.ToBoolean(pasteValue["Is Nullable?"]);
+                        field.IsNullable = Convert.ToBoolean(GetPasteValue(pasteValue, "Is Nullable?"));
+                    }
+
+                    if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, "Key Types")))
+                    {
+                        string[] keyTypesText = GetPasteValue(pasteValue, "Key Types").Split(",");
+
+                        foreach(string keyTypeText in keyTypesText)
+                        {
+                            field.KeyTypes.Add(Enum.Parse<DataStructFieldKeyType>(keyTypeText.Trim()));
+                        }
+                    }
+
+                    for(int i = 4; i < pasteValues.Columns.Count; i++)
+                    {
+                        string metadataItem = pasteValues.Columns[i].ColumnName;
+
+                        if (!string.IsNullOrEmpty(GetPasteValue(pasteValue, metadataItem)))
+                        {
+                            field.Metadata.Add(metadataItem, GetPasteValue(pasteValue, metadataItem));
+                        }
                     }
 
                     fields.Add(field);
@@ -117,8 +137,9 @@ namespace DLHWin.Grids.DataStructs
             }
 
             DataStruct.Fields = fields;
-            //DataStruct.Save();
+            DataStruct.Save();
             Reload();
+            GridPasted?.Invoke(null, null);
         }
     }
 }
