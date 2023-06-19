@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using DLHApp.Model;
 using DLHWin.ProjectTree;
 using DLHWin.Editors.Dialogs;
+using DLHWin.Config;
 using Microsoft.WindowsAPICodePack.Dialogs;
 
 namespace DLHWin.Main
@@ -64,6 +65,14 @@ namespace DLHWin.Main
             Menu.SetMenuItemClick(@"File\New\Project", NewProject);
             Menu.SetMenuItemClick(@"File\Open", OpenProject);
 
+            UserConfigRecentProjectCollection recentFiles = UserConfig.Load().RecentProjects;
+
+            foreach (string recentFile in recentFiles)
+            {
+                string menuItem = string.Format(@"File\Recent Files\{0}", recentFile);
+                Menu.SetMenuItemClick(menuItem, OpenRecentProject);
+            }
+
             Menu.SetMenuItemClick(@"Terminal\Hide Terminal", HideTerminal);
             Menu.SetMenuItemClick(@"Terminal\Show Terminal", ShowTerminal);
 
@@ -99,6 +108,26 @@ namespace DLHWin.Main
             }
         }
 
+        void OpenRecentProject(object sender, EventArgs e)
+        {
+            string fileName = string.Empty;
+
+            if(sender is string)
+            {
+                fileName = (string)sender;
+            }
+
+            if(sender is ToolStripMenuItem)
+            {
+                fileName = ((ToolStripMenuItem)sender).Text;
+            }
+
+            if (!string.IsNullOrEmpty(fileName))
+            {
+                LoadProject(fileName);
+            }
+        }
+
         void LoadProject(string fileName)
         {
             Project = ProjectController.Load(fileName);
@@ -106,6 +135,7 @@ namespace DLHWin.Main
             ExplorerPanel.Project = Project;
             ExplorerPanel.TreeSelectionChanged += OnTreeSelectionChanged;
             DisplayPanel.TerminalPanel.ResetTerminalCommand();
+            UserConfig.Load().RecentProjects.Add(fileName);
         }
 
         void OnTreeSelectionChanged(object sender, TreeViewEventArgs e)

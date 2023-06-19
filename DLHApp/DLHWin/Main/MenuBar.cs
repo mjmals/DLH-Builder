@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DLHWin.Config;
 
 namespace DLHWin.Main
 {
@@ -14,6 +15,12 @@ namespace DLHWin.Main
             AddMenuOptions("File", "New");
             AddMenuOptions("File", "New", "Project");
             AddMenuOptions("File", "Open");
+            AddMenuOptions("File", "Recent Files");
+
+            foreach(string projectFile in UserConfig.Load().RecentProjects)
+            {
+                AddMenuOptions("File", "Recent Files", projectFile);
+            }
 
             AddMenuOptions("Edit");
             AddMenuOptions("View");
@@ -31,6 +38,13 @@ namespace DLHWin.Main
             foreach(string item in paths)
             {
                 string itemPath = Path.Combine(parentPath, item);
+
+                if (File.Exists(item))
+                {
+                    itemPath = parentPath + @"\" + item;
+                }
+
+
                 ToolStripMenuItem findItem = (ToolStripMenuItem)Items.Find(itemPath, true).FirstOrDefault();
 
                 if (findItem == null)
