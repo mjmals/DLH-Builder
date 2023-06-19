@@ -27,7 +27,7 @@ namespace DLHApp.Model.DataStructs
                         output += ",";
                     }
 
-                    string joins = string.Join(@", ", relationship.Joins.Select(x => string.Format("StructJoin({0},{1}{2})", x.SourceField, x.TargetField, (x.IsCaseSenstive ? ",true" : ""))));
+                    string joins = string.Join(@", ", relationship.Joins.Select(x => string.Format("StructJoin({0},{1}{2})", x.SourceField, x.TargetField, (x.IsCaseSensitive ? ",true" : ""))));
                     string relText = string.Format("StructRelationship(Source={0}, Joins=[{1}], Output={2})", relationship.SourceDataStruct, joins, relationship.OutputField);
                     output += string.Format("\n\t{0}", relText);
                 }

@@ -12,7 +12,7 @@ namespace DLHApp.Model.DataStructs
 
         public string TargetField { get; set; }
 
-        public bool IsCaseSenstive { get; set; }
+        public bool IsCaseSensitive { get; set; }
 
         public override string ToString()
         {

@@ -60,7 +60,7 @@ namespace DLHApp.Model.DataStructs
                 string[] joinParams = joinText.Replace("StructJoin", "").Replace("(", "").Replace(")", "").Split(",");
                 output.SourceField = joinParams.Length >= 1 ? joinParams[0].Trim() : null;
                 output.TargetField = joinParams.Length >= 2 ? joinParams[1].Trim() : null;
-                output.IsCaseSenstive = joinParams.Length >= 3 ? Convert.ToBoolean(joinParams[2].Trim().ToLower()) : false;
+                output.IsCaseSensitive = joinParams.Length >= 3 ? Convert.ToBoolean(joinParams[2].Trim().ToLower()) : false;
             }
             catch { }
 
