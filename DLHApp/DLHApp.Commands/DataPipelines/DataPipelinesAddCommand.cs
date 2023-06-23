@@ -33,7 +33,7 @@ namespace DLHApp.Commands.DataPipelines
 
             if (Args[0].Split(@"\").Length > 1)
             {
-                pipelineFolder = string.Join(@"\", Args[0].Split(@"\").Take(Args[0].Split(@"\").Length));
+                pipelineFolder = string.Join(@"\", Args[0].Split(@"\").Take(Args[0].Split(@"\").Length - 1));
             }
 
             DataPipeline pipeline = DataPipeline.New();
