@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 
 namespace DLHApp.Model.DataPipelines
 {
@@ -35,6 +36,14 @@ namespace DLHApp.Model.DataPipelines
             output.ExcludedItems = new List<string>();
             output.Templates = new TemplateReferenceCollection();
 
+            return output;
+        }
+
+        public static DataPipelineTask Load(string fileName)
+        {
+            DataPipelineTask output = JsonConvert.DeserializeObject<DataPipelineTask>(File.ReadAllText(fileName));
+            output.Name = Path.GetFileNameWithoutExtension(fileName).Replace(".dpltsk", "");
+            output.FolderPath = Path.GetDirectoryName(fileName);
             return output;
         }
     }

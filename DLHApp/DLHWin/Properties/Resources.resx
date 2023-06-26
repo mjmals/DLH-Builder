@@ -178,6 +178,9 @@
   <data name="OpenFile_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\OpenFile_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Pipeline_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\Pipeline_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
   <data name="Plugged_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Plugged_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
@@ -225,6 +228,9 @@
   </data>
   <data name="Table_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Table_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Task_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Images\Task_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Template_16x" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Images\Template_16x.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>

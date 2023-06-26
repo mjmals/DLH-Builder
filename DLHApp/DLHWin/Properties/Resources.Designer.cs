@@ -263,6 +263,16 @@ namespace DLHWin.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Pipeline_16x {
+            get {
+                object obj = ResourceManager.GetObject("Pipeline_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap Plugged_16x {
             get {
                 object obj = ResourceManager.GetObject("Plugged_16x", resourceCulture);
@@ -416,6 +426,16 @@ namespace DLHWin.Properties {
         internal static System.Drawing.Bitmap Table_16x {
             get {
                 object obj = ResourceManager.GetObject("Table_16x", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
+        internal static System.Drawing.Bitmap Task_16x {
+            get {
+                object obj = ResourceManager.GetObject("Task_16x", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

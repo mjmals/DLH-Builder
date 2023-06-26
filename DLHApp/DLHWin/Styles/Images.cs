@@ -19,6 +19,8 @@ namespace DLHWin.Styles
                 output.Images.Add("Connection", Properties.Resources.Plugged_16x);
                 output.Images.Add("Copy", Properties.Resources.Copy_16x);
                 output.Images.Add("Data Application", Properties.Resources.DatabaseApplication_16x);
+                output.Images.Add("Data Pipeline", Properties.Resources.Pipeline_16x);
+                output.Images.Add("Data Pipeline Task", Properties.Resources.Task_16x);
                 output.Images.Add("Data Struct", Properties.Resources.DatabaseStoredProcedures_16x);
                 output.Images.Add("Data Source", Properties.Resources.DataSourceReference_16x);
                 output.Images.Add("Data Stage", Properties.Resources.RouteService_16x);

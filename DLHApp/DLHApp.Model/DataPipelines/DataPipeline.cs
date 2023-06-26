@@ -40,7 +40,10 @@ namespace DLHApp.Model.DataPipelines
 
         public static DataPipeline Load(string fileName)
         {
-            return JsonConvert.DeserializeObject<DataPipeline>(File.ReadAllText(fileName));
+            DataPipeline output = JsonConvert.DeserializeObject<DataPipeline>(File.ReadAllText(fileName));
+            output.Name = Path.GetFileNameWithoutExtension(fileName).Replace(".dpl", "");
+            output.FolderPath = Path.GetDirectoryName(fileName);
+            return output;
         }
     }
 }
