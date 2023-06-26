@@ -190,7 +190,9 @@ namespace DLHWin.Editors
 
                 if(dialog.DialogResult == DialogResult.OK)
                 {
-
+                    BuildStructDetailPanel();
+                    LoadScriptBox();
+                    StructGrid.Reload();
                 }
             }
         }

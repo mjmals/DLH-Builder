@@ -45,11 +45,11 @@ namespace DLHWin.Editors.Dialogs
             ToolStrip toolBar = new ToolStrip() { ImageList = Images.List };
             
             ToolStripButton addBtn = new ToolStripButton() { Text = "Add Relationship", ImageKey = "Add" };
-            toolBar.Click += AddRelationship;
+            addBtn.Click += AddRelationship;
             toolBar.Items.Add(addBtn);
 
             ToolStripButton removeBtn = new ToolStripButton() { Text = "Delete Relationship", ImageKey = "Delete" };
-            toolBar.Click += RemoveRelationship;
+            removeBtn.Click += RemoveRelationship;
             toolBar.Items.Add(removeBtn);
 
             DataGridView grid = new DataGridView() { Dock = DockStyle.Fill };
@@ -78,14 +78,29 @@ namespace DLHWin.Editors.Dialogs
             }
         }
 
+        DataGridView GetRelationshipGrid()
+        {
+            return (DataGridView)Controls.Find("relationshipGrid", true).First();
+        }
+
         void AddRelationship(object sender, EventArgs e)
         {
-
+            DataStructRelationship rel = new DataStructRelationship();
+            Relationships.Add(rel);
+            
+            DataGridView grid = GetRelationshipGrid();
+            grid.Rows.Add();
+            grid.Rows[grid.Rows.Count - 1].Tag = rel;
         }
 
         void RemoveRelationship(object sender, EventArgs e)
         {
+            DataGridView grid = GetRelationshipGrid();
+            DataGridViewRow row = grid.SelectedCells[0].OwningRow;
+            DataStructRelationship rel = (DataStructRelationship)row.Tag;
 
+            Relationships.Remove(rel);
+            grid.Rows.Remove(row);
         }
 
         Panel JoinPanel()
@@ -95,11 +110,11 @@ namespace DLHWin.Editors.Dialogs
             ToolStrip toolBar = new ToolStrip() { ImageList = Images.List };
 
             ToolStripButton addBtn = new ToolStripButton() { Text = "Add Join", ImageKey = "Add" };
-            toolBar.Click += AddJoin;
+            addBtn.Click += AddJoin;
             toolBar.Items.Add(addBtn);
 
             ToolStripButton removeBtn = new ToolStripButton() { Text = "Delete Join", ImageKey = "Delete" };
-            toolBar.Click += RemoveJoin;
+            removeBtn.Click += RemoveJoin;
             toolBar.Items.Add(removeBtn);
 
             DataGridView grid = new DataGridView() { Dock = DockStyle.Fill };
@@ -118,8 +133,8 @@ namespace DLHWin.Editors.Dialogs
 
         void LoadJoins(object sender, EventArgs e)
         {
-            DataGridView joinGrid = (DataGridView)Controls.Find("joinGrid", true).First();
-            DataGridView relationshipGrid = (DataGridView)Controls.Find("relationshipGrid", true).First();
+            DataGridView joinGrid = GetJoinGrid();
+            DataGridView relationshipGrid = GetRelationshipGrid();
 
             DataStructRelationship rel = (DataStructRelationship)relationshipGrid.Rows[relationshipGrid.SelectedCells[0].RowIndex].Tag;
 
@@ -136,14 +151,31 @@ namespace DLHWin.Editors.Dialogs
             }
         }
 
+        DataGridView GetJoinGrid()
+        {
+            return (DataGridView)Controls.Find("joinGrid", true).First();
+        }
+
         void AddJoin(object sender, EventArgs e)
         {
+            DataStructRelationshipJoin join = new DataStructRelationshipJoin();
 
+            DataGridView grid = GetJoinGrid();
+            DataStructRelationship rel = (DataStructRelationship)grid.Tag;
+
+            rel.Joins.Add(join);
+            grid.Rows.Add(new DataGridViewRow() { Tag = join });
         }
 
         void RemoveJoin(object sender, EventArgs e)
         {
+            DataGridView grid = GetJoinGrid();
+            DataStructRelationship rel = (DataStructRelationship)grid.Tag;
+            DataGridViewRow row = grid.SelectedCells[0].OwningRow;
+            DataStructRelationshipJoin join = (DataStructRelationshipJoin)row.Tag;
 
+            rel.Joins.Remove(join);
+            grid.Rows.Remove(row);
         }
 
         void Save(object sender, EventArgs e)
