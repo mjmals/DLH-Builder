@@ -25,6 +25,7 @@ namespace DLHWin.Styles
                 output.Images.Add("Data Source", Properties.Resources.DataSourceReference_16x);
                 output.Images.Add("Data Stage", Properties.Resources.RouteService_16x);
                 output.Images.Add("Definition Set", Properties.Resources.ScriptGroup_16x);
+                output.Images.Add("Delete", Properties.Resources.Cancel_16x);
                 output.Images.Add("Dependency", Properties.Resources.Link_16x);
                 output.Images.Add("Environment", Properties.Resources.EnvironmentDefinition_16x);
                 output.Images.Add("Export File", Properties.Resources.ExportFile_16x);

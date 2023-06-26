@@ -8,6 +8,7 @@ using DLHApp.Model.DataStructs;
 using DLHWin.Editors.SyntaxHighlighters;
 using DLHWin.Grids.DataStructs;
 using DLHWin.Styles;
+using DLHWin.Editors.Dialogs;
 
 namespace DLHWin.Editors
 {
@@ -106,6 +107,7 @@ namespace DLHWin.Editors
             editLabel.Text = "(edit)";
             editLabel.Top = headerLabel.Top;
             editLabel.Left = headerLabel.Right;
+            editLabel.Click += EditRelationships;
             output.Controls.Add(editLabel);
 
             foreach(DataStructRelationship relationship in DataStruct.Relationships)
@@ -177,6 +179,19 @@ namespace DLHWin.Editors
             {
                 MessageBox.Show("Unable to save Data Struct");
                 return;
+            }
+        }
+
+        void EditRelationships(object sender, EventArgs e)
+        {
+            using (DataStructRelationshipDialog dialog = new DataStructRelationshipDialog(DataStruct))
+            {
+                dialog.ShowDialog();
+
+                if(dialog.DialogResult == DialogResult.OK)
+                {
+
+                }
             }
         }
     }
