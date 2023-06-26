@@ -25,7 +25,14 @@ namespace DLHWin.ProjectTree.NodeTypes.DataPipelines
 
         void AddPipeline(object sender, EventArgs e)
         {
+            string parentPath = DirectoryItem.FullPath.Replace(@"Data Pipelines\", "");
 
+            DataPipeline pipeline = DataPipeline.New();
+            pipeline.Name = "New Pipeline";
+            pipeline.FolderPath = parentPath;
+            pipeline.Save();
+
+            Tree.RefreshTree();
         }
 
         internal override bool ValidateType(ProjectDirectoryItem directoryItem)
