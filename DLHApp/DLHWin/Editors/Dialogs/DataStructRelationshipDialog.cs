@@ -57,6 +57,7 @@ namespace DLHWin.Editors.Dialogs
             grid.AllowUserToAddRows = false;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
             grid.SelectionChanged += LoadJoins;
+            grid.CellEndEdit += RelationshipGridCellUpdated;
             grid.Columns.Add("Source Data Struct", "Source Data Struct");
             grid.Columns.Add("Output Field", "Output Field");
             LoadRelationships(grid);
@@ -103,6 +104,22 @@ namespace DLHWin.Editors.Dialogs
             grid.Rows.Remove(row);
         }
 
+        void RelationshipGridCellUpdated(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView grid = GetRelationshipGrid();
+            DataStructRelationship rel = (DataStructRelationship)grid.Rows[e.RowIndex].Tag;
+
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    rel.SourceDataStruct = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    break;
+                case 1:
+                    rel.OutputField = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    break;
+            }
+        }
+
         Panel JoinPanel()
         {
             Panel output = new Panel() { Dock = DockStyle.Fill };
@@ -121,6 +138,7 @@ namespace DLHWin.Editors.Dialogs
             grid.Name = "joinGrid";
             grid.AllowUserToAddRows = false;
             grid.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            grid.CellEndEdit += JoinGridCellUpdated;
             grid.Columns.Add("Source Field", "Source Field");
             grid.Columns.Add("Target Field", "Target Field");
             grid.Columns.Add(new DataGridViewCheckBoxColumn() { Name = "Is Case Sensitive", HeaderText = "Is Case Sensitive?" });
@@ -176,6 +194,25 @@ namespace DLHWin.Editors.Dialogs
 
             rel.Joins.Remove(join);
             grid.Rows.Remove(row);
+        }
+
+        void JoinGridCellUpdated(object sender, DataGridViewCellEventArgs e)
+        {
+            DataGridView grid = GetJoinGrid();
+            DataStructRelationshipJoin join = (DataStructRelationshipJoin)grid.Rows[e.RowIndex].Tag;
+
+            switch (e.ColumnIndex)
+            {
+                case 0:
+                    join.SourceField = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    break;
+                case 1:
+                    join.TargetField = grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                    break;
+                case 2:
+                    join.IsCaseSensitive = (bool)grid.Rows[e.RowIndex].Cells[e.ColumnIndex].Value;
+                    break;
+            }
         }
 
         void Save(object sender, EventArgs e)
