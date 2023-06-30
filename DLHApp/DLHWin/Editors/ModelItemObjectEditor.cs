@@ -14,52 +14,64 @@ namespace DLHWin.Editors
     {
         public ModelItemObjectEditor(string modelItemPath, Type modelItemType) : base()
         {
-            ModelItem = (IModelItem)modelItemType.GetMethod("Load").Invoke(null, new[] { modelItemPath });
+            ModelItemPath = modelItemPath;
+            ModelItemType = modelItemType;
+            LoadModelItem();
+
+            Text = ModelItem.Name;
+
+            PropertyPanel.Controls.AddRange(new Control[] { PropertyEditor, ErrorBox });
             PropertyEditor.SelectedObject = ModelItem;
             PropertyEditor.PropertyValueChanged += SetObjectTextEditor;
             PropertyEditor.PropertyValueChanged += PropertyUpdated;
-            Text = ModelItem.Name;
+            PropertyEditor.ExpandAllGridItems();
+            
             ObjectTextEditorPanel.Controls.Add(ObjectTextEditor);
             ObjectTextEditorPanel.Controls.Add(Menu());
-            PropertyEditor.ExpandAllGridItems();
+            ObjectTextEditor.TextChanged += TextEditorUpdated;
+            
             SetObjectTextEditor(null, null);
         }
 
         public IModelItem ModelItem { get; set; }
 
+        public string ModelItemPath { get; set; }
+
+        public Type ModelItemType { get; set; }
+
         public Panel ObjectTextEditorPanel = new Panel();
 
-        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, AcceptsTab = true, Font = new Font("Cascadia Code", 10) };
+        public RichTextBox ObjectTextEditor = new RichTextBox() { BorderStyle = BorderStyle.None, Dock = DockStyle.Fill, AcceptsTab = true, SelectionTabs = new int[] { 10, 20, 30, 40 }, Font = new Font("Cascadia Code", 10) };
 
-        public PropertyGrid PropertyEditor = new PropertyGrid();
+        public Panel PropertyPanel = new Panel() { Dock = DockStyle.Fill };
+
+        public PropertyGrid PropertyEditor = new PropertyGrid() { Dock = DockStyle.Fill };
+
+        public RichTextBox ErrorBox = new RichTextBox() { Dock = DockStyle.Fill, Enabled = false, Visible = false };
 
         public ToolStrip Menu()
         {
             ToolStrip output = new ToolStrip();
             output.ImageList = Images.List;
 
-            ToolStripButton updateBtn = new ToolStripButton();
-            updateBtn.Text = "Update from Json";
-            updateBtn.ImageKey = "Run";
-            updateBtn.Click += UpdateFromJson;
-            output.Items.Add(updateBtn);
+            ToolStripButton refreshBtn = new ToolStripButton();
+            refreshBtn.Text = "Refresh";
+            refreshBtn.ImageKey = "Refresh";
+            refreshBtn.Click += RefreshEditor;
+            output.Items.Add(refreshBtn);
 
             return output;
         }
 
-        void UpdateFromJson(object sender, EventArgs e)
-        {
-            Type type = ModelItem.GetType();
-            string sourcePath = ModelItem.SourcePath;
-            ModelItem = (IModelItem)JsonConvert.DeserializeObject(ObjectTextEditor.Text, type);
-            ModelItem.SourcePath = sourcePath;
-            ModelItem.Save();
-            PropertyEditor.SelectedObject = ModelItem;
-        }
 
         protected override Control[] EditorControls()
         {
-            return new Control[] { ObjectTextEditorPanel, PropertyEditor };
+            return new Control[] { ObjectTextEditorPanel, PropertyPanel };
+        }
+
+        void LoadModelItem()
+        {
+            ModelItem = (IModelItem)ModelItemType.GetMethod("Load").Invoke(null, new[] { ModelItemPath });
         }
 
         void SetObjectTextEditor(object sender, EventArgs e)
@@ -70,6 +82,40 @@ namespace DLHWin.Editors
         void PropertyUpdated(object sender, PropertyValueChangedEventArgs e)
         {
             ModelItem.Save();
+        }
+
+        void TextEditorUpdated(object sender, EventArgs e)
+        {
+            PropertyEditor.Visible = true;
+            ErrorBox.Visible = false;
+            string modelItemName = ModelItem.Name;
+
+            try
+            {
+                Type type = ModelItem.GetType();
+                string sourcePath = ModelItem.SourcePath;
+                
+                ModelItem = (IModelItem)JsonConvert.DeserializeObject(ObjectTextEditor.Text, type);
+                ModelItem.Name = modelItemName;
+                ModelItem.SourcePath = sourcePath;
+                ModelItem.Save();
+                
+                PropertyEditor.SelectedObject = ModelItem;
+            }
+            catch(Exception ex)
+            {
+                PropertyEditor.Visible = false;
+                ErrorBox.Visible = true;
+
+                ErrorBox.Text = string.Format("Error parsing object data: \n{0}", ex.Message);
+            }
+        }
+
+        void RefreshEditor(object sender, EventArgs e)
+        {
+            LoadModelItem();
+            SetObjectTextEditor(null, null);
+            PropertyEditor.SelectedObject = ModelItem;
         }
     }
 }
