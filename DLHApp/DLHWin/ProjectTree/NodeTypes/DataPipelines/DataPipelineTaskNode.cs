@@ -12,7 +12,7 @@ namespace DLHWin.ProjectTree.NodeTypes.DataPipelines
     {
         public DataPipelineTaskNode(ProjectDirectoryItem directoryItem) : base(directoryItem)
         {
-
+            Nodes.Add(new ScriptsNode(directoryItem, typeof(DataPipelineTask)));
         }
 
         protected override string[]? Images => new string[] { "Data Pipeline Task" };

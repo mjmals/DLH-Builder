@@ -29,6 +29,30 @@ namespace DLHApp.Model.DataPipelines
 
         public int Order { get; set; }
 
+        public override TemplateModelItem GetTemplateItems()
+        {
+            TemplateModelItem output = base.GetTemplateItems();
+
+            List<string> includedItems = new List<string>();
+
+            foreach(string includedItem in IncludedItems)
+            {
+                foreach(string file in Directory.GetFiles(includedItem, "*.json", SearchOption.AllDirectories))
+                {
+                    if(ExcludedItems != null && ExcludedItems.Where(x => file.StartsWith(x)).Count() > 0)
+                    {
+                        continue;
+                    }
+
+                    includedItems.Add(file);
+                }
+            }
+
+            output.Add("IncludedItems", includedItems);
+
+            return output;
+        }
+
         public static DataPipelineTask New()
         {
             DataPipelineTask output = new DataPipelineTask();
