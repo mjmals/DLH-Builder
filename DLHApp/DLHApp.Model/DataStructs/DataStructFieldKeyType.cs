@@ -16,6 +16,7 @@ namespace DLHApp.Model.DataStructs
         Business,
         Surrogate,
         Version,
-        Measure
+        Measure,
+        Validation
     }
 }
